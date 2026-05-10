@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真实网络加载：从上到下 时快时慢</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        /* 图片全程静止不动 */
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* 黑色遮罩：方向 FIXED —— 从上到下揭开 */
+        .mask {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            transition: height 0.05s linear;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(96, 14, 14, 0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">ex03/04</div>
+
+<div class="container">
+    <!-- 替换成你的青山村地图图片 -->
+    <img src="images/大庆典.webp" alt="地图">
+    <div class="mask"></div>
+</div>
+
+<script>
+    const mask = document.querySelector('.mask');
+    let currentHeight = 100; // 初始：100% 黑屏
+    mask.style.height = currentHeight + '%';
+
+    // 核心：模拟真实网络 时快时慢、随机卡顿
+    function simulateRealLoading() {
+        if (currentHeight <= 0) return;
+
+        // 随机减少高度（从上往下露出图片）
+        const stepDown = Math.random() * 2 + 0.2; // 每次减少 0.2% ~ 2.2%
+        currentHeight -= stepDown;
+        if (currentHeight < 0) currentHeight = 0;
+
+        mask.style.height = currentHeight + '%';
+
+        // 随机延迟：模拟网络卡顿（时快时慢）
+        const delay = currentHeight > 10
+            ? Math.random() * 120 + 30  // 正常加载：30~150ms
+            : Math.random() * 200 + 80; // 快完成时更卡：80~280ms
+
+        setTimeout(simulateRealLoading, delay);
+    }
+
+    // 开始执行
+    window.onload = simulateRealLoading;
+</script>
+
+</body>
+</html>

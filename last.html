@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>邺山村传统民俗活动</title>
+    <!-- Font Awesome 6 (图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 整体风格：新闻网站式简洁排版，无花哨特效，评论区专用效果独立 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f9f8f5;
+            font-family: 'Georgia', 'Times New Roman', '宋体', 'SimSun', '微软雅黑', serif;
+            color: #1e1a14;
+            line-height: 1.5;
+            transition: background-color 0.8s ease;
+        }
+
+        /* 全黑渐变的遮罩层 (用于画面逐渐变黑) */
+        .black-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 恭临祈福专属浮层（在下方面板出现小小字，位于评论区下方） */
+        .blessing-tip {
+            margin-top: 16px;
+            text-align: left;
+            font-size: 13px;
+            background: transparent;
+            transition: all 0.2s;
+        }
+
+        .blessing-line {
+            font-size: 18px;
+            font-weight: 600;
+            color: #c2712e;
+            letter-spacing: 2px;
+            font-family: 'Georgia', serif;
+        }
+
+        .high-energy {
+            font-size: 11px;
+            color: #aa7c4a;
+            margin-top: 4px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            font-style: normal;
+        }
+
+        /* 与新闻主体容器不再增加额外效果 */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 30px 20px 40px;
+            background: #fff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.02);
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-header {
+            border-bottom: 3px solid #c5a86a;
+            margin-bottom: 32px;
+            padding-bottom: 18px;
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #3b2a1f;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .site-sub {
+            font-size: 13px;
+            color: #7a6850;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .activity-item {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 42px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #e6dfcf;
+        }
+
+        .activity-img {
+            flex: 0 0 260px;
+            max-width: 260px;
+        }
+
+        .activity-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background-color: #eae3d4;
+            object-fit: cover;
+            border: 1px solid #ddd2be;
+            padding: 2px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2f2419;
+            margin-bottom: 10px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.3;
+        }
+
+        .activity-meta {
+            font-size: 13px;
+            color: #9b7e5f;
+            margin-bottom: 12px;
+            border-left: 2px solid #dbc9aa;
+            padding-left: 10px;
+        }
+
+        .activity-desc {
+            font-size: 15px;
+            line-height: 1.55;
+            color: #2b241c;
+            text-align: justify;
+            margin-bottom: 8px;
+        }
+
+        .activity-note {
+            font-size: 13px;
+            color: #927f62;
+            margin-top: 12px;
+            font-style: normal;
+            background: #fefaf3;
+            display: inline-block;
+            padding: 2px 8px;
+            border-left: 2px solid #c5a86a;
+        }
+
+        /* 评论区板块 */
+        .comment-section {
+            margin-top: 48px;
+            padding-top: 28px;
+            border-top: 2px solid #dacdad;
+        }
+
+        .comment-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3b2a1f;
+            margin-bottom: 18px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.3px;
+        }
+
+        .comment-placeholder {
+            background-color: #fefaf3;
+            border: 1px solid #e9dfcf;
+            padding: 24px 20px 28px;
+            margin-bottom: 8px;
+            text-align: center;
+            color: #b59a75;
+            font-size: 14px;
+        }
+
+        /* 正方形棱角按钮 */
+      .action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+        .square-btn {
+            width: 80px;
+            height: 80px;
+            background-color: #f1ede6;
+            border: 1.5px solid #c2aa83;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.1s linear;
+            border-radius: 0px;
+            color: #5e4a31;
+        }
+
+        .square-btn i {
+            font-size: 32px;
+            color: #7e623f;
+        }
+
+        .square-btn span {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-family: 'Segoe UI', '微软雅黑', sans-serif;
+        }
+
+        .square-btn:hover {
+            background-color: #e3d9cb;
+            border-color: #a68558;
+        }
+
+        .square-btn.correct-click {
+            background-color: #dac29c;
+            border-color: #8b6942;
+            transform: scale(0.97);
+        }
+
+        /* 禁用点击效果（防止重复点按已完成顺序） */
+        .square-btn.disabled-btn {
+            pointer-events: none;
+            opacity: 0.7;
+            filter: grayscale(0.05);
+        }
+
+        .no-comment-text {
+            font-size: 14px;
+            color: #b69a73;
+            padding: 12px 0 4px;
+            border-top: 1px dashed #e2d5c0;
+            margin-top: 12px;
+            text-align: left;
+        }
+
+        .footer-news {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #e1d5bf;
+            font-size: 12px;
+            color: #8f7b5c;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+            .activity-item {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .activity-img {
+                flex: 0 0 auto;
+                max-width: 100%;
+            }
+            .activity-img img {
+                max-height: 220px;
+                width: 100%;
+                object-fit: cover;
+            }
+            .square-btn {
+                width: 68px;
+                height: 68px;
+            }
+            .square-btn i {
+                font-size: 28px;
+            }
+            .action-buttons {
+                gap: 16px;
+            }
+        }
+
+        /* 祈福提示区原本隐藏，触发正确顺序后显示 */
+        .blessing-area {
+            margin-top: 18px;
+            transition: all 0.2s;
+            min-height: 70px;
+        }
+        .blessing-hidden {
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        .blessing-visible {
+            visibility: visible;
+            opacity: 1;
+            height: auto;
+            margin-top: 16px;
+        }
+        .blessing-wrapper {
+            background: #fffaf0;
+            border-left: 4px solid #cb7b3c;
+            padding: 10px 16px;
+        }
+        .blessing-area {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    text-align: center;
+    pointer-events: none;  /* 让点击穿透，不干扰按钮 */
+    width: auto;
+    min-width: 300px;
+}
+
+.blessing-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* 恭临祈福：红色 + 黑色描边 + 超大字号 */
+.blessing-line {
+    font-size: 72px;
+    font-weight: 900;
+    color: #e31b23;
+    -webkit-text-stroke: 2px #000000;
+    text-shadow: none;
+    letter-spacing: 6px;
+    white-space: nowrap;
+    font-family: 'Georgia', 'Times New Roman', '宋体', serif;
+}
+
+/* 前方高能：黑色 + 小字号 */
+.high-energy {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', '微软雅黑', sans-serif;
+    background: rgba(255,255,240,0.85);
+    padding: 6px 16px;
+    display: inline-block;
+    border-radius: 0px;
+}
+
+/* 慢慢浮现动画 */
+.blessing-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.01s ease, visibility 0.01s;
+}
+
+.blessing-visible {
+    opacity: 1;
+    visibility: visible;
+    animation: gentleFadeIn 1.8s ease forwards;
+}
+
+@keyframes gentleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.92);
+    }
+    30% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 移动端适配：适当缩小字号 */
+@media (max-width: 680px) {
+    .blessing-line {
+        font-size: 44px;
+        -webkit-text-stroke: 1.5px #000;
+        letter-spacing: 3px;
+        white-space: normal;
+    }
+    .high-energy {
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">37/39</div>
+<div class="black-overlay" id="blackOverlay"></div>
+<div class="container">
+    <div class="news-header">
+        <div class="site-title">邺山风情 · 岁时民俗志</div>
+        <div class="site-sub">传统村落文化记录 | 五则活态传承 · 秘契祈福</div>
+    </div>
+
+    <!-- 五个活动内容保持不变 -->
+    <div class="activity-item">
+        <div class="activity-img">
+            <img src="user/祭.webp" alt="邺山村春祭社戏" loading="lazy">
+        </div>
+        <div class="activity-content">
+            <div class="activity-title">春祭社戏 · 祈年古韵</div>
+            <div class="activity-meta">时间：农历二月初二前后 | 地点：邺山古戏台</div>
+            <div class="activity-desc">立春后乡民择吉日开台，以婺剧、目连戏酬谢土地。邺山村社戏传承自清代同乐班，鼓乐声动，十里乡亲携板凳前来。戏前有“破台”仪式，戏后撒五谷，祈求风调雨顺、五谷丰登，是当地开春最重要的公共活动。</div>
+            <div class="activity-note">传承三百余年，2021年列入县级非遗名录</div>
+        </div>
+    </div>
+
+    <div class="activity-item">
+        <div class="activity-img">
+            <img src="user/端午.webp" alt="邺山村端午龙舟" loading="lazy">
+        </div>
+        <div class="activity-content">
+            <div class="activity-title">端午龙舟会 · 竞渡邺水</div>
+            <div class="activity-meta">时间：农历五月初五 | 地点：邺山溪渡口</div>
+            <div class="activity-desc">邺山溪上一年一度的龙舟盛会，五支龙舟队分别代表村中五姓宗族。龙舟饰以彩绘，鼓声震天。赛后还有流传百年的“抢吉祥鸭”和“包长情粽”习俗，寓意攘灾祈福，水岸观者如潮。</div>
+            <div class="activity-note">近年联合周边三村，举办“山水龙舟文化节”</div>
+        </div>
+    </div>
+
+    <div class="activity-item">
+        <div class="activity-img">
+            <img src="user/窑.webp" alt="中秋烧瓦塔" loading="lazy">
+        </div>
+        <div class="activity-content">
+            <div class="activity-title">中秋烧瓦塔 · 窑火映月</div>
+            <div class="activity-meta">时间：农历八月十五晚间 | 地点：村口晒谷场</div>
+            <div class="activity-desc">用旧砖瓦垒砌空心塔，内填柴草点燃，火焰越旺象征日子越红火。长者领唱“添柴歌”，孩童绕塔添薪。瓦塔烧至通红后泼洒粗盐，爆出金色火星，意为驱除邪气，传统火崇拜与中秋团圆相融。</div>
+            <div class="activity-note">烧塔后共享“桂花米糕”，邻里共庆秋夕</div>
+        </div>
+    </div>
+
+    <div class="activity-item">
+        <div class="activity-img">
+            <img src="user/龙.webp" alt="秋收稻草龙" loading="lazy">
+        </div>
+        <div class="activity-content">
+            <div class="activity-title">秋收稻草龙 · 庆丰巡田</div>
+            <div class="activity-meta">时间：霜降后第一个周末 | 地点：全村街巷及稻田</div>
+            <div class="activity-desc">秋收结束，村民用新稻草扎成九节草龙，遍插香火，由少年青壮共同舞动。龙队穿行田埂与农家院落，每经一户高唱“龙归仓”调，祈愿库廪充实。草龙最终送入溪流，寓意送龙归海，谢自然恩赐。</div>
+            <div class="activity-note">扎龙技艺现为村中老匠人手传，保留原始民俗形态</div>
+        </div>
+    </div>
+
+    <div class="activity-item">
+        <div class="activity-img">
+            <img src="user/神.webp" alt="邺山迎神赛会" loading="lazy">
+        </div>
+        <div class="activity-content">
+            <div class="activity-title">邺山迎神赛会 · 抬阁巡境</div>
+            <div class="activity-meta">时间：农历十月廿三 | 地点：五显庙至邺山主街</div>
+            <div class="activity-desc">村民抬着精雕神轿及儿童彩阁（铁枝阁），随同锣鼓旌旗队伍巡游四境。沿途设点施赠平安粽、福饼，并上演古老“跳马灯”，历史悠久，是邺山村规模最宏大的民俗集会。</div>
+            <div class="activity-note">2023年恢复中断六十年的“神阁巡境”全套仪轨</div>
+        </div>
+    </div>
+
+    <!-- 评论区: 五个按钮 + 祈福提示区块（顺序正确时显示恭临祈福 + 小小字“前方高能”） -->
+    <div class="comment-section">
+        <div class="comment-title">民俗互动 · 秘契五感</div>
+        <div class="comment-placeholder">
+            ❝ 依古礼轻叩五识 · <strong>赐福</strong>序启祈福 ❞<br>
+            
+        </div>
+
+        <!-- 五个正方形棱角按钮 ID 分别对应 眼 耳 手 心 头 -->
+        <div class="action-buttons">
+            <div class="square-btn" id="btn-hand" data-key="hand" data-name="手">
+        <i class="fas fa-hand-peace"></i>
+        <span></span>
+    </div>
+    <div class="square-btn" id="btn-heart" data-key="heart" data-name="心">
+        <i class="fas fa-heart"></i>
+        <span></span>
+    </div>
+    <div class="square-btn" id="btn-eye" data-key="eye" data-name="眼">
+        <i class="fas fa-eye"></i>
+        <span></span>
+    </div>
+    <div class="square-btn" id="btn-head" data-key="head" data-name="头">
+        <i class="fas fa-user-circle"></i>
+        <span></span>
+    </div>
+    <div class="square-btn" id="btn-ear" data-key="ear" data-name="耳">
+        <i class="fas fa-ear-listen"></i>
+        <span></span>
+    </div>
+</div>
+
+        <!-- 祈福文案区域 (初始隐藏，顺序正确后显示恭临祈福 + 下方小小字“前方高能”) -->
+        <div id="blessingArea" class="blessing-area blessing-hidden">
+    <div class="blessing-wrapper">
+        <div class="blessing-line">恭临祈福</div>
+    </div>
+</div>
+
+      
+    </div>
+
+    <div class="footer-news">
+        报道来源：邺山村文化礼堂 · 民俗档案室   |   图文记录传统五项民俗
+</div>
+
+<script>
+    
+       // 正确顺序: 眼 -> 耳 -> 手 -> 心 -> 头
+const CORRECT_ORDER = ["eye", "ear", "hand", "heart", "head"];
+let currentStep = 0;
+let orderCompleted = false;
+
+const btnEye = document.getElementById('btn-eye');
+const btnEar = document.getElementById('btn-ear');
+const btnHand = document.getElementById('btn-hand');
+const btnHeart = document.getElementById('btn-heart');
+const btnHead = document.getElementById('btn-head');
+const blessingArea = document.getElementById('blessingArea');
+const blackOverlay = document.getElementById('blackOverlay');
+
+function showBlessing() {
+    if (blessingArea) {
+        blessingArea.classList.remove('blessing-hidden');
+        blessingArea.classList.add('blessing-visible');
+    }
+}
+
+function markButtonAsPressed(btnElement) {
+    if (!btnElement) return;
+    btnElement.classList.add('correct-click');
+    setTimeout(() => {
+        if (btnElement) btnElement.classList.remove('correct-click');
+    }, 200);
+}
+
+function disableAllButtons() {
+    const btns = [btnEye, btnEar, btnHand, btnHeart, btnHead];
+    btns.forEach(btn => {
+        if (btn) {
+            btn.style.pointerEvents = 'none';
+            btn.classList.add('disabled-btn');
+        }
+    });
+}
+
+// 画面渐渐全黑 → 全黑后跳转到 祭祀.html
+function transitionToBlackAndRedirect() {
+    if (!blackOverlay) return;
+    blackOverlay.style.opacity = '0';
+    blackOverlay.style.transition = 'opacity 1.6s ease';
+    void blackOverlay.offsetWidth;
+    blackOverlay.style.opacity = '1';
+
+    setTimeout(() => {
+        window.location.href = '祭祀.html';
+    }, 2500);
+}
+
+function handleButtonClick(clickedKey, btnElement) {
+    if (orderCompleted) return;
+
+    if (currentStep < CORRECT_ORDER.length && CORRECT_ORDER[currentStep] === clickedKey) {
+        markButtonAsPressed(btnElement);
+        currentStep++;
+
+        if (currentStep === CORRECT_ORDER.length) {
+            orderCompleted = true;
+            showBlessing();
+
+            setTimeout(() => {
+                if (!orderCompleted) return;
+                disableAllButtons();
+                transitionToBlackAndRedirect();
+            }, 1000);
+        }
+    } else {
+        // 顺序错误：静默重置，无任何提示
+        if (blessingArea && blessingArea.classList.contains('blessing-visible')) {
+            blessingArea.classList.remove('blessing-visible');
+            blessingArea.classList.add('blessing-hidden');
+        }
+        currentStep = 0;
+        orderCompleted = false;
+        // 没有任何弹窗、toast 或提示文字
+    }
+}
+
+// 绑定事件
+btnEye.addEventListener('click', () => handleButtonClick('eye', btnEye));
+btnEar.addEventListener('click', () => handleButtonClick('ear', btnEar));
+btnHand.addEventListener('click', () => handleButtonClick('hand', btnHand));
+btnHeart.addEventListener('click', () => handleButtonClick('heart', btnHeart));
+btnHead.addEventListener('click', () => handleButtonClick('head', btnHead));
+
+// 初始化状态
+currentStep = 0;
+orderCompleted = false;
+if (blessingArea) {
+    blessingArea.classList.add('blessing-hidden');
+    blessingArea.classList.remove('blessing-visible');
+}
+</script>
+</body>
+</html>

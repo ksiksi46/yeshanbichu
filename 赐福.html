@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>邺山赐福</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/zcool-add-cursive/1.0.0/ZCOOLAddCursive.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 深色背景，凸显文字阴影与字距的质感 */
+            background-color: #00f7ff;
+            color: #000000;
+            /* 主要字体使用具有古韵的衬线体 */
+            font-family: "华文楷书", "KaiTi", "Noto Serif SC", "Times New Roman", serif;
+            font-size: 26px;
+            line-height: 2.2;
+            padding: 60px 20px;
+            max-width: 880px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 52px;
+            margin-bottom: 48px;
+            letter-spacing: 12px;      /* 加大标题字距 */
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.4);
+            font-weight: normal;
+            color: #000000;
+        }
+
+        p {
+            margin-bottom: 28px;
+            letter-spacing: 3px;        /* 正文加大字间距，提升庄严感 */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-align: justify;        /* 两端对齐，更显规整 */
+            text-indent: 2em;           /* 首行缩进两字 */
+        }
+
+        /* 首段去掉缩进，保留古书顶格风格 */
+        .first-line {
+            text-indent: 0;
+        }
+
+        .shangxiang {
+            margin-top: 42px;
+            font-size: 32px;
+            letter-spacing: 10px;       /* 尚飨字距加大 */
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+            text-align: right;
+            font-weight: normal;
+        }
+
+        .image-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            margin-top: 56px;
+            border: 1px solid #8b7a5a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: #2c241a;
+            padding: 6px;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        /* 落款小字（可选，仅增加仿古感） */
+        .inscription {
+            margin-top: 32px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            color: #b89a70;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        /* 移动端适配：适当降低字体及字距，避免拥挤 */
+        @media (max-width: 650px) {
+            body {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+            .title {
+                font-size: 38px;
+                letter-spacing: 8px;
+            }
+            p {
+                letter-spacing: 2px;
+            }
+            .shangxiang {
+                font-size: 26px;
+                letter-spacing: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">28/39</div>
+    <div class="title">邺山赐福</div>
+
+    <p class="first-line">维己亥年仲春朔日，邺山父老谨以清酌庶馐之奠，敢昭告于邺山之神曰：</p>
+
+    <p>伏惟神明，赫赫在穹。垂光下土，福佑邺中。岁丰人乐，百谷盈廪。疾患不兴，犬守夜宁。</p>
+
+    <p>夫天道无亲，常与善人。山有灵而知善恶，人有诚而感神明。故献祭之事，贵在至诚。</p>
+
+    <p>昔日邺山有俗，每岁仲春，择吉日而祭。<strong>其序有五：一曰观山者立高台，二曰闻涛者临深涧，三曰执香者奉薪火，四曰诚心者默诵经，五曰首事者诵祝文。其仪甚肃，其礼甚恭。</strong></p>
+
+    <p>牲醴既陈，笙磬既设。神其来格，歆此芳洁。庇我邺山，千载弗绝。虫蝗不作，旱潦无虞。民安其业，子孝父慈。</p>
+
+    <div class="shangxiang">尚飨</div>
+
+    <div class="image-box">
+        <img src="images/赐福.webp" >
+    </div>
+    
+</body>
+</html>

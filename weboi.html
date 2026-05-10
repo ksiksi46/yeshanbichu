@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <title>说一万遍抱歉 的微博</title>
+    <style>
+        /* 基础重置与微博经典配色 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f5;
+            font-family: Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+            color: #333;
+            /* 主页背景图片 */
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 顶部导航栏伪装 */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 48px;
+            background-color: rgba(255,255,255,0.95);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid #fa7d3c;
+        }
+        .nav-inner { width: 980px; display: flex; justify-content: space-between; align-items: center; }
+        .fake-logo { 
+            font-size: 30px; 
+            font-weight: bold; 
+            color: #fa7d3c; 
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .fake-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #fa7d3c, #ff9a5c);
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .fake-search { 
+    width: 200px; 
+    height: 26px; 
+    background: #f2f2f5; 
+    border-radius: 13px; 
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
+}
+.fake-menu { 
+    width: 40px; 
+    height: 26px; 
+    background: #f2f2f5; 
+    border-radius: 13px; 
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 18px;
+}
+        /* 主体容器 */
+        .container {
+            width: 980px;
+            margin: 60px auto 0;
+        }
+
+        /* 个人头部资料卡 */
+        .profile-header {
+            background-color: rgba(255,255,255,0.95);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: 0 0 2px rgba(0,0,0,0.1);
+            position: relative;
+        }
+       .cover-img {
+    width: 100%;
+    height: 300px;
+    background-image: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+}
+        .profile-info {
+            padding: 0 20px 20px;
+            text-align: center;
+            position: relative;
+            top: -50px;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.8);
+            background-color: #ccc;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+        }
+        .username { font-size: 22px; font-weight: bold; margin: 10px 0 5px; }
+        .bio { font-size: 14px; color: #808080; }
+        
+        /* 统计数据条 */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 15px;
+        }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 18px; font-weight: bold; display: block;}
+        .stat-label { font-size: 12px; color: #808080; }
+
+        /* 内容区布局 */
+        .main-content {
+            display: flex;
+            gap: 10px;
+        }
+        .sidebar { width: 300px; }
+        .feed { width: 670px; }
+
+        /* 模块通用样式 */
+        .box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 2px rgba(0,0,0,0.1);
+        }
+        .box-title { font-size: 14px; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+
+        /* 右侧图片logo */
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .sidebar-logo img {
+            width: 100%;
+            max-width: 260px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* 单条微博样式 */
+        .post {
+            background: rgba(255,255,255,0.95);
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 2px rgba(0,0,0,0.1);
+        }
+        .post-header { display: flex; align-items: center; margin-bottom: 10px; }
+        .post-avatar { width: 40px; height: 40px; border-radius: 50%; background: #ccc; margin-right: 10px; overflow: hidden; }
+        .post-avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        .post-meta .name { font-size: 14px; font-weight: bold; color: #333; }
+        .post-meta .time { font-size: 12px; color: #808080; }
+        .post-content { font-size: 14px; line-height: 1.8; margin-bottom: 15px; white-space: pre-line; }
+        .post-actions { border-top: 1px solid #eee; display: flex; padding-top: 10px; }
+        .action-btn { flex: 1; text-align: center; font-size: 12px; color: #808080; cursor: pointer; }
+        .action-btn:hover { color: #fa7d3c; }
+
+        /* 年份分隔线 */
+        .year-divider {
+            background: rgba(242,242,245,0.95);
+            padding: 10px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #999;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">20/39</div>
+<div class="top-nav">
+    <div class="nav-inner">
+        <div class="fake-logo">
+            <img src="../images/weboi.webp" alt="logo" style="height: 35px; width: auto; margin-right: 8px;" onerror="this.src='https://placehold.co/28x28/fa7d3c/white?text=#'">
+            weboi
+        </div>
+        <div class="fake-search">
+            <span style="color: #999; font-size: 14px;">搜索</span>
+        </div>
+        <div class="fake-menu">
+            ☰
+        </div>
+    </div>
+</div>
+    
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="cover-img"></div>
+            <div class="profile-info">
+                <div class="avatar" title="点击查看大图">
+                    <img src="../images/zzy.webp" alt="头像" class="avatar-img">
+                </div>
+                <div class="username">说一万遍抱歉</div>
+                <div class="bio">简介：一切都会好起来的。</div>
+                <div class="stats">
+                    <div class="stat-item"><span class="stat-num">12</span><span class="stat-label">关注</span></div>
+                    <div class="stat-item"><span class="stat-num">408</span><span class="stat-label">粉丝</span></div>
+                    <div class="stat-item"><span class="stat-num">89</span><span class="stat-label">微博</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <!-- 右侧图片logo -->
+                
+                <div class="box">
+                    <div class="box-title">个人资料</div>
+                    <div style="font-size: 12px; line-height: 2;">
+                        <p>等级：Lv. 6</p>
+                        <p>地区：未知</p>
+                         
+                    </div>
+                </div>
+            </div>
+
+            <div class="feed">
+                <!-- 2021年 - 最早 -->
+             
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2021年8月12日 16:20 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        今天正式到卫生院报到，算是把从学校里学的东西真的用在实处了。早上跟着前辈去给几个老人量血压，山路走得人腿发酸，回来的时候坐在田埂上歇了好一会儿。风一吹，田里的味道很干净，让人暂时能忘掉很多乱七八糟的念头。活着这件事，有时候真的很沉重，只是别人听不懂，我也说不出口。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 5</div>
+                        <div class="action-btn">评论 18</div>
+                        <div class="action-btn">赞 35</div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2021年11月3日 23:30 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        最近夜班有点多，后半夜总是睡不着。窗外的虫鸣和风声混在一起，总让我产生一种错觉，好像有人在远处等着我，又好像在轻轻喊我的名字。我不敢细想，只能开灯坐一会儿，等心跳平复了再躺下。当医生要冷静，可我自己的情绪，好像越来越难稳住。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 3</div>
+                        <div class="action-btn">评论 12</div>
+                        <div class="action-btn">赞 28</div>
+                    </div>
+                </div>
+
+                
+
+                <!-- 2022年 -->
+             
+                    <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2022年6月30日 02:15 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        最近睡眠特别差，一闭眼就做梦，梦里一直在跑，身后有声音追着我，却看不清是谁。醒来一身冷汗，坐在床上发呆到天亮。白天给村民诊疗的时候，偶尔会走神，反应过来又赶紧强迫自己集中精神。他们都说我年轻稳重，只有我清楚，我心里那根弦，已经绷得快断了。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 9</div>
+                        <div class="action-btn">评论 31</div>
+                        <div class="action-btn">赞 52</div>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2022年10月11日 18:45 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        傍晚在村口遇到几个陌生面孔，说话做事都有点奇怪，眼神落在我身上的时候，让我浑身不自在。他们没说什么具体的事，可那种默契又隐晦的语气，让我一阵心慌。好像有些我拼命想忘掉的东西，正在慢慢重新围过来。我假装什么都没察觉，可回到宿舍，手还是凉了很久。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 7</div>
+                        <div class="action-btn">评论 23</div>
+                        <div class="action-btn">赞 45</div>
+                    </div>
+                </div>
+
+               
+
+                <!-- 2023年 -->
+            
+                 <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2023年1月27日 02:45 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        最近总觉得耳边有细碎的声音，不是耳鸣，更像是有人在低声说话，内容模糊不清，却一直缠着我，白天忙起来还好，一到安静的时候就特别明显，吵得我头疼。我跟同事说，可能是最近太累了，他们也没多想，只让我多休息，可我自己知道不对劲。我治得了别人的风寒感冒、小伤小病，开得出对症的药方，却对自己脑子里这些东西束手无策，那种无力感，比小时候生病还要绝望。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 12</div>
+                        <div class="action-btn">评论 38</div>
+                        <div class="action-btn">赞 65</div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2023年9月2日 21:10 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        他们又托人带话给我了，语气比上次更直接，也更强势，说有些事情，不是我想躲就能躲开的，该轮到我出力了，还说这是我该做的。我装作听不懂，故意岔开话题，可那种被盯上的感觉越来越强烈，好像一张网慢慢收紧，勒得我喘不过气。我回来是想安安稳稳当医生，用自己的方式弥补一些东西，救更多的人，而不是为了再被拉进那些黑暗里去，可我好像，已经没有选择的余地了。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 18</div>
+                        <div class="action-btn">评论 43</div>
+                        <div class="action-btn">赞 78</div>
+                    </div>
+                </div>
+
+               
+
+                <!-- 2024年 -->
+                
+<div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2024年3月18日 19:20 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        他们来找我了，说得很明白，需要我以医生的身份帮忙，语气里没有商量，只有笃定，好像我天生就该做这件事。我挣扎了很久，拒绝了一次又一次，可他们拿当年的事要挟我，拿我身边的人要挟我，我怕了，我最终还是答应了。那一刻，我觉得自己多年的坚持都白费了，我以为当医生是赎罪，可到头来，我还是变成了自己最讨厌的样子，心里的愧疚像潮水一样涌过来，压得我喘不过气。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 23</div>
+                        <div class="action-btn">评论 67</div>
+                        <div class="action-btn">赞 112</div>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2024年12月9日 22:30 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        我开始频繁地出现幻觉，有时候看着诊室里的药瓶，会觉得它们都在扭曲、在说话；有时候对着镜子，会突然不认识自己的脸，觉得镜子里的人很陌生，眼神空洞，一点都不像我。同事说我气色越来越差，人也越来越沉默，有时候会对着空气发呆，甚至自言自语，他们都在偷偷议论我，我知道，他们觉得我不正常了。我也想做个正常人，可我答应了他们，就再也回不去了，那些愧疚、恐惧、自我厌恶，一天天把我往崩溃的边缘推，我快要撑不住了。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 15</div>
+                        <div class="action-btn">评论 52</div>
+                        <div class="action-btn">赞 89</div>
+                    </div>
+                </div>
+
+                
+
+                <!-- 2025年 - 最新 -->
+                 <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2025年1月30日 14:50 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        今天给老人量血压，血压计的数字一直在跳，不是机器坏了，是我眼睛在抖，手也在抖，连握稳血压计都做不到。周围的声音忽远忽近，有人在说话，有诡异声响，还有我自己的心跳声，全都搅在一起，吵得我头疼欲裂。我快装不下去了，真的快装不下去了，我每天都在自我拉扯，一边是医生的良知，一边是无法摆脱的枷锁，我快要分裂了。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 8</div>
+                        <div class="action-btn">评论 34</div>
+                        <div class="action-btn">赞 67</div>
+                    </div>
+                </div>
+                 <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2025年4月5日 03:12 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        脑子里很乱，很多片段混在一起，小时候的病房、白色的墙、模糊的人影、诡异的念叨、诊室里的药味、血腥味…… 全都搅在一起，分不清哪是现实，哪是幻觉。我有时候会对着空气说话，说完又猛地清醒，发现自己像个疯子一样。别人看我的眼神已经不一样了，他们觉得我怪怪的，躲着我，议论我，也许很快，就会有人直接说我疯了。我不在乎了，不在乎了，不在乎了。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 5</div>
+                        <div class="action-btn">评论 27</div>
+                        <div class="action-btn">赞 41</div>
+                    </div>
+                </div>
+                
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2025年4月28日 23:15 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        对不起，对不起，对不起。
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 2</div>
+                        <div class="action-btn">评论 18</div>
+                        <div class="action-btn">赞 23</div>
+                    </div>
+                </div>
+                      
+               <div class="post" id="climax-post">
+                    
+                   <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="../images/zzy.webp" alt="头像" class="post-avatar-img">
+                        </div>
+                        <div class="post-meta">
+                            <div class="name">说一万遍抱歉</div>
+                            <div class="time">2025年5月8日 23：58 来自 微博客户端</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        又发消息了҉̧̗̱。他͕̝ͦ̀ͤ̕说̰̪̀͢你̖ͅ在哪。我̫͓͜͢说我在哭，不̤̖对͋ͭ͘͡我是在笑，好好好啊好好哈哈。
+                        他说你明天̝͉̻̰͘͘͞͝还要来。我说好，我说好，好痒，哈哈，明天来？来呀来呀来呀来呀，来干嘛呀，不管啦，都好都好都好……但是好疼，疼，疼死了，
+                        对̣͕̤̞̜̰̲͔̪̟̗͕̠͖̭̹̌̓̽̏不起  ̵̧͇̮̖̮̹̯̰̼̀͘ ̴̧̡̲̫̭͉̝̟̞̫͝ ҉̗̼̣͖͏̧͡ ̛̝͉͕͐̓ͭ̉͟͞͞ͅ ̷̛͚̯̮̥́͜  ̡̬̰͔̫̘̺͍̮̗̜̗͋ͨ́ͩ͘͞͠ͅ͏̴̡̛̣͖̞̬̩̬͖̮̚͟͠͡ ̸̸̧̹̘̠̹͙̮͖̤͇͉̥̳̳͚͍̬̗͎̰̜͒̑ͥ͗̕̕̕͠҉ ̮̥̦̲ ̭̫͙͉ ̵̶̸̷̧̢̡̠̬̰̯͙̘̰̝̋̂͂̂͘̕̕͟͞ ̭̖̹̰ ̡̧̡̹̥̱̹̪̫̞͓̣͓̬̗̞̱̥̦̯͔͚̾̀̊̆ͧ͘͘̕͢͞ͅ͏̛̬͈̼̮̀ ̶̣̩̳̀̂̄͛͂͜͠ͅ ̲͚̯̘  ̡̨̛̗̱̹̪̭̭͚͉̩̠͙̃ͩ̀͛̊ͅ ̨̡̗̙͕̮͜͞ ̷̷̨̛̛̱̦̳̻̖̞̹̲͈͇̼̯̙̞̝̤̝̳̯̼̭͚̯̲̟͎̞̥̥̹̠̪͈͖̔̀̍̉ͦ͘͠ͅͅ ̵̷̨̺͖͈̻̘̺͉̰̺̦̰̗͠ ̖͓̫̰  ̬͓̪̯ 对不起̢̧̢̤͙͔͉͖̬̼̣̥̱̘̱̙͇̭͙͝ ͔͕̗̪ ̧̧̛̛̼̩͔̟̦͎͇̮ ̼̰̳̮͏̷̵̮͖̟̬̺͙͕̲̞͔̥̼́̽ͫͤ̕͞͠͞͏̛́̀̕ ̣̠͈̝̄̎ͩ̚ ̶̵̵̝̲̺̂ͨ̃̌͟ͅ  ̶̨̠̲̩͎̳̖̯̪̑̎ͮ̀̔͢ ̸̴̛̞̰͍̬̪͓̦͘ͅ   ̵̸͖̦͎̳̹̱̥̗͋͢͏̢̠̟̫̣͎͇̪̘̗̣̙̣̘̬̹̈͆̀̀̀͟ͅ ̷̢̨̥̗͚̥̦͙͕̭̫̰̪̖́̓ͪ̔̕ ̸̵̷̴̢̛̹͚̳̰͔̥͔̙̀̈̇ͪ̍͜ ̴̸̛̱͉̩̦̞̫͈͚͍͔̻̙͂͒ͤ́͢  ̶̢̧͓̩͚̣̠̰̰̹͕̻̺̥̼̣͉̞̋ͮ̓̍̕̕̕͝͡ ̪̦̝͕ ̢̝̺͇͔ͧ̓҉͚̗̭̜͈̺̬̘̻̘̮̣̖̦͉̯́ͬ̓͜ ̩̹̪͚  ̨̡̛̤̪̞͉̣̘͍̩͖̟͚̲̤̳̪ͮ̀̏̆̆͘͘͘͢͝ͅ҉̴̟̦͇̪͜ ̧̛͇̤͇̬̠̭͕̳͟͡   ̴̴͈͎̗̩̥̣̲̦̞̟̥̖̀͘对͏̶̶̡̧̛͇̱̲̗̳̘̰̺̟̪̗̫̰̩̳͓͎̪͇̯̗̠̖̻̮͔͙̟̣̱̗̖̉̑ͪ͑͘͟͜͜͞͠不̸̢̮̬̠͙̻͎̼̜͚̱̰͖̪̱̞̳̌̃͒͋͢͝起̀͢͟͏̵̷̷̢̟̙̞͙̰̞̯̩͕̺̞͔̍̈́̀̐͘̚͠ ̨͚̙͍̙҉̷͍͈̰̙̯̜͚̟̹̣͔̣̥̲̥̠̻̫͓̤ͫ̽͛̔̕͡͠͞͞ ̴̵̴̰̥̤̭̠̫̟͉̗̯̣̗͍̻̳̳͚͎̦̳̠͔̫́ͣ͗̀̔̀͘̕͠ͅ ̟̲̦͈ ͣ̆̒̆  ̞̝̺͖ ̴̸̸̪̩̫̳͠ ̸̸̬̯̜̮̼̗̘͖͂͏̴̡̝̘͕̟͚͙̩̞̦̲̤̰̀̀ͬͯ̀͟ ̶̵̶̧̢͖̪͍̰͍͎͇̭̼̘͙̯̙̤̘͈̉̀̑̍̕̕̕̕͢͜͠   ̴̢̛̭̳̰̹̯̥̪͜ͅ ̵̸̸̫͎̱̥̞̮̘͖͓̥̘̜͂̒͊͘͢͏̛̥̫̘͍̥̣̙̜̅͝  ̶̸̶̢̮̣͈̲̖̺̼͚̫̬̭͍̲̱̼͖̠̦͚̗̤̳̖͉͇̳̦̹̮͖͉͙̏ͧ̅ͩ͟͜͡͠  ͉̟͙̥ ̵̸̧̬̱̮̫̹̺͙̱͜  ̸̗͔̪͈̼̳̗͉́͝͏ ̰͔͙̲̹̥̠̼̖̝͙͚̽̍ͭ͆  ͢͏̨̺̟̙̰̘͖̱͉͜ ̵̶̛͢ ̷̨̻̠̯̬́̕对不̲̞͓͙起 ̠̳͕̺ ̢̧͚̲̩̺̯͈̥̬̇ͯ̉̚͡͝ ̝̫̼̱ ̵̶͔̟̟͚̭̖͙͔̹͎̟͎̭̤̰̫̖̖̖͙͐ͧ̋̕̚͢ ̵̢͎̗̻͍̺̰̦̩̬̭̞̦̻̞̠̠ͭͣ͛ͬ̕͟͟͡͡͡ ̴̵̢̧̡̡̨̛͈̣̥̬̫̠̠̥̱̯̠̣̠̭̘͚͈̮͓͖ͥ͒̀ͨ̆͘͟͡ ̘̰͓͉ ̢̛̝̪̪̙̯̩̤̲̬̺̥̗ͧ̊̇͂͟͢  ͇̪͈̞ ̢̗̬͔̟͘͜͠ ̷̡̺͖̬͕̓҉̡̛̝͔̣̘͓̠̝̝ͥ̕͟͏̨̢̛̩̳͓̱͚̹̫̰̒̀̀̚͞͠͞ ̷̛̥͚̩͉̦̞͉̀͜ͅ  ̛̰̤̖̳̯͙͓̫ͣͮ́̈̄͠͝ ̶̛͈͙͔̯̀͟  ͕͚̪͈̝̣̦́̕͘͢ͅ ̺̮̪͉͇̺̞͚́̽̓͒ ̷̫̞̟̫̭̰͎̙̀͜͞  ͖͇̹̞ ͢͝͏͙̮͓̩̣̗̖̖̕  ͣͤͯ̃对̴̕͘͜不起̥͈̳͇ ̸̶̶̠̤̞̫̤͚̝͞ͅ ̙̥̭ͅ ̺̼͍ͅ ̴̢̓̐͏̶͉̠̞̦̺͎̜͙͋̅͘͘͟͡ ͜͜͡҉̰̭̪̖ͨ͏͏̶̴̨̡͙̟̗̣ͣ̂͏̧̅͘͞҉̸̺̲̣ͅ        ̧̭͔̫̜̤̹̦̗̀͞͝ ̡̛̼̟̠̰͠҉̫͕͖̲ ͓̟̤̤ ̵̢̛̙͎̬͓͜   ̳̖̗̺҉͖̳̖̻̲̰̮̟͓͙̯͍͘͡͡   ̸̴̩̥͇̙̳̮͕͇͢͞ ͚͓͕͉ ͖͍̲͖ ̴̢͇̲̼͓̗̠̤̞͟͡对̖̭̯ͅ不͙͖̜͍͜͏̷̧͇̘̬͓ͦ͛̌͢͡͏̶̶̧̡̛̺̩̦͕̙̠̮̫͖̱̣͕̻̳̪̯̃起   ̦͉̮̹ ̷̨̧͈͈̘̫͟ ̗̬͔̤͖͈͉͚͜͏̗̬͈͇̲͍̫̞͘҉   ̸̡̖̞͚̲̯̟̰̜̋̋̄ͧ͘̕ ̡͎̗͍̩͔̯̭̦̥̘̦̫͇̤̹͎̯̬̥̫̏̏ͯ͊́͘͠ ͈͖̲̜  ̼̟̹͖҉̨̳͇̰̮͢͞ ̛͙̺̬̥̀̕͏̢̛̘̳̫̜͚̻̭̦͉͙͔̻͔̻̻̮̆̀͌̀̕͘̚̕͢͝ ̶̵̸̵̢̮͓̲̯̘̙̱̥̫͍̥̹̞̩̼̹̫͇̟̘̝̪̬̰̠͇̗̣̅ͩ͊ͥ̕̕̕͢͢͟͝ ̷̨̛̕ ̴̸̨̛̭̟̗̥͎̪̗̬̹̠̖́̉ͪͤ͋́͜͠ͅ ͍̤̜ͅ ̷̷̨̧̨̢̛͕̙̣̯̥̝̭̖̱̦̝̳͈͓͖̩̬͈̻̹̗̥ͯ̐ͨ̿͠͠͞͞͠ͅͅ ̓̈́ͥ҉̛҉͉̦̫̯҉̴̴̸̺̙̩̖̟͔̖͙̈́́ ̢̱̗͉̯͖̠͎ͭ̋̍͆̕͜͞ͅ ̳͎̭͙ ̘͔̱͕ ̸̸̨̛̲̣̼̦͎̹͈̭̟͙͖ͧͯͦͪ̕͜͝͡ͅ  ̬͉͙ͅ对̠͖̹̬不起  ̌͏̶̡̥̱̥͎͙̼̻̲͙̞͈̤̪͓̞̥̣̬̠̮͕̟̮̯̩͕̜̠̜̼̱͋̃̋̕͢͟͠͡ͅ ̬͙̤̲͞͏̨͇̰̙̹͏̫̭̖̱̼͓̼̮̆͛ͪͥ  ̢̛͉͎̭͕͡͠  ̴̧̢̜̳̙̱͖̗̤̰́   ̸̛̱̰̥͔̥̤͚͓͘͞    ̩̖̹͍ͩ͋̃ͦ  ̨͓̦̙̬͔͕̠͔̂̅̃ͧ͢͜͝ ͙͖̼̞ ̧̤̣̳̯͟͟͞ ̜̩̻͉ ̷͞҉̳̬̟͇͏̵̸̧̧̦̹̬̮͙̲͚̳̥̮̲̩̬̙͚̏̇̀̾͡ͅ҉̦̪̖̦͓̣̖̄͢ͅ ̷̧̧͕̰̫̤̿̏͆̆͟    ̯͎̺͉对̡̨̜̠̺̜̪̯̻̖̙̥͉̖̰̳̣̀ͬ̇ͦͬ̕ͅ不͖̬̭̯起̭̖̩͇̜͙̜͕͕̪̮͆ͥͯ̚͘͟͠͝ͅ ͘҉̡̟̗̜̗͡ ̶̵̵͉̱͈̭͚̳̬̬̕ ̛̫̺̼̦̬̟̱̗͈͖̳͎́́̕ ̸̟̰̮̾ͣ͋̓͢ͅ҉̱̠̗̕ͅ ̵̴҉̧̱̮̣ͅ ̧͔͙̜͚̓͂́͜҉̩͎͎͎ͮ̌ ̷̵̧͉̯̜̼̘̹̥͖͞ ̘̺̣̟ ̶̧̨̡͓̘͓̥̖͉̦̘̔͟͏҉̸̴͔͔̣̼̮̮̖͉̏ͬ̃́͢͝ ̵̧̀͞ ̶̸̷͙̤̙̹͙͈̲̪̱͕̜̜͜  ̴̧̩̠̘̖͚̻͇̘͙̳̞̼̅̋ͫͤ̕͢ ̸̵̴̨̢̛͈̙̦͍̳͙͇͈̫̙̙̯̱̙͇͔ͭͦ͞͏̲̰̳̠͛ͫ    ̻̪͓̹͈̬̲̬͟͡͏̶̤̲͖̲     ̥̯̘̣ ̦̭͖̣ 对不̧̡͙̫̩̝̠̱̮͙̥̯̩̱̞͔̗̰̌̅̈́̀͑͠起̷͕̹̞̙̹̝̰͔̺̪̦͟͠͡ͅ ̱͕̣̞̊ͫͫͯ ̲͕̱̖ ̸̵̛̬̠̭̟̟̠͕̭̼̹̝̻͔̟͍̟ͯ̽̽́͌ ̴̢̛̍̕͟͏̶̷̨̤̻̦̖̻̠̣̥̮͕̤͕̣͉̤̜̜̲͎͇̀̃́̍̔͟  ̵̸̷̝̖͍̖̕ ̖̩̤͇   ̸̵̶̨̢̛͕̯̙͕͍̗̥̠̥̗͚͕̻͓͖̰̜͉̟̮̖̘͖͉͔̝͍̰̰͍̼ͦ͊͐̑͠͡ͅ ҉̶̛̪̥͉̼͞ ̵͓̺̺ͅ͏̛͘ ̷̢̱͉̣̤̙͔̙̰͇̠̗͢͜ͅ  ͇̗͙̬  ̷̵̝͖͍̘͘͝ ̴͞͏͏̩͉͚̱ ̵̥͉̯̞̮̘͖̞̯͖͓͍ͩ̌̀͒̚͝͞ ͇̦̙̩ ̵̷̷̟͕̮͓͛͏̶̟̥̖͔ͮ͢͟͏̈͊ ̴̵̨̡̫̩͎̫̱̩̦̱ͩ̕͢͡҉̡̲̼͚̹̮̺̰̙̳̤̼̣̍̔͘̕͟҉̴̴̡̪̝̺̦̮͕̜̜̱̬̖́̈́́ͅ͏̵ ͏́͡͠  ̪͉̪̪对不̜̼̫̞起͔̘̜͕͜͞҉͏ ̲̭̞̦ͭ҉̴̷̸̶̨̧̨̢̬͇̹͙͎̣͕͍͍͕̻̰̜͇̻͎͈̺̲̲͔̰̗͎͇̘ͭ̈́̾̕͢͡ͅͅ  ̷̣̲̯̱̜͚̘̥͟͢͝   ͖̦̠͇ ̺̹͚̝̇̇͋̈́ ̡̡̢̛͙̗̜̰̘̙̭̯̣̠͇̝̲̮̹͉͙̬̰͎͙͉̦̬̯͙̫̺̞̲̭̀́͂̀͋̽͘͘͘͜͜͞ͅ ̸̧͉̠͓̼̯̺̞̜̯̻̩̦̖̟͉̫ͭ͂ͧ̇͢͞ ̼̜͎͓  ̵̧͟͏ ̴̡̢̖̳̱̠̘͍͈̗̖̲̙̭̫͉̙̳̫̭̲̦̭̰͍̼̝͕̦͎͙͖̠̘̹̰́̀͆̀ͮ̽͘͘͢͢͜͜͠ͅͅ  ̣̦̞͍̬̩̰̘̽ͫͪ͋ ̵̴̷̢̡̢̞̖̤̠̣͉͓͖̖͖͖̮̭̭̱̘̥̟̳͖̩͚̱̳ͭͫ̊ͤ͞͠ ̮̥̻͔̮̯͉̯̀́͘͞ ̖̫͍̬ ͎̹͙ͅ ̶̷̧̨̮̲̞͕͙̟͕͎̯̜̗̳͓͚͍̲͖̱͖̺͈̣͓́͝ͅ͏̶̛̹̼̰̖͎̤̺̯͔̲̻̟̀ͥ̏̏͢͞҉ ̴̢̡̬̝̫̰̹͉̮̣̀ ̶̵̷̲̘͍͎͙̳̖̣̟̣̲̦̙̰̙̺͔̰̯̝̹̯͇̖̠̰̺͕̘̟̱̈͐̀̐͘̕͟͜͜ͅ  ̵̡̬̦͓͈̯̮͇̹͎͉͕͜͢ͅ ͕̺͎̬对̵̶̸̱̹̟̱͘不̛͙̞͎ͅ҉̖͉͖͍́̕起̨̛͢͞  ̸̸̡͠    ̴̡̹̗̼͕͞҉͓͎͔̱̌̎͏̡̛͓̪̭̖̰̥̪͕͎̘͈̌ͯ͘ͅ ̨͕̙̮̭̳̪̪͔́͜͝ ̟̜̩̰ ̡̛̛̯͓̰͈͊ͧ̌ͮ͡ ̷̧̛̗̖̳̜̝̙̬͈͎̺̩̣́ ̴̡͖͎̭̲̱̮̲̺̼͎̻̱̫̘̙͕́̅̔̐͜͝ ̢͎̰̯͎̮͇̜̠͇̫̜̥̟̱̒̍̓̑̕͟͞ͅͅ ͙̹̠̥ ̴̸̡͇͇̖̩̫̘̮̟̍̊͗̇͡҉҉̧͝ ̵̶͔̘͉͇̕͞ ̸̡̝̙͖̠͟҉  ̶̧̛̝͖̻͔͋̇͡҉̷̨̡̢̲̞̙͔̫͇͈͚͍͙̝̳̀̄̚͜͜ ҉̵̵̣̞̯̼̥̪̲̙̺̪̣̹ͪ̿͐͑͘ ͍͓̬̖ ̴̨̱̯̼̰̤̬̖͚̙̤͙͚̬̪̻͍̯̠̝̳̿ͧ̀̌̄͜    ͉̮̰ͅ对不̨̻̹̭̤͓̖̻̟̫̥͙͓̓͗̽ͧ͡͡͠҉͎̭̠̺͏̵̞͕͚͙̦̖̪̬҉起҉̷̥̞̹̪̞̺̱͎̫͍̘̣́̕  ̤̲̟͖ ̺̤̖ͅ ̶̴̷̵̧̻̖͖̠̙͓̟̺̞͇̥̦̫̙͔̦͂͆́͠͏͚͉̩͈̳̲̻͎ͩ̌  ̰̘͍͚  ̭͇̞̯ ̡͖͚̱̠͏̸͚̣͖̞̬̫̱͈̳̘͇̩ͮ̀̔̈͢͜͢͜͡ ̵͏̨̱͉͓̲̩̣͕̩͞  ̴͓̱̦͕҉̢͈̳͉̩̭̲͙̀ͬ͌ͪ͞ͅ ̲̳̟̟ ̷̴̧̖͕̟̳̦̦̹̽̅́̇̕͘͟͠͡ͅ ̗͕̮͈ ̙͙̤͎͍̰̳͍͈̞̯̒̔̃̄ͅ ̠̘̩̹ ̸̴̧͙̭͍̝̦̫̼͚͠  ̢̫̳̝̳̕͘͡ ̱̙͉͎͈̜̊ͩ̀͠͠ͅͅ͏̣̞͇̞͛ͮ ̷̧̡̱͔̠̯͚̟̳͉̗̥̹̗̮̥̞̱̻̣̲̩͈̺̺̜̀ͫ͂ͯ̀̚͢͜͠  ̡̣͓̫̼̣̙̬̰ͬͣ̇̋͝͏͉̮̘͙͞ 对̳͓̪͕不̻̟̝͍͙̯̼̞̋̓̓̋起̹̙̠̺̺͕̠͚͟͡͝͡ ̷̫̬̲̼҉̸̕ ̯͎̘̳ ͓̗̦̬͏͇̘͈̪͔̜̼̮͇̞̻͡͞͡ͅ ͈͈̙̪ͦͪ̏̋ ̴̢̟̻̪͖͢҉ ̣͙̻̻ ̶̶̨̛̪̙̫̥͍̤̘̮̙̼͈̲͂̏̏͆̕͞͞͝  ̥̦̦̖  ̘̬̝̭ ̸̸̭̖͖̳̕͏̶̡̢̛͍̪̮̜̪͇͙̩͙͈̹͇́ͥ́́ͫ͢͠͠ ̴̵̡͈̪͉̜͇̫̬̟̲̙̯̯͍̯͓̘̞̭̙̮̮̲̼̩̀̎͆ͦ͂͘͜͡͞  ̶̴̸̢̩͈̳̳̹͎̻͎̟̜̣͓̆̊̐ͦ͘͟͜͝ ̶̶̷̧̘̺̻̻̟̺͓̩̥̞̫̱̪͕͓̟̌͐ͣ̀͟͢͠͡  ͇͔̠̩̀͘҉̵ ̲̠̥͔ ̸̧̰͙̗̳̝̥̯͓͇̟̞̋̍́̏͘͢ͅ  ͉̳̭̤ ̻̣͚̘ ͚̬͉̟ ̢̡̛̥̩̦̙͠对͡͏̴̸̧̧̩̤̟̦͕̗̤̯̘͙̙̳̘̙̣͇͆͊̿ͪ̕͠不̴̡͈̻͈̞̭̼̹͉̞͚͍̤̫̫͈͍͍̭̲̝̀ͫ͞͡͞͏̛̭͇̣̟̋̍͞҉̶̶̡̰̮̠͔̞̞͕̗̖̞̭̱́͂́͟起   ̳̳͚̼ ̸̶͙͓̳̺̮̻̮͕̳̰͚̀ͅ͏  ̷̧̕͞  ̴̴̸̡̛̛̫̱͈̪̩̗͖̻̝̰̳̫̠͖̹͉͋͂̒̍́̕  ̩̭̘̮ ̴̡̧̨̨͓͎̩̲̥͇̪̲͇̰̝̪̊̀ͮ̒͂͜͢ ̩͖̩͎ ̢̢̡͞ ̧̡̛̀ ̡́͟͢ ̴̡̙͈̙͎̲̮̻͚͙͇͔͖̫̩̫͕̕͜ ̶̨̢̛̫̱͍̳͈̠̦̩͖̭̭͖͙̙̲̞̠͉̙̱ͤ̈́̇ͨ̀͟͜͟ ̸̺̭̱̙̯̗̳̪ͬ͂́҉̴ͬ̓  ̢̛̠̮͉̬́͡ ̢̛́͠ ̶̴̲̠͔͍̗̘̠͇́͗̾̄̾͝   ̵̧̛̹̺̱̤̘͔̺̮̲̥̥̫͠对̧̨̛̛̪̤̘͇̰̩͕̮̪̬͕̪̹̗̝̦͒ͭ́ͥ̅̕͜͝不起͔̫͖̮ ̕҉̬̟̘͇͉͕͎̥͟͠  ͏̡̕͏   ̰̺̤͉ ̸̛̮̰̟̤̌͟͏̵̡̨͇͙̝͖̭̩̭̣̮͍̲̼̂̀͒͘͘͏̨̥͔̠̜́ ̷̛̭̼͔͈̘̝̕͟ͅͅ   ̐̀̓ͬ  ̸̛͚͙͓̞͔̱̯̫͍̼̜̼͙̠̤̟̝͔̏́́͐̎̾̕͘͠͞ͅͅ ̴̷̷͖͙̟̦̩̪͍͙͎͕̝̻̦͓̝͈͉͎̠̹̞͚̰̘́͋ͨ̚͝   ̳̩̫̥  ̾ͮ̑͏̡̛͔͇̣̟̭̘̦̗̩͚̫̰ͫ͘ ̡̹̦̱͓̺̰̖̯̀͢͞   ̷̛̟̞͔̣͊ͮͣ͞͏͙̱̮̙̐ ͈̤̻͖̽̆̎҉̡̡ͬ͜ ̛̮̙̣͙͏̷̴̴̢͙͉̥͔̝̰͚͔͚̻̫͙̺̪̱̱͍͙̣͉̩͖͖͎̀̒̓̆̚̕对不起
+                        我不应̡̗͔̻̲̫̭̞̫͠͞͞该，对̸̴̨̡̢̨͚̖̰̘̱̪͔̲̲͕͎͖̜͖̪̹̖͇͓͙ͩ̍́͒͐͝不起̵̴̸̪̣̘̟̘̩͖̝̹̺̲͠ͅ对̣̗̝͕̼̩͙̘̮͔͍̥̋ͬ͛ͯ不͈͎̥̭͆ͭ͏̞̳͕̰́҉͚̗͔̱̏͘҉̴̶̛͎͔̤̬͎̻͉̰̀起͚̬̰͇̌͑̎҉͇̣̞̜͜͡҉̶̡̲̫͈̯̄͜͡对不起̶̡̪̫̞̲̭̟̯͚̥̞̟̩͉̮̒ͦ̇̀̋͜ͅͅ对不͈̳͍͓̬̜̜̹͚͓̭̝́͟҉̨̰̘̙͙̽̎́ͮ̚͜͜͝起̼̞͕̥，̞̳̘̐͂͟͜ͅ͏̧̤̺͈̤͎͕̖͖͊̏要偿̛͈̣̬͍͚͇̝̰͍̪̮͢͢͠ͅ还̢̙͎͖̖͏͜҉，̶̨̢̦̲̗̥̝͓̲͕̕对̹͙̖̹还有͇̮̩̥救̨͇̘͎̲҉̵̩̭̹̺͞，̴̨̘̗̜̼͛̉̈́̄͜͜哈哈͍̞̪̮哈哈哈哈，对，还有救，我的错对不起，偿还，唯有死可以解决一切，唯有死可以解决一切，对死，哈哈哈哈，<span style="font-size: 24px;">死，死̷̢͏̟̼̹，̴̶̡̛͎̙̖̬̤̥̣̺̱ͥ͒̀̈͞死̴̢̣̭̞̿͆͢͝͏̗̳͔̞̩̏̕ͅ死̦̰͉死̧̱͔ͅ҉̸，̰͓̙ͣ͛̔死死，̖̝̜̲̟̜͘͘͟现在̶̧͚̫̹̯͖̘̭͙̬͈͉̜͑ͪ͑͡͠͞͠就̱̹̹去，哈哈̸̝̹͙̀͝哈͕̳͓̊̂͛，̞̫̠死，死，去͔̘̤死̸̡̢̞̩͓̣̙͖，̢̆̀͐̄͡死̿̒͜͏͏̢̛͔̖̥̠̰͍͋͘
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn">收藏</div>
+                        <div class="action-btn">转发 2</div>
+                        <div class="action-btn">评论 18</div>
+                        <div class="action-btn">赞 23</div>
+                    </div>
+                </div>
+
+               
+
+                
+
+            </div>
+        </div>
+    </div>
+
+   <script>
+// 监听页面滚动，检测目标帖子是否完全进入视野
+function checkTargetPost() {
+    const targetPost = document.getElementById('climax-post');
+    if (!targetPost) return;
+    
+    const rect = targetPost.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    
+    // 完全进入视野的条件：元素的四条边都在视口内
+    const isFullyVisible = rect.top >= 0 && 
+                           rect.left >= 0 && 
+                           rect.bottom <= windowHeight && 
+                           rect.right <= windowWidth;
+    
+    // 当帖子完全进入视野时触发（且未触发过）
+    if (isFullyVisible && !window.triggered) {
+        window.triggered = true;
+        
+        // ========== 失焦效果：帖子保持清晰，背景模糊，帖子粘滞 ==========
+        
+        // 创建模糊遮罩层
+        const blurOverlay = document.createElement('div');
+        blurOverlay.id = 'blur-overlay';
+        blurOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(0px);
+            background-color: rgba(0,0,0,0);
+            z-index: 9998;
+            pointer-events: none;
+            transition: backdrop-filter 1.5s ease, background-color 1.5s ease;
+        `;
+        document.body.appendChild(blurOverlay);
+        
+        // 保存帖子原始位置
+        let originalPostTop = targetPost.getBoundingClientRect().top + window.scrollY;
+        
+        // 记录帖子原始样式
+        const originalPosition = targetPost.style.position;
+        const originalTop = targetPost.style.top;
+        const originalZIndex = targetPost.style.zIndex;
+        
+        // 逐渐模糊背景
+        setTimeout(() => {
+            blurOverlay.style.backdropFilter = 'blur(12px)';
+            blurOverlay.style.backgroundColor = 'rgba(0,0,0,0.3)';
+        }, 50);
+        
+        // 给帖子添加高亮效果（保持清晰）
+        targetPost.style.transition = 'box-shadow 0.5s ease, border 0.5s ease';
+        targetPost.style.boxShadow = '0 0 0 2px rgba(255,0,0,0.3), 0 0 0 4px rgba(0,0,0,0.2)';
+        targetPost.style.zIndex = '10000';
+        targetPost.style.position = 'relative';
+        targetPost.style.background = 'rgba(255,255,255,1)';
+        
+        // 让其他内容扭曲变形
+        const allElements = document.querySelectorAll('.post, .sidebar .box, .profile-header, .year-divider, .top-nav');
+        allElements.forEach(el => {
+            if (el !== targetPost) {
+                el.style.transition = 'transform 0.3s ease, filter 0.3s ease';
+                el.style.filter = 'blur(2px) grayscale(20%)';
+                el.style.transform = 'skew(1deg, 0.5deg)';
+            }
+        });
+        
+        // 帖子逐渐贴近屏幕（放大效果）
+        let scaleStep = 0;
+        const totalSteps = 100;
+        const duration = 7000;
+        const intervalTime = duration / totalSteps;
+        const targetScale = 1.15;
+        
+        // 背景逐渐变暗（同步进行）
+        let darkStep = 0;
+        const darkInterval = setInterval(() => {
+            if (darkStep >= totalSteps) {
+                clearInterval(darkInterval);
+                return;
+            }
+            darkStep++;
+            const opacity = (darkStep / totalSteps) * 1.3;
+            blurOverlay.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+        }, intervalTime);
+        
+        const scaleInterval = setInterval(() => {
+            if (scaleStep >= totalSteps) {
+                clearInterval(scaleInterval);
+                targetPost.style.transition = 'none';
+                targetPost.style.transform = 'scale(1)';
+                blurOverlay.style.backgroundColor = 'rgba(0,0,0,0)';
+                return;
+            }
+            scaleStep++;
+            const currentScale = 1 + (scaleStep / totalSteps) * (targetScale - 1);
+            targetPost.style.transform = `scale(${currentScale})`;
+        }, intervalTime);
+        
+        // 细微抖动函数
+        let shakeInterval = null;
+        
+        function startMicroShake() {
+            let shakeCount = 0;
+            shakeInterval = setInterval(() => {
+                if (shakeCount >= 40) {
+                    clearInterval(shakeInterval);
+                    targetPost.style.transform = 'scale(1.02)';
+                    return;
+                }
+                const shakeX = (Math.random() - 0.5) * 2;
+                const shakeY = (Math.random() - 0.5) * 1.5;
+                const currentScale = 1 + (15 / 300);
+                targetPost.style.transform = `scale(${currentScale}) translate(${shakeX}px, ${shakeY}px)`;
+                shakeCount++;
+            }, 60);
+        }
+        
+        // 让帖子粘滞在视野中央
+        function stickToCenter() {
+            const rectNow = targetPost.getBoundingClientRect();
+            const windowHeightNow = window.innerHeight;
+            const targetHeight = rectNow.height;
+            const targetScrollY = originalPostTop - (windowHeightNow / 2) + (targetHeight / 2);
+            
+            window.scrollTo({
+                top: targetScrollY,
+                behavior: 'smooth'
+            });
+            
+            const originalOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.body.style.overflow = originalOverflow;
+            }, 4000);
+        }
+        
+        // 滚动时持续让帖子保持在视野中央
+        function maintainSticky() {
+            const rectNow = targetPost.getBoundingClientRect();
+            const windowHeightNow = window.innerHeight;
+            const targetHeight = rectNow.height;
+            const idealTop = (windowHeightNow / 2) - (targetHeight / 2);
+            
+            if (Math.abs(rectNow.top - idealTop) > 30) {
+                const targetScrollY = rectNow.top + window.scrollY - idealTop;
+                window.scrollTo({
+                    top: targetScrollY,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // 添加扭曲动画（持续）
+        let twistInterval = setInterval(() => {
+            allElements.forEach(el => {
+                if (el !== targetPost && el.parentNode) {
+                    const randomSkewX = (Math.random() - 0.5) * 2;
+                    const randomSkewY = (Math.random() - 0.5) * 1.5;
+                    el.style.transform = `skew(${randomSkewX}deg, ${randomSkewY}deg)`;
+                }
+            });
+        }, 400);
+        
+        // 启动粘滞效果
+        setTimeout(() => {
+            stickToCenter();
+            window.addEventListener('scroll', maintainSticky);
+            window.addEventListener('wheel', maintainSticky);
+            window.addEventListener('touchmove', maintainSticky);
+        }, 500);
+        
+        // 10秒后逐渐恢复
+        setTimeout(() => {
+            clearInterval(twistInterval);
+            
+            blurOverlay.style.backdropFilter = 'blur(0px)';
+            blurOverlay.style.backgroundColor = 'rgba(0,0,0,0)';
+            
+            allElements.forEach(el => {
+                if (el !== targetPost) {
+                    el.style.filter = '';
+                    el.style.transform = '';
+                }
+            });
+            
+            targetPost.style.boxShadow = '';
+            targetPost.style.zIndex = '';
+            targetPost.style.position = originalPosition || '';
+            targetPost.style.top = originalTop || '';
+            
+            window.removeEventListener('scroll', maintainSticky);
+            window.removeEventListener('wheel', maintainSticky);
+            window.removeEventListener('touchmove', maintainSticky);
+            
+            setTimeout(() => {
+                if (blurOverlay.parentNode) blurOverlay.parentNode.removeChild(blurOverlay);
+            }, 1500);
+        }, 7000);
+    }
+}
+
+// 监听滚动事件
+window.addEventListener('scroll', checkTargetPost);
+window.addEventListener('wheel', checkTargetPost);
+window.addEventListener('touchmove', checkTargetPost);
+window.addEventListener('DOMContentLoaded', checkTargetPost);
+</script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>邺山日报 · 两名男子擅闯未开发区域不幸遇难</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e8e0d5;
+            font-family: 'Times New Roman', '宋体', 'SimSun', 'Georgia', serif;
+            padding: 40px 20px;
+        }
+
+        .newspaper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fffdf9;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 40px 48px 60px;
+            border-radius: 4px;
+        }
+
+        /* 报头 */
+        .header {
+            text-align: center;
+            border-bottom: 3px double #333;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .newspaper-name {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: 8px;
+            font-family: 'Times New Roman', '黑体', serif;
+            color: #2c2c2c;
+        }
+
+        .header-sub {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #5a5a5a;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        .date {
+            font-weight: 500;
+        }
+
+        .edition {
+            letter-spacing: 2px;
+        }
+
+        /* 标题区 */
+        .article-title {
+            text-align: center;
+            margin: 28px 0 16px;
+        }
+
+        .main-title {
+            font-size: 32px;
+            font-weight: 800;
+            font-family: 'Times New Roman', '黑体', serif;
+            line-height: 1.3;
+            color: #1e2a2a;
+        }
+
+        .sub-title {
+            font-size: 16px;
+            color: #6b4c3b;
+            margin-top: 12px;
+            font-style: normal;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .byline {
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+            margin: 10px 0 20px;
+        }
+
+        /* 正文 */
+        .content {
+            font-size: 17px;
+            line-height: 1.75;
+            color: #2c2c2c;
+            text-align: justify;
+        }
+
+        .content p {
+            margin-bottom: 1.2em;
+            text-indent: 2em;
+        }
+
+        .content p:first-of-type {
+            margin-top: 0;
+        }
+
+        .inset-quote {
+            background: #f5f2ed;
+            border-left: 4px solid #8b5a2b;
+            padding: 16px 22px;
+            margin: 24px 0;
+            font-style: normal;
+            font-size: 15px;
+            color: #3b2b1f;
+        }
+
+        .strong-warning {
+            font-weight: 700;
+            color: #a5230c;
+        }
+
+        .signature {
+            margin-top: 32px;
+            text-align: right;
+            font-size: 14px;
+            border-top: 1px dashed #ccc;
+            padding-top: 20px;
+            color: #4a4a4a;
+        }
+
+        hr {
+            margin: 28px 0;
+            border: none;
+            border-top: 1px dotted #bcab8f;
+        }
+
+        /* 相关阅读 */
+        .related {
+            background: #f9f6f0;
+            padding: 16px 20px;
+            margin-top: 32px;
+            font-size: 14px;
+        }
+
+        .related h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #3d2b1a;
+        }
+
+        .related ul {
+            margin-left: 20px;
+            list-style: square;
+        }
+
+        .related li {
+            margin-bottom: 6px;
+            color: #5a4a3a;
+        }
+
+        @media (max-width: 600px) {
+            .newspaper {
+                padding: 24px 20px;
+            }
+            .newspaper-name {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
+            .main-title {
+                font-size: 24px;
+            }
+            .content {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+    【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+</div>
+    <div class="newspaper">
+        <div class="header">
+            <div class="newspaper-name">邺 山 日 报</div>
+            <div class="header-sub">
+                <span class="date">2026年2月19日 星期四</span>
+                <span class="edition">农历丙午年正月廿二 · 总第388期</span>
+                <span>统一刊号 CU 33-0018</span>
+            </div>
+        </div>
+
+        <div class="article-title">
+            <div class="main-title">两名男子擅闯未开发区域失联</div>
+            <div class="main-title" style="font-size: 28px;">搜救八公里外发现遗体</div>
+            <div class="sub-title">邺山公安：初步认定为野兽攻击致死，案件已结</div>
+        </div>
+
+        <div class="byline">
+            本报记者 方远 ｜ 邺山公安融媒体中心
+        </div>
+
+        <div class="content">
+            <p>邺山公安分局今日发布通报称，2月17日至18日发生在辖区未开发山区的两名人员失联事件已调查终结。经连日搜救，救援人员于2月19日凌晨在距离擅闯入口约8公里处的密林沟壑中发现两具遗体，经现场勘查及法医初判，符合野兽攻击致死特征。目前案件已依法办结，家属善后工作正在开展。</p>
+
+            <p>据警方通报，死者陈某（男，27岁）于2月17日下午独自进入邺山村未开发区域。该区域山势陡峭、植被茂密，且常年有野猪、黑熊等野生动物活动迹象，村口及沿途均设有“未开发区域·禁止进入”警示牌。陈某未向村委会报备，也未携带任何通讯定位设备，擅自翻越隔离围栏进入禁区。</p>
+
+            <p>2月17日当晚，陈某迟迟未归且电话无法接通。其好友张某（男，26岁）得知消息后焦急万分，于2月18日清晨独自赶往邺山村。令人惋惜的是，张某没有第一时间报警，而是同样绕过警戒线进入同一区域欲自行寻找。至18日中午，两人均失联。</p>
+
+            <div class="inset-quote">
+                <strong>▍ 搜救细节</strong><br>
+                接警后，邺山公安派出所立即联合应急管理、消防及当地村民向导共30余人，携带无人机、搜救犬分三路进山。由于近日山区持续阴雨，能见度低、道路泥泞，搜救极其困难。2月19日凌晨1时许，第二搜救组在距入口直线距离约8.2公里的一处断崖下方发现两名失联者。现场有明显拖拽痕迹及野生动物爪印。随行法医确认两人已无生命体征，体表伤痕形态符合大型猛兽攻击特征。
+            </div>
+
+            <p>邺山公安分局局长孙涛开在19日上午的新闻发布会上表示：“我们对两名年轻生命的逝去深感痛心。但必须再次向社会公众郑重提醒：邺山村周边存在大面积尚未旅游开发的原始山林，地质条件复杂，通讯信号覆盖盲区多，且近年生态保护成效显著，野猪、黑熊、豹猫等野生动物种群数量明显上升。任何人员不得擅自闯入未开放区域。”</p>
+
+            <p>通报特别指出，陈某好友张某在亲友失联后选择独自盲目进山搜寻，是导致悲剧扩大的关键原因。警方呼吁广大民众，一旦遇到人员走失或受困情况，应第一时间拨打110或向属地管理部门求助，切勿贸然涉险，以免造成更大伤亡。</p>
+
+            <p>记者另从邺山村委会了解到，事发后已连夜对全境未开发区域所有进山路口增设硬隔离护栏，并增补12块大型警示牌。同时，配备两名专职巡护员每日开展山道巡查，严防类似事件再次发生。目前，死者家属对公安机关调查结论无异议，善后事宜正依法依规办理。</p>
+
+            <hr>
+
+            <p style="font-size: 15px; color: #6f4e2e;"><strong>【警方再次郑重警示】</strong><br>
+            邺山非开放区域地形复杂，猛兽出没，信号全无。<strong class="strong-warning">切勿以生命试险，切勿盲目施救。</strong> 如在景区内遇到紧急情况，请立即拨打景区救援电话 0571-88882365 或 110。</p>
+        </div>
+
+        <div class="signature">
+            本报记者 方远 整理报道<br>
+            通讯员 钱程 孙毅<br>
+            邺山日报 · 深度组
+        </div>
+
+        <div class="related">
+            <h4>◉ 相关阅读</h4>
+            <ul>
+                <li>景区管理处提醒：自然保护区核心区域不得擅入，违者将依法追究责任</li>
+                <li>遇险自救指南：山区失联后应如何提高获救几率？</li>
+                <li>邺山日报微评：敬畏自然，别让“探险”变成“送命”</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 28px; font-size: 12px; color: #8f8b7a; text-align: center; border-top: 1px solid #e2d9cf; padding-top: 18px;">
+            © 邺山日报 版权所有 未经授权不得转载 | 新闻热线 0571-88882369
+        </div>
+    </div>
+</body>
+</html>

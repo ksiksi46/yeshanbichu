@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="邺山村官方网站 - 浙西秘境，徽派古村，生态旅游目的地。">
+    <title>邺山村 | 浙西秘境 · 徽派古村</title>
+    <!-- Google Fonts 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e2a2a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #2c6e49;
+            --primary-dark: #1f4d33;
+            --primary-light: #e9f3ed;
+            --accent: #d4a373;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #6c757d;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.25s ease;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 标题字体 */
+        h1, h2, h3, .serif-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1e3a2f;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 36px;
+            }
+        }
+
+        /* 头部导航 */
+        .site-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 150px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: #1e3a2f;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 22px;
+            color: #2c3e2f;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-btn, .user-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #2c3e2f;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2c3e2f;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: 72px;
+                left: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: calc(100vh - 72px);
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 32px 24px;
+                gap: 24px;
+                box-shadow: var(--shadow-md);
+                transition: 0.3s;
+                z-index: 999;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+        }
+
+        /* 视频区 */
+        .hero-video-section {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit:fill;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            color: white;
+            padding: 0 24px;
+        }
+
+        .hero-content h1 {
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 32px;
+            max-width: 640px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 44px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .hero-video-section {
+                height: 70vh;
+            }
+        }
+
+        /* 视频控制栏 */
+        .video-controls {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 8px 12px;
+            border-radius: 40px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .volume-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider-container {
+            width: 0;
+            overflow: hidden;
+            transition: width 0.3s ease;
+        }
+
+        .video-controls:hover .volume-slider-container {
+            width: 100px;
+        }
+
+        .volume-slider {
+            width: 90px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* 景区概述区块 */
+        .overview-section {
+            padding: 96px 0;
+            background: white;
+        }
+
+        .overview-grid {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .overview-text {
+            flex: 1;
+        }
+
+        .overview-text h3 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: #1e3a2f;
+        }
+
+        .overview-text p {
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .overview-features {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-item i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .feature-item span {
+            font-weight: 500;
+        }
+
+        .overview-image {
+            flex: 1;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .overview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 四景点展示区 */
+        .scenic-spots {
+            margin-top: 80px;
+        }
+        
+        .scenic-spots-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .scenic-spots-title h3 {
+            font-size: 32px;
+            color: #1e3a2f;
+            margin-bottom: 12px;
+        }
+        
+        .scenic-spots-title p {
+            color: var(--gray-600);
+            font-size: 16px;
+        }
+        
+        .spots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        .spot-card {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            background: transparent;
+            text-decoration: none;
+            color: white;
+            display: block;
+            position: relative;
+        }
+
+        .spot-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .spot-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .spot-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .spot-card:hover .spot-image img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+            padding: 40px 20px 20px 20px;
+            text-align: center;
+        }
+
+        .image-overlay h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* 通用按钮 */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2c6e49;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #1f4d33;
+            transform: translateY(-2px);
+        }
+
+        .hero-content .btn-primary {
+            background: #2c6e49;
+        }
+
+        .hero-content .btn-primary:hover {
+            background: #1f4d33;
+        }
+
+        /* 景区导游板块 */
+        .guide-section {
+            padding: 96px 0;
+            background: var(--gray-100);
+        }
+
+        .guide-card {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .guide-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .guide-image {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .guide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .guide-card:hover .guide-image img {
+            transform: scale(1.05);
+        }
+
+        .guide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            padding: 60px 40px 40px;
+            text-align: center;
+        }
+
+        .guide-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .guide-content p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 24px;
+        }
+
+        .btn-guide {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-guide:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .guide-image {
+                height: 400px;
+            }
+            .guide-content h3 {
+                font-size: 24px;
+            }
+            .guide-content p {
+                font-size: 14px;
+            }
+            .guide-overlay {
+                padding: 40px 20px 30px;
+            }
+        }
+
+        /* 预约表单样式 */
+        .booking-section {
+            padding: 96px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9f3ed 100%);
+        }
+
+        .booking-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            padding: 48px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group.full-width {
+            flex: 1 1 100%;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e3a2f;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
+        }
+
+        .form-submit {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .btn-submit {
+            background: #2c6e49;
+            color: white;
+            padding: 14px 48px;
+            border: none;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: auto;
+            min-width: 180px;
+        }
+
+        .btn-submit:hover {
+            background: #1f4d33;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 768px) {
+            .booking-card {
+                padding: 28px;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .btn-submit {
+                width: 100%;
+                padding: 14px 24px;
+            }
+        }
+
+        /* 其他内容区块 */
+        .section-padding {
+            padding: 96px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .travel-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .travel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .card-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            margin-bottom: 14px;
+        }
+
+        .affair-card {
+            background: var(--gray-100);
+            padding: 28px;
+            border-radius: 16px;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #1c2e24;
+            color: #e0e7e3;
+            padding: 72px 0 32px;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #bcd0c5;
+            transition: var(--transition);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .social-icons a {
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 64px 0;
+            }
+            .overview-grid {
+                flex-direction: column;
+            }
+            .overview-text h3 {
+                font-size: 28px;
+            }
+            .spots-grid {
+                grid-template-columns: 1fr;
+            }
+            .scenic-spots-title h3 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">05/39</div>
+
+<header class="site-header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="#">
+                    <img src="images/qsclogo.webp" alt="邺山村logo" class="logo-img">
+                    <span class="logo-text">邺山村</span>
+                </a>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#overview">景区概述</a></li>
+                <li><a href="交通.html" >交通</a></li>
+                <li><a href="qsc农家乐.html" >景点民宿</a></li>
+                <li><a href="qsc面馆.html" >美食</a></li>
+                <li><a href="cwh.html" target="_blank">村务公开</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="search-btn" aria-label="搜索"><i class="fas fa-search"></i></button>
+                <button class="user-btn" aria-label="用户"><i class="far fa-user-circle"></i></button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="菜单"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- 首屏视频区 -->
+    <section class="hero-video-section" id="home">
+        <video id="heroVideo" class="hero-video" autoplay muted loop playsinline>
+            <source src="宣传.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>浙韵邺山 · 栖心之境</h1>
+        </div>
+
+        <div class="video-controls">
+            <button id="playPauseBtn" class="control-btn" aria-label="播放/暂停">
+                <i class="fas fa-pause"></i>
+            </button>
+            <div class="volume-wrapper">
+                <button id="volumeBtn" class="control-btn" aria-label="静音切换">
+                    <i class="fas fa-volume-mute"></i>
+                </button>
+                <div class="volume-slider-container">
+                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 景区概述区块 -->
+    <section class="overview-section" id="overview">
+        <div class="container">
+            <div class="section-title">
+                <h2>景区概述</h2>
+                <p>浙西秘境 · 六百年徽派古村</p>
+            </div>
+            <div class="overview-grid">
+                <div class="overview-text">
+                    <h3>藏于山间的活态博物馆</h3>
+                    <p>邺山村始建于明朝洪武年间，距今已有600多年历史。村庄依山傍水，自然环境优美，是国家级传统村落保护单位。村内保存完好的42栋明清古建筑群、独特的民俗文化、丰富的农产品资源，构成了邺山村独特的魅力。</p>
+                    <p>这里没有过度商业化，只有原生态的山野、淳朴的村民和治愈的慢时光。</p>
+                    <div class="overview-features">
+                        <div class="feature-item"><i class="fas fa-home"></i><span>42栋明清古建</span></div>
+                        <div class="feature-item"><i class="fas fa-mountain"></i><span>千亩高山梯田</span></div>
+                        <div class="feature-item"><i class="fas fa-tree"></i><span>千年古树群</span></div>
+                        <div class="feature-item"><i class="fas fa-cloud-sun"></i><span>云海观景台</span></div>
+                    </div>
+                </div>
+                <div class="overview-image">
+                    <img src="../images/首页.webp" alt="邺山村全景">
+                </div>
+            </div>
+
+            <!-- 核心景点展示区 -->
+            <div class="scenic-spots">
+                <div class="scenic-spots-title">
+                    <h3>核心景点</h3>
+                    <p>邺山村的精华所在，每一处都值得驻足停留</p>
+                </div>
+                <div class="spots-grid">
+                    <a href="" class="spot-card" >
+                        <div class="spot-image">
+                            <img src="../images/明清.webp" alt="明清古民居建筑群">
+                            <div class="image-overlay">
+                                <h4>明清古民居</h4>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="spot-card" >
+                        <div class="spot-image">
+                            <img src="../images/邺山湖.webp" alt="邺山湖风光">
+                            <div class="image-overlay">
+                                <h4>邺山湖</h4>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="spot-card" >
+                        <div class="spot-image">
+                            <img src="../images/云海.webp" alt="青峰云海景观">
+                            <div class="image-overlay">
+                                <h4>青峰云海</h4>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="spot-card" >
+                        <div class="spot-image">
+                            <img src="../images/茶.webp" alt="邺山茶园风光">
+                            <div class="image-overlay">
+                                <h4>邺山茶园</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 景区导游板块 -->
+    <section class="guide-section" id="guide">
+        <div class="container">
+            <div class="section-title">
+                <h2>景区导游</h2>
+                <p>专业向导带您深度游邺山村</p>
+            </div>
+            <div class="guide-card">
+                <div class="guide-image">
+                    <img src="../images/手绘地图.webp" alt="邺山村导游图">
+                    <div class="guide-overlay">
+                        <div class="guide-content">
+                            <h3>深度游路线推荐</h3>
+                            <p>古民居群 → 邺山湖 → 青峰云海 → 邺山茶园</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 预约参观板块 -->
+    <section class="booking-section" id="booking">
+        <div class="container">
+            <div class="section-title">
+                <h2>预约参观</h2>
+                <p>提前预约，享受专属导游服务</p>
+            </div>
+            <div class="booking-card">
+                <form id="bookingForm" class="booking-form" onsubmit="return false;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">姓名 <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">手机号码 <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" placeholder="请输入手机号码" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="people">参观人数 <span class="required">*</span></label>
+                            <input type="number" id="people" name="people" placeholder="几人同行" min="1" max="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">参观日期 <span class="required">*</span></label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="message">备注需求</label>
+                            <textarea id="message" name="message" rows="3" placeholder="如需导游、餐饮、住宿等特殊需求，请留言"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-submit">
+                        <button type="button" id="submitBooking" class="btn-submit">提交预约</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系信息 -->
+    <section class="section-padding" id="contact">
+        <div class="container">
+            <div class="overview-grid">
+                <div class="overview-text">
+                    <h3>抵达邺山村</h3>
+                    <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> 浙江省 / 徽省交界 · 邺山村游客中心</p>
+                    <p>🚗 自驾：汀州市区出发约2小时，导航"邺山村村委会"<br>
+                    🚌 公共交通：高铁至汀州站，转乘旅游专线巴士（每天两班）<br>
+                    🏡 民宿推荐：云起山居、古樟小院、梯田云宿</p>
+                    <div class="social-icons" style="margin-top: 20px;">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="overview-image">
+       
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>邺山村村民委员会</h4>
+                <p>中国 · 浙皖交界传统古村落<br>国家森林乡村 · 省级美丽乡村示范</p>
+            </div>
+            <div class="footer-col">
+                <h4>快速导航</h4>
+                <ul class="footer-links">
+                    <li><a href="#overview">景区概述</a></li>
+                    <li><a href="" onclick="showComingSoon('交通指南')">交通指南</a></li>
+                    <li><a href="" onclick="showComingSoon('景点民宿')">景点民宿</a></li>
+                    <li><a href="" onclick="showComingSoon('特色美食')">特色美食</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>游客服务</h4>
+                <ul class="footer-links">
+                    <li><a href="" onclick="showComingSoon('民宿预定')">民宿预定</a></li>
+                    <li><a href="" onclick="showComingSoon('旅游路线')">旅游路线</a></li>
+                    <li><a href="" onclick="showComingSoon('常见问题')">常见问题</a></li>
+                    <li><a href="" onclick="showComingSoon('在线留言')">在线留言</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>官方平台</h4>
+                <div class="social-icons">
+                    <a href=""><i class="fab fa-weixin"></i></a>
+                    <a href=""><i class="fab fa-weibo"></i></a>
+                    <a href=""><i class="fab fa-tiktok"></i></a>
+                    <a href=""><i class="fab fa-youtube"></i></a>
+                </div>
+                <p style="margin-top: 20px;">旅游咨询：0571-8888-2365<br>邮箱：contact@qingshan.cn</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 邺山村村民委员会 版权所有 | 浙ICP备 2025123456号 | 设计支持：乡村数字文旅</p>
+            <p>本网站视频与图片仅为示意，实际风光更美，欢迎亲临体验。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function showComingSoon(pageName) {
+    window.location.href = pageName + '.html';
+}
+    // 视频控制逻辑
+    const video = document.getElementById('heroVideo');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const volumeBtn = document.getElementById('volumeBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    let currentVolume = 0;
+
+    function updateVolumeFill(value) {
+        const percent = value * 100;
+        volumeSlider.style.background = `linear-gradient(to right, white 0%, white ${percent}%, rgba(255,255,255,0.3) ${percent}%, rgba(255,255,255,0.3) 100%)`;
+    }
+
+    function updateVolumeIcon() {
+        const icon = volumeBtn.querySelector('i');
+        if (video.muted || video.volume === 0) {
+            icon.className = 'fas fa-volume-mute';
+        } else if (video.volume < 0.5) {
+            icon.className = 'fas fa-volume-down';
+        } else {
+            icon.className = 'fas fa-volume-up';
+        }
+    }
+
+    function updatePlayPauseIcon() {
+        const icon = playPauseBtn.querySelector('i');
+        if (video.paused) {
+            icon.className = 'fas fa-play';
+        } else {
+            icon.className = 'fas fa-pause';
+        }
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+        updatePlayPauseIcon();
+    });
+
+    volumeBtn.addEventListener('click', () => {
+        if (video.muted) {
+            const newVol = currentVolume > 0 ? currentVolume : 0.6;
+            video.muted = false;
+            video.volume = newVol;
+            volumeSlider.value = newVol;
+            updateVolumeFill(newVol);
+        } else {
+            currentVolume = video.volume;
+            video.muted = true;
+            video.volume = 0;
+            volumeSlider.value = 0;
+            updateVolumeFill(0);
+        }
+        updateVolumeIcon();
+    });
+
+    volumeSlider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        video.volume = val;
+        updateVolumeFill(val);
+        if (val === 0) {
+            video.muted = true;
+            currentVolume = 0;
+        } else {
+            video.muted = false;
+            currentVolume = val;
+        }
+        updateVolumeIcon();
+    });
+
+    video.addEventListener('volumechange', () => {
+        if (video.muted) {
+            volumeSlider.value = 0;
+            updateVolumeFill(0);
+        } else {
+            volumeSlider.value = video.volume;
+            updateVolumeFill(video.volume);
+            currentVolume = video.volume;
+        }
+        updateVolumeIcon();
+    });
+
+    video.addEventListener('play', updatePlayPauseIcon);
+    video.addEventListener('pause', updatePlayPauseIcon);
+
+    // 移动端菜单
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    mobileToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // 导航高亮
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinksItems.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === `#${current}`) {
+                link.classList.add('active');
+            }
+            if (href === '#home' && current === '') {
+                link.classList.add('active');
+            }
+        });
+        if (navLinks.classList.contains('active') && window.innerWidth > 1024) {
+            navLinks.classList.remove('active');
+        }
+    });
+
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId !== '#' && targetId.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(targetId);
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+                    navLinks.classList.remove('active');
+                }
+            }
+        });
+    });
+    
+    // 景点卡片点击效果
+    document.querySelectorAll('.spot-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.cursor = 'pointer';
+        });
+    });
+
+    // 预约表单提交
+    const submitBtn = document.getElementById('submitBooking');
+    const bookingForm = document.getElementById('bookingForm');
+
+    function showBookingToast(message) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #050c08;
+            color: white;
+            padding: 16px 32px;
+
+            font-size: 18px;
+            font-weight: 600;
+            z-index: 10000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.3s ease;
+        `;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const people = document.getElementById('people').value.trim();
+            const date = document.getElementById('date').value;
+            
+            if (name === '') {
+                showBookingToast('请填写姓名');
+                return;
+            }
+            if (phone === '') {
+                showBookingToast('请填写手机号码');
+                return;
+            }
+            if (phone.length < 11) {
+                showBookingToast('请输入正确的手机号码');
+                return;
+            }
+            if (people === '') {
+                showBookingToast('请填写参观人数');
+                return;
+            }
+            if (date === '') {
+                showBookingToast('请选择参观日期');
+                return;
+            }
+            
+            showBookingToast('预约成功！邺山村欢迎您，这里永远为您留着一席之地！');
+        });
+    }
+</script>
+</body>
+</html>

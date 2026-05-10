@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>感谢游玩 · 邺山旧事</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #faf9f5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Georgia', serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 顶部图片区域：完全独立，全宽贴顶，无任何margin干扰 */
+        .top-image-area {
+            width: 75%;
+            background: #FFE500;      /* 纯色背景，防止图片加载慢时出现突兀空白 */
+            line-height: 0;           /* 清除行高带来的额外间隙 */
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-image {
+            width: 100%;
+            max-width: 100%;          /* 保证在任何分辨率下都不溢出 */
+            height: auto;
+            display: block;
+            cursor: pointer;
+            object-fit: contain;      /* 保持图片完整比例，不留白边 */
+            background: #FFE500;
+        }
+
+        /* 卡片外层包装：负责垂直+水平居中，占满剩余高度 */
+        .card-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 2rem 1.5rem 1.5rem;
+        }
+
+        /* 主卡片：优雅留白，无阴影，干净清爽 */
+        .card {
+            max-width: 650px;
+            width: 100%;
+            background: #ffffff;
+            padding: 3rem 3rem 2rem;
+            text-align: center;
+        }
+
+        /* 感谢游玩标题：醒目居中 */
+        .title {
+            margin-bottom: 2.5rem;
+        }
+
+        .title h1 {
+            font-size: 3rem;
+            font-weight: 450;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #2b2a27;
+            font-family: 'Inter', system-ui;
+        }
+
+        /* 正文内容 */
+        .content {
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: #2c2a27;
+            font-family: 'Georgia', 'Times New Roman', 'Inter', serif;
+            text-align: center;
+        }
+
+        .content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 小红书二维码容器 ———— 页面最下方优雅呈现 */
+        .social-footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #ece7df;
+        }
+
+        .qr-label {
+            font-size: 0.75rem;
+            color: #8e877c;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            font-family: 'Inter', monospace;
+        }
+
+        .qr-code-wrapper {
+            display: inline-block;
+            background: #ffffff;
+            padding: 0.75rem;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .qr-code-wrapper:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+        }
+
+        .qr-image {
+            display: block;
+            width: 104px;
+            height: 104px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #fef9e8;
+        }
+
+        /* 可选签名落款（保留轻量致谢） */
+        .signature {
+            margin-top: 1.8rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #b9b0a2;
+            letter-spacing: 0.3px;
+            font-family: monospace;
+        }
+
+        /* 返回或额外按钮区域 (保留但轻量) */
+        .back {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 0.7rem;
+            font-family: 'Inter', monospace;
+            color: #a79e8f;
+            cursor: pointer;
+            padding: 0.4rem 0;
+            letter-spacing: 2px;
+            transition: color 0.2s;
+            text-transform: uppercase;
+        }
+
+        .back-btn:hover {
+            color: #4f4a3e;
+        }
+
+        /* 移动端适配：让二维码大小适宜，留白舒适 */
+        @media (max-width: 560px) {
+            .card {
+                padding: 2rem 1.5rem 1.8rem;
+            }
+            .title h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+            .content {
+                font-size: 0.9rem;
+            }
+            .card-wrapper {
+                padding: 1.5rem 1rem 1rem;
+            }
+            .qr-image {
+                width: 120px;
+                height: 120px;
+            }
+            .qr-code-wrapper {
+                padding: 0.6rem;
+            }
+            .social-footer {
+                margin-top: 2rem;
+                padding-top: 1.2rem;
+            }
+        }
+
+        /* 图片点击微反馈 */
+        .top-image {
+            transition: opacity 0.2s ease;
+        }
+        .top-image:hover {
+            opacity: 0.96;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部图片：独立区域，全宽展示 -->
+    <div class="top-image-area">
+        <img src="images/感谢.webp" 
+             alt="邺山旧事·感谢游玩" 
+             class="top-image" 
+             id="topImage">
+    </div>
+
+    <!-- 卡片容器：负责剩余空间内水平垂直居中，二维码将位于卡片最下方 -->
+    <div class="card-wrapper">
+        <div class="card">
+            <div class="title">
+                <h1>感 谢 游 玩</h1>
+            </div>
+            <div class="content">
+                <p>邺山村的故事到此结束。</p>
+                <p>感谢你走进这片迷雾，解开邺山的秘密。</p>
+                <!-- 可添加更多致谢语，保持氛围 -->
+            </div>
+
+            <!-- 小红书二维码区域 ———— 页面最下方，优雅且醒目 -->
+            <div class="social-footer">
+                <div class="qr-label">📖 小 红 书 · 邺山旧事</div>
+                <div class="qr-code-wrapper" id="qrClickZone">
+                    <img src="user/码.webp" 
+                         alt="小红书二维码" 
+                         class="qr-image"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23ffe500%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%233b3a36%22%20font-size%3D%2212%22%20font-family%3D%22monospace%22%3E%E7%A0%81%3F%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                </div>
+                <div class="signature" style="margin-top: 0.8rem;">
+                    扫码关注 · 更多旧事与故事
+                </div>
+            </div>
+
+            <!-- 保留原有可选签名与预留按钮，但不干扰最下方的二维码视觉焦点 -->
+            <div class="back">
+                <!-- 预留动作按钮，无实际链接，仅氛围 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 干净简洁的控制台致意 + 互动反馈
+        console.log('邺山旧事制作组 · 感谢游玩 | 小红书二维码已添至页面底部');
+
+        // 顶部图片点击轻反馈（原有效果增强）
+        const topImg = document.getElementById('topImage');
+        if (topImg) {
+            topImg.addEventListener('click', () => {
+                console.log('再次感谢你的邺山之旅 ✨');
+                // 可选轻提醒 (无侵入)
+                const msg = document.createElement('div');
+                msg.textContent = '🌸 感谢游玩，愿故事余韵长存';
+                msg.style.position = 'fixed';
+                msg.style.bottom = '24px';
+                msg.style.left = '50%';
+                msg.style.transform = 'translateX(-50%)';
+                msg.style.backgroundColor = '#2b2a27d9';
+                msg.style.color = '#faf7f0';
+                msg.style.padding = '8px 20px';
+                msg.style.borderRadius = '40px';
+                msg.style.fontSize = '0.8rem';
+                msg.style.fontFamily = 'system-ui';
+                msg.style.backdropFilter = 'blur(6px)';
+                msg.style.zIndex = '999';
+                msg.style.pointerEvents = 'none';
+                msg.style.opacity = '0';
+                msg.style.transition = 'opacity 0.2s';
+                document.body.appendChild(msg);
+                setTimeout(() => { msg.style.opacity = '1'; }, 10);
+                setTimeout(() => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 400);
+                }, 1800);
+            });
+        }
+
+        // 小红书二维码区域交互反馈: 点击时给予友好提示 (不自动跳转但便于复制/扫码)
+        const qrZone = document.getElementById('qrClickZone');
+        if (qrZone) {
+            qrZone.addEventListener('click', (e) => {
+                e.stopPropagation();
+                console.log('小红书');
+                // 温柔的轻提示 (非侵入)
+                const toast = document.createElement('div');
+                toast.style.position = 'fixed';
+                toast.style.bottom = '30px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.backgroundColor = '#3e2e24e6';
+                toast.style.color = '#fff5ea';
+                toast.style.padding = '8px 20px';
+                toast.style.borderRadius = '40px';
+                toast.style.fontSize = '0.75rem';
+                toast.style.fontWeight = '400';
+                toast.style.letterSpacing = '0.4px';
+                toast.style.backdropFilter = 'blur(8px)';
+                toast.style.zIndex = '1000';
+                toast.style.fontFamily = 'Inter, system-ui';
+                toast.style.whiteSpace = 'nowrap';
+                toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.2s';
+                document.body.appendChild(toast);
+                setTimeout(() => { toast.style.opacity = '1'; }, 10);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2000);
+            });
+            // 增加辅助提示：鼠标悬浮显示“关注小红书”
+       
+        }
+    </script>
+</body>
+</html>

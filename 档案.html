@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汀州市公安局邺山分局 案件卷宗</title>
+    <style>
+        /* 全局重置 — 正式公文版式，无特效、无图标 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #d0d3d9;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            font-family: '仿宋', 'FangSong', '华文仿宋', '宋体', SimSun, serif;
+            line-height: 1.65;
+            color: #000000;
+        }
+
+        /* 卷宗主体 — 模拟纸质文件 */
+        .file-container {
+            width: 1040px;
+            max-width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            padding: 50px 60px 55px 60px;
+            border: 1px solid #7f8c8d;
+        }
+
+        /* 红头文件头部 */
+        .file-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 18px;
+        }
+        .red-title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #8b0000;
+            letter-spacing: 4px;
+            line-height: 1.3;
+            font-family: '黑体', 'SimHei', 'Hei', 'Microsoft YaHei', sans-serif;
+            margin-bottom: 8px;
+        }
+        .file-info {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a3b5d;
+            letter-spacing: 4px;
+            font-family: '黑体', 'SimHei', sans-serif;
+            border-bottom: 1px solid #8b0000;
+            display: inline-block;
+            padding-bottom: 6px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        /* 案号行 */
+        .case-ref {
+            text-align: center;
+            font-size: 18px;
+            font-family: '仿宋', 'FangSong', serif;
+            margin-top: 14px;
+            color: #1e1e1e;
+        }
+        .case-ref span {
+            background-color: #f2f2f2;
+            padding: 2px 12px;
+            border-left: 2px solid #8b0000;
+            border-right: 2px solid #8b0000;
+        }
+
+        /* 密级标识 */
+        .security-level {
+            text-align: right;
+            font-size: 14px;
+            font-family: '黑体', 'SimHei', sans-serif;
+            color: #8b0000;
+            border: 1px solid #8b0000;
+            padding: 4px 14px;
+            display: inline-block;
+        
+            margin-bottom: 15px;
+            background: #fff8f0;
+        }
+        .clearfix {
+            clear: both;
+        }
+
+        /* 基本信息栏 */
+        .base-info {
+            border: 1.5px solid #3a5e7a;
+            padding: 20px 26px;
+            margin: 30px 0 28px 0;
+            background-color: #f9fafb;
+        }
+        .base-info h3 {
+            font-size: 20px;
+            color: #1a3b5d;
+            font-weight: 700;
+            font-family: '黑体', 'SimHei', sans-serif;
+            border-left: 4px solid #8b0000;
+            padding-left: 14px;
+            margin-top: -6px;
+            margin-bottom: 18px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 22px;
+        }
+        .info-item {
+            display: flex;
+            font-size: 16px;
+            border-bottom: 1px dotted #9aaec2;
+            padding-bottom: 5px;
+        }
+        .info-label {
+            width: 130px;
+            font-weight: 600;
+            color: #1a3b5d;
+            font-family: '黑体', 'SimHei', sans-serif;
+            flex-shrink: 0;
+        }
+        .info-content {
+            flex: 1;
+        }
+
+        /* 章节标题 */
+        .chapter {
+            margin-top: 35px;
+        }
+        .chapter-title {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: '黑体', 'SimHei', sans-serif;
+            color: #1a3b5d;
+            background: #eef2f7;
+            padding: 8px 18px;
+            border-left: 6px solid #8b0000;
+            margin-bottom: 22px;
+        }
+        .sub-title {
+            font-size: 18px;
+            font-weight: 600;
+            font-family: '黑体', 'SimHei', sans-serif;
+            color: #1a3b5d;
+            margin: 24px 0 12px 0;
+            padding-left: 14px;
+            border-left: 3px solid #8b0000;
+        }
+
+        /* 正文段落 */
+        .content-text {
+            text-indent: 2em;
+            margin-bottom: 14px;
+            font-size: 16.5px;
+            text-align: justify;
+            line-height: 1.65;
+        }
+
+        /* 有序列表 */
+        .content-list {
+            margin: 12px 0 18px 3.2em;
+            list-style-type: decimal;
+            font-size: 16.5px;
+        }
+        .content-list li {
+            margin-bottom: 12px;
+            text-align: justify;
+            padding-left: 6px;
+        }
+
+        /* 结案栏 */
+        .case-conclusion {
+            border: 2px double #1a3b5d;
+            padding: 24px 28px;
+            margin-top: 48px;
+            background-color: #fefaf5;
+            text-align: center;
+        }
+        .case-conclusion h3 {
+            font-size: 24px;
+            color: #8b0000;
+            font-weight: 700;
+            font-family: '黑体', 'SimHei', sans-serif;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            text-decoration: underline;
+            text-underline-offset: 8px;
+        }
+        .case-conclusion p {
+            font-size: 18px;
+            line-height: 1.8;
+            text-indent: 0;
+        }
+
+        /* 落款区域 */
+        .file-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 28px;
+            border-top: 2px solid #1a3b5d;
+        }
+        .signature-block {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            min-width: 360px;
+        }
+        .sign-line-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+            font-size: 17px;
+        }
+        .sign-label {
+            font-weight: 700;
+            font-family: '黑体', 'SimHei', sans-serif;
+            color: #1a3b5d;
+            width: 110px;
+        }
+        .sign-line {
+            border-bottom: 1.5px solid #000000;
+            width: 220px;
+            height: 28px;
+        }
+        .seal-area {
+            width: 140px;
+            height: 140px;
+            border: 1px solid #8b0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fef7e8;
+            font-family: '楷体', 'KaiTi', serif;
+            font-size: 14px;
+            color: #8b0000;
+            text-align: center;
+            line-height: 1.4;
+        }
+        .seal-text {
+            writing-mode: horizontal-tb;
+            font-weight: normal;
+        }
+
+        /* 归档章 */
+        .archive-mark {
+            margin-top: 32px;
+            font-size: 12px;
+            color: #4a4a4a;
+            border-top: 1px dashed #7f8c8d;
+            padding-top: 12px;
+            text-align: right;
+            font-family: '楷体', 'KaiTi', serif;
+        }
+
+        /* 页码 */
+        .page-number {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+  <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">27/39</div>
+<div class="file-container">
+    <!-- 密级标识 -->
+    <div style="overflow: hidden; margin-bottom: 10px;">
+        <div class="security-level">★ 内部档案 · 机密 ★</div>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- 红头文件头部 -->
+    <div class="file-header">
+        <div class="red-title">汀州市公安局邺山分局</div>
+        <div class="file-info">案件卷宗</div>
+        <div class="case-ref"><span>青公（治）封字〔2026〕第 015 号</span></div>
+    </div>
+
+    <!-- 案件核心基本信息 -->
+    <div class="base-info">
+        <h3>案件核心信息</h3>
+        <div class="info-grid">
+            <div class="info-item"><span class="info-label">案件编号：</span><span class="info-content">青公（治）受字〔2025〕第 XXX 号</span></div>
+            <div class="info-item"><span class="info-label">案件类别：</span><span class="info-content">失踪案（拟作无迹可查结案）</span></div>
+            <div class="info-item"><span class="info-label">办案单位：</span><span class="info-content">汀州市公安局邺山分局邺山派出所</span></div>
+            <div class="info-item"><span class="info-label">办案民警：</span><span class="info-content">主办民警：XXX ；协办民警：XXX</span></div>
+            <div class="info-item"><span class="info-label">报案时间：</span><span class="info-content">2025 年 2 月 18 日 9 时 00 分</span></div>
+            <div class="info-item"><span class="info-label">报案人：</span><span class="info-content">刘某（XX 宾馆前台，身份证号：320682XXXXXXXXXXXX）</span></div>
+            <div class="info-item"><span class="info-label">失踪人员：</span><span class="info-content">陈宇，男，22岁，户籍地 江海省孝西市，职业：自由记者，暂住邺山区 XX 宾馆 207 房间</span></div>
+            <div class="info-item"><span class="info-label">失联时间：</span><span class="info-content">2025 年 2 月 18 日凌晨 1 时 30 分许</span></div>
+            <div class="info-item"><span class="info-label">最后出现地：</span><span class="info-content">浙西省汀州市邺山区邺山村老林管护区</span></div>
+        </div>
+    </div>
+
+    <!-- 一、案件受理情况 -->
+    <div class="chapter">
+        <div class="chapter-title">一、案件受理情况</div>
+        <p class="content-text">2025 年 2 月 18 日 9 时 00 分，我所接刘某报案称住客陈宇凌晨外出未归、手机关机，疑似失联。接报后因当日早间值班警力调度紧张，仅 1 名民警在岗值守，需兼顾所内接处警、台账整理等工作，暂无法即刻出警，故延迟 1 小时完成受案登记；期间为先初步核实报案情况、固定基础信息，仅指派 1 名辅警前往宾馆简单问询，核实现场基本情况、失踪人员身份及失联前轨迹，为后续民警出警开展正式调查做好前期准备。未启动失联人员紧急查找预案，未上报市级公安机关指挥中心。</p>
+    </div>
+
+    <!-- 二、失踪人员基本情况 -->
+    <div class="chapter">
+        <div class="chapter-title">二、失踪人员基本情况</div>
+        <p class="content-text">陈宇，男，22 岁，自由记者，2025 年 2 月 16 日 10 时入住 XX 宾馆，登记时刻意隐瞒职业 “记者”。入住期间多次独自前往邺山村老林周边，向村民打听 “村里失踪人员”“祭祀习俗”等敏感信息，曾被邺山村村干部口头警告 “不要乱打听、乱拍照”，仍执意深入老林区域。经核查，陈宇无本地关联人员，行为具有明显调查倾向。</p>
+    </div>
+
+    <!-- 三、调查取证及查找工作情况 -->
+    <div class="chapter">
+        <div class="chapter-title">三、调查取证及查找工作情况</div>
+        
+        <div class="sub-title">（一）现场勘查与监控调取</div>
+        <ol class="content-list">
+            <li>监控调取：调取宾馆及邺山村主干道监控，提取陈宇凌晨 1 时 30 分进入邺山村村级道路的相关画面；邺山村老林入口处监控因年久失修，设备故障长期未予修复，无有效录像可查。未发现陈宇后续行进轨迹相关监控素材，周边无私人商户及民用监控可调取，故本案无有效监控轨迹佐证其失联后的活动情况。</li>
+            <li>山林搜寻：2 月 18 日 14 时许，联合邺山村村干部李某及村内护林人员，对老林管护区开展实地搜寻。因管护区内地形复杂、林木茂密，部分区域无明显路径，且受现有搜寻条件限制，未使用专业搜寻设备，沿管护区周边及入口可通行区域进行排查后，未发现失踪人员踪迹及相关随身物品。搜寻结束后制作《搜寻工作记录》，载明搜寻范围覆盖管护区周边 3 公里区域，附现场搜寻照片 5 张，暂无进一步有效搜寻线索。</li>
+        </ol>
+
+        <div class="sub-title">（二）证人询问</div>
+        <ol class="content-list">
+            <li>宾馆工作人员：对宾馆相关工作人员进行询问，核实失踪人员陈宇入住期间活动情况，据证述，陈宇入住后独来独往，日常早出晚归，失联当日凌晨独自外出后未归，无异常随行人员及特殊接触情况。同步制作询问笔录，固定相关证言。</li>
+            <li>邺山村村民 / 村干部：联合邺山村村干部李某，对村内周边村民及护林人员进行走访询问。受访人员均称未在村内及老林管护区周边见到陈宇，凌晨时段无异常人员活动及特殊情况发生；护林员王某证述，其失联当日凌晨在管护区宿舍值守，未发现有人员擅自进入管护区，相关证言均已制作笔录，内容核对无误后由被询问人签字捺印。</li>
+            <li>异地协查：已通过户籍地公安机关联系上陈宇家属，告知其陈宇在邺山辖区擅自进入老林管护区后失联的相关情况，同步说明山林区域地形复杂、搜寻难度较大的现状。经沟通，家属暂未提出前来邺山配合调查的需求，相关协查情况已做好书面记录，后续将持续与家属及户籍地警方保持联系，及时反馈调查进展。</li>
+        </ol>
+
+        <div class="sub-title">（三）信息与物证核查</div>
+        <ol class="content-list">
+            <li>通讯核查：调取陈宇通讯记录核查，其手机信号于凌晨 1 时 50 分在老林管护区周边区域消失，后续无任何通话、定位及网络使用记录。<strong>失联前曾有一条异地发送的即时通讯信息</strong>，无涉本案相关有效信息，其余联系号码均为异地亲友及工作关联号码，未发现本地陌生可疑联络记录，暂未排查出与本案相关的通讯线索。</li>
+            <li>物品核查：陈宇携带的单反相机、笔记本、双肩包等物品（均被邺山村村民扣押，移交至邺山公安）。</li>
+            <li>交通核查：调取邺山区汽车站、高铁站等公共交通枢纽通行记录及网约车平台接单记录核查，均未发现陈宇失联后的购票、乘车轨迹，排除其通过公共交通及正规网约车离开邺山辖区的可能。辖区乡村路段无相关通行登记记录，暂无法核查私人车辆流动情况，无证据显示其搭乘私人车辆离开。</li>
+        </ol>
+    </div>
+
+    <!-- 四、案件分析及定性意见 -->
+    <div class="chapter">
+        <div class="chapter-title">四、案件分析及定性意见</div>
+        <p class="content-text">结合本案调查情况，综合分析如下：</p>
+        <ol class="content-list">
+            <li>陈宇系外地人员，刻意隐瞒身份进入邺山，在未告知任何人的情况下，擅自翻越地质灾害禁入区警示围栏，进入邺山村老林管护区核心区域；该区域山高林密、无手机信号、地质条件复杂，且近期夜间有暴雨，存在极高的意外风险。</li>
+            <li>经全面调查，未发现陈宇与他人发生纠纷、被他人控制的任何痕迹，无任何证据证明其失联系违法犯罪行为所致，排除他人作案可能。</li>
+            <li><strong>陈宇自身存在重大过错，无视景区警示、拒绝村民劝阻，执意进入危险区域，其失联系自身行为导致的意外失踪，无迹可查。</strong></li>
+        </ol>
+        <p class="content-text" style="font-weight: bold; margin-top: 16px;">定性意见：</p>
+        <p class="content-text"><strong>本案无任何违法犯罪线索，陈宇失踪为个人意外所致，拟作 “查无结果” 处理，终止主动调查工作。</strong></p>
+    </div>
+
+    <!-- 五、后续处置措施 -->
+    <div class="chapter">
+        <div class="chapter-title">五、后续处置措施</div>
+        <ol class="content-list">
+            <li>已将陈宇相关信息录入全国失踪人员信息系统，同步开展基础协查工作。因暂未发现涉外部区域关联线索，暂未向周边区县及市级公安机关发函协查，后续将根据调查进展，适时启动跨区域协查工作。</li>
+            <li>已向邺山村村委会及周边群众告知本案基本情况，要求其日常巡逻中留意相关线索，发现情况及时向派出所报备；同时做好辖区治安管控，引导村民不随意传播不实信息，避免引发不必要的舆情影响。</li>
+            <li>对邺山村老林管护区增设更多 “地质灾害禁入” 警示标识，安排村民 24 小时巡逻，严禁外来人员进入，防止类似情况再次发生。</li>
+        </ol>
+    </div>
+
+    <!-- 六、案件办理状态 -->
+    <div class="case-conclusion">
+        <h3>案件办理状态</h3>
+        <p class="content-text" style="text-align: center; font-size: 17px; line-height: 1.8;">本案调查取证工作已全部结束，无任何可查线索，无失踪人员踪迹，正式作查无结果结案，卷宗封存，不再受理任何关于该案的查询、复核申请。</p>
+    </div>
+
+    <!-- 落款及公章区域 -->
+    <div class="file-footer">
+    <div class="signature-block">
+        <div class="sign-line-item">
+            <span class="sign-label">审核人(<strong>局长</strong>)：</span>
+            <div class="sign-line" style="font-family: 'GuDianMingChaoKai-2', '华文楷书', '楷体', cursive; font-size: 56px; font-weight: bold; display: flex; align-items: center; justify-content: flex-start; padding-left: 19px; color: #000000; letter-spacing: 4px;">孙涛开</div>
+        <div class="sign-line-item">
+            <span class="sign-label">审批人(<strong>局长</strong>)：</span>
+           <div class="sign-line" style="font-family: 'GuDianMingChaoKai-2', '华文楷书', '楷体', cursive; font-size: 56px; font-weight: bold; display: flex; align-items: center; justify-content: flex-start; padding-left: 19px; color: #000000; letter-spacing: 4px;">孙涛开</div>
+    </div>
+</div>
+
+    <!-- 归档标识 -->
+    
+    <div class="page-number">
+        第 1 页  共 1 页
+    </div>
+</div>
+</body>
+</html>

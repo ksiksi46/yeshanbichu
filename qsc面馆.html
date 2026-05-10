@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="邺山村特色美食 - 邺山面馆，传承百年的手擀面老店">
+    <title>邺山村 | 特色美食 - 邺山面馆</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7f5;
+            color: #1e2a2a;
+            line-height: 1.5;
+        }
+
+        :root {
+            --primary: #2c6e49;
+            --primary-dark: #1f4d33;
+            --primary-light: #e9f3ed;
+            --accent: #d4a373;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #6c757d;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.25s ease;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 头部导航 */
+        .site-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 150px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: #1e3a2f;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 22px;
+            color: #2c3e2f;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-btn, .user-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #2c3e2f;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2c3e2f;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: 72px;
+                left: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: calc(100vh - 72px);
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 32px 24px;
+                gap: 24px;
+                box-shadow: var(--shadow-md);
+                transition: 0.3s;
+                z-index: 999;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+        }
+
+        /* 面包屑 */
+        .breadcrumb {
+            padding: 24px 0 16px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        /* 美食详情卡片 */
+        .food-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .food-image {
+            flex: 1;
+            min-width: 500px;
+            background: #eef2ee;
+        }
+
+        .food-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+        }
+
+        .food-info {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .food-tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            width: fit-content;
+            margin-bottom: 16px;
+        }
+
+        .food-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: #1e3a2f;
+            margin-bottom: 16px;
+        }
+
+        .food-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .feature-icon i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .food-desc {
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        .signature-dish {
+            background:  transparent;
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin: 16px 0;
+        }
+        .signature-dish h4 {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .signature-dish p {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 16px 0;
+        }
+        .price small {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--gray-600);
+        }
+
+        .btn-order {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 18px;
+            text-decoration: none;
+            transition: var(--transition);
+            width: fit-content;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-order:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #1c2e24;
+            color: #e0e7e3;
+            padding: 48px 0 24px;
+            margin-top: 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        .footer-links a {
+            text-decoration: none;
+            color: #bcd0c5;
+            transition: var(--transition);
+        }
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .social-icons a {
+            background: rgba(255,255,255,0.1);
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .food-info {
+                padding: 28px;
+            }
+            .food-info h2 {
+                font-size: 28px;
+            }
+            .btn-order {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">08/39</div>
+
+<header class="site-header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="travel.html">
+                    <img src="images/qsclogo.webp" alt="邺山村logo" class="logo-img">
+                    <span class="logo-text">邺山村</span>
+                </a>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="travel.html">首页</a></li>
+                <li><a href="travel.html#overview">景区概述</a></li>
+                <li><a href="交通.html">交通</a></li>
+                <li><a href="qsc农家乐.html">景点民宿</a></li>
+                <li><a href="qsc面馆.html" class="active">美食</a></li>
+                <li><a href="cwh.html" target="_blank">村务公开</a></li>
+                <li><a href="travel.html#contact">联系</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="search-btn" aria-label="搜索"><i class="fas fa-search"></i></button>
+                <button class="user-btn" aria-label="用户"><i class="far fa-user-circle"></i></button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="菜单"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <!-- 面包屑导航 -->
+        <div class="breadcrumb">
+            <a href="travel.html">首页</a> <span>/</span> <span style="color: #1e2a2a;">特色美食</span>
+        </div>
+
+        <!-- 美食详情卡片 -->
+        <div class="food-card">
+            <div class="food-image">
+                <img src="../images/馆.webp" alt="邺山面馆">
+            </div>
+            <div class="food-info">
+                <h2>邺山面馆</h2>
+                <div class="food-features">
+                    <span class="feature-icon"><i class="fas fa-clock"></i> 营业6:00-19:00</span>
+                    <span class="feature-icon"><i class="fas fa-hand-peace"></i> 手工擀面</span>
+                    <span class="feature-icon"><i class="fas fa-drumstick-bite"></i> 土鸡慢炖</span>
+                    <span class="feature-icon"><i class="fas fa-leaf"></i> 山泉水和面</span>
+                </div>
+                <div class="food-desc">
+                    开在村口老祠堂旁的邺山面馆，是村里唯一的小馆子，也是邺山村几代人的味觉记忆。老板李师傅每天凌晨四点起床，用山泉水手工和面、擀面，面条筋道弹牙。浇头用的笋干、野菌都是清晨从后山采来的，土猪肉是村民自家养的。
+                </div>
+                <div class="signature-dish">
+                <a href="#" class="btn-order" id="orderNowBtn">立即点餐 <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>邺山村村民委员会</h4>
+                <p>中国 · 浙皖交界传统古村落<br>国家森林乡村 · 省级美丽乡村示范</p>
+            </div>
+            <div class="footer-col">
+                <h4>快速导航</h4>
+                <ul class="footer-links">
+                    <li><a href="travel.html#overview">景区概述</a></li>
+                    <li><a href="#" onclick="showComingSoon('交通指南')">交通指南</a></li>
+                    <li><a href="景点民宿.html">景点民宿</a></li>
+                    <li><a href="#">特色美食</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>游客服务</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showComingSoon('民宿预定')">民宿预定</a></li>
+                    <li><a href="#" onclick="showComingSoon('旅游路线')">旅游路线</a></li>
+                    <li><a href="#" onclick="showComingSoon('常见问题')">常见问题</a></li>
+                    <li><a href="#" onclick="showComingSoon('在线留言')">在线留言</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>官方平台</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <p style="margin-top: 20px;">旅游咨询：0571-8888-2365<br>邮箱：contact@qingshan.cn</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 邺山村村民委员会 版权所有 | 浙ICP备 2025123456号</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 移动端菜单
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    mobileToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // 未完成页面提示
+    function showComingSoon(pageName) {
+        alert(`${pageName}页面正在建设中，敬请期待！`);
+    }
+
+    // 立即点餐跳转
+    const orderBtn = document.getElementById('orderNowBtn');
+    if (orderBtn) {
+        orderBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open('邺山面馆.html');
+        });
+    }
+</script>
+</body>
+</html>

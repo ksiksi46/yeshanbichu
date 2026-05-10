@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>邺山公安 - 档案查询系统</title>
+    <style>
+        body { margin: 0; font-family: "Microsoft YaHei", sans-serif; background: #f4f4f4; }
+        .top-bar { background: #c00; height: 35px; color: white; line-height: 35px; font-size: 12px; padding: 0 10%; }
+        
+        header { background: white; padding: 20px 10%; display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #0055AA; }
+        .logo-area { display: flex; align-items: center; }
+        .logo-area div:first-child { width:60px; height:60px; background:#ccc; border-radius:50%; margin-right:15px; display:flex; align-items:center; justify-content:center; font-size:10px; }
+        .logo-text h1 { font-size: 28px; color: #0055AA; margin: 0; letter-spacing: 2px; }
+        .logo-text p { font-size: 14px; color: #666; margin: 0; }
+
+        nav { background: #0055AA; color: white; padding: 0 10%; display: flex; }
+        nav a { color: white; text-decoration: none; padding: 15px 25px; font-weight: bold; }
+        nav a:hover { background: #003399; }
+        .content-full-img {
+            width: 120px;
+            height: 120px;
+            object-fit: fill;
+    
+            margin: 10px 0;
+        }
+
+        /* 档案查询主容器 */
+        .query-container {
+            width: 80%;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+            min-height: 500px;
+        }
+        .query-title {
+            font-size: 24px;
+            color: #0055AA;
+            border-left: 5px solid #c00;
+            padding-left: 15px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .query-form {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #0055AA;
+        }
+        .verify-btn {
+            background: #0055AA;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .verify-btn:hover {
+            background: #003399;
+        }
+        .error-msg {
+            background: #fff2f0;
+            border-left: 4px solid #c00;
+            padding: 12px 15px;
+            margin-top: 20px;
+            color: #c00;
+            font-size: 14px;
+            display: none;
+        }
+        .error-msg.show {
+            display: block;
+        }
+        .info-tip {
+            background: #eef5ff;
+            padding: 12px 15px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #0055AA;
+            text-align: center;
+        }
+
+        footer { background: #333; color: #ccc; padding: 40px 10%; text-align: center; font-size: 14px; margin-top: 50px; }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: #ccc; margin: 0 10px; text-decoration: none; }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">25/39</div>
+    <div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+        【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+    </div>
+
+    <div class="top-bar">
+        欢迎访问邺山公安门户网站 | 无障碍阅读 | 移动客户端
+    </div>
+
+    <header>
+        <div class="logo-area">
+             <img src="../images/警徽.webp" class="content-full-img">
+            <div class="logo-text">
+                <h1>邺山公安</h1>
+                <p>Public Security Bureau of Yeshan City</p>
+            </div>
+        </div>
+        <!-- 占位保持布局一致，无搜索框 -->
+        <div style="width: 280px;"></div>
+    </header>
+
+    <nav>
+        <a href="公安.html">首页</a>
+        <a>警务资讯</a>
+        <a>信息公开</a>
+        <a href="#" style="background:#003399;">档案查询</a>
+        <a>警民互动</a>
+        <a>党建工作</a>
+    </nav>
+
+    <div class="query-container">
+        <div class="query-title">身份验证</div>
+        <div class="query-form">
+            <div class="form-group">
+                <label>姓名</label>
+                <input type="text" id="realName" placeholder="请输入民警姓名" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>警号</label>
+                <input type="text" id="badgeNumber" placeholder="请输入警号" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>身份证号</label>
+                <input type="text" id="idNumber" placeholder="请输入身份证号码" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>案件编号</label>
+                <input type="text" id="numNumber" placeholder="请输入案件编号" autocomplete="off">
+            </div>
+            <button class="verify-btn" id="verifyBtn">验证身份</button>
+            <div id="errorMsg" class="error-msg"></div>
+           
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">网站地图</a> | <a href="#">隐私保护</a> | <a href="#">联系我们</a>
+        </div>
+        <p>“本网页为架空解谜游戏内容，所有名称、地点、事件均为虚构，与现实无关。”</p>
+        <p>版权所有：邺山市公安局  主办单位：邺山市公安局办公室</p>
+        <p>ICP备案编号：冀ICP备88888888号  政府网站标识码：1234567890</p>
+        <p>公安备案号：1101000000001号</p>
+    </footer>
+
+    <script>
+    const nameInput = document.getElementById('realName');
+    const badgeInput = document.getElementById('badgeNumber');
+    const idInput = document.getElementById('idNumber');
+    const numInput = document.getElementById('numNumber');
+    const verifyBtn = document.getElementById('verifyBtn');
+    const errorDiv = document.getElementById('errorMsg');
+
+    // 预设正确答案（仅于承安）
+    const CORRECT_NAME = '于承安';
+    const CORRECT_BADGE = '3315110';
+    const CORRECT_ID = '381699200011176789';
+    const CORRECT_NUM = 'MZ-SL-0027';
+
+    function showError(msg, isSuccess = false) {
+        errorDiv.textContent = msg;
+        errorDiv.classList.add('show');
+        if (isSuccess) {
+            errorDiv.style.color = '#155724';
+            errorDiv.style.backgroundColor = '#d4edda';
+            errorDiv.style.borderLeftColor = '#28a745';
+        } else {
+            errorDiv.style.color = '#c00';
+            errorDiv.style.backgroundColor = '#fff2f0';
+            errorDiv.style.borderLeftColor = '#c00';
+        }
+    }
+
+    function hideError() {
+        errorDiv.classList.remove('show');
+        errorDiv.textContent = '';
+        errorDiv.style.color = '';
+        errorDiv.style.backgroundColor = '';
+        errorDiv.style.borderLeftColor = '';
+    }
+
+    function validateAndRedirect() {
+        const name = nameInput.value.trim();
+        const badge = badgeInput.value.trim();
+        const id = idInput.value.trim();
+        const num = numInput.value.trim();
+
+        // 非空校验
+        if (name === '' || badge === '' || id === '' || num === '') {
+            showError('验证失败：姓名、警号、身份证号、案件编号均不能为空', false);
+            return;
+        }
+
+        if (name === CORRECT_NAME && badge === CORRECT_BADGE && id === CORRECT_ID && num === CORRECT_NUM) {
+            // 先显示正确提示
+            showError('验证通过！正在跳转至档案页面...', true);
+            
+            // 延迟1秒后跳转
+            setTimeout(function() {
+                window.open('档案.html', '_blank');
+            }, 1000);
+        } else {
+            showError('验证失败：姓名、警号、身份证号、案件编号与档案记录不匹配', false);
+        }
+    }
+
+    verifyBtn.addEventListener('click', validateAndRedirect);
+
+    // 按回车快速验证
+    const inputs = [nameInput, badgeInput, idInput, numInput];
+    inputs.forEach(input => {
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    validateAndRedirect();
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

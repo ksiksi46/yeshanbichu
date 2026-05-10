@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>邺山公安 - 互联网+政务服务平台</title>
+    <style>
+        body { margin: 0; font-family: "Microsoft YaHei", sans-serif; background: #f4f4f4; }
+        .top-bar { background: #c00; height: 35px; color: white; line-height: 35px; font-size: 12px; padding: 0 10%; }
+        
+        header { background: white; padding: 20px 10%; display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #0055AA; }
+        .logo-area { display: flex; align-items: center; }
+        .logo-area div:first-child { width:60px; height:60px; background:#ccc; border-radius:50%; margin-right:15px; display:flex; align-items:center; justify-content:center; font-size:10px; }
+        .logo-text h1 { font-size: 28px; color: #0055AA; margin: 0; letter-spacing: 2px; }
+        .logo-text p { font-size: 14px; color: #666; margin: 0; }
+
+        .search-wrapper { 
+            position: relative; 
+            display: flex; 
+            align-items: flex-start; 
+            flex-direction: column;
+            gap: 8px;
+        }
+        .search-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .search-input-container { 
+            position: relative; 
+            width: 280px; 
+        }
+        .search-wrapper input { 
+            padding: 10px 12px; 
+            width: 100%; 
+            border: 1px solid #ccc; 
+            border-radius: 4px 0 0 4px; 
+            box-sizing: border-box; 
+        }
+        .fake-placeholder { 
+            position: absolute; 
+            left: 12px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: #999; 
+            pointer-events: none; 
+            white-space: nowrap; 
+        }
+        .search-wrapper button { 
+            padding: 10px 20px; 
+            background: #0055AA; 
+            color: white; 
+            border: 1px solid #0055AA; 
+            border-left: none; 
+            border-radius: 0 4px 4px 0; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        .search-wrapper button:hover { background: #003399; }
+
+        /* 搜索小结果提示框 - 位于搜索框正下方 */
+        .search-result-tip {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 1px solid #e0e4e8;
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+            animation: fadeIn 0.15s ease;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .search-result-tip:hover {
+            background: #fefce8;
+            border-color: #0055AA;
+        }
+        .search-result-tip.show {
+            display: block;
+        }
+        .tip-content {
+            padding: 12px 14px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .tip-content .tip-title {
+            font-weight: bold;
+            color: #0055AA;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tip-content .tip-title span:first-child {
+            font-size: 16px;
+        }
+        .tip-content .tip-desc {
+            color: #444;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .tip-arrow {
+            position: absolute;
+            top: -6px;
+            left: 20px;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-left: 1px solid #e0e4e8;
+            border-top: 1px solid #e0e4e8;
+            transform: rotate(45deg);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        nav { background: #0055AA; color: white; padding: 0 10%; display: flex; }
+        nav a { color: white; text-decoration: none; padding: 15px 25px; font-weight: bold; }
+        nav a:hover { background: #003399; }
+
+        .container { width: 80%; margin: 20px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        
+        .news-section { background: white; padding: 20px; min-height: 400px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .section-title { border-left: 5px solid #0055AA; padding-left: 10px; font-size: 18px; color: #0055AA; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        
+        .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .service-card { background: #eef5ff; padding: 15px; text-align: center; border: 1px solid #d0e0f5; cursor: pointer; }
+        .service-card:hover { background: #0055AA; color: white; }
+
+        footer { background: #333; color: #ccc; padding: 40px 10%; text-align: center; font-size: 14px; margin-top: 50px; }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: #ccc; margin: 0 10px; text-decoration: none; }
+         .content-full-img {
+            width: 120px;
+            height: 120px;
+            object-fit: fill;
+    
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">24/39</div>
+    <div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+        【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+    </div>
+
+    <div class="top-bar">
+        欢迎访问邺山公安门户网站 | 无障碍阅读 | 移动客户端
+    </div>
+
+    <header>
+        <div class="logo-area">
+             <img src="../images/警徽.webp" class="content-full-img">
+            
+            <div class="logo-text">
+                <h1>邺山公安</h1>
+                <p>Public Security Bureau of Yeshan City</p>
+            </div>
+        </div>
+        
+        <div class="search-wrapper">
+            <div class="search-row">
+                <div class="search-input-container">
+                    <input type="text" id="searchInput" placeholder="" autocomplete="off">
+                    <div class="fake-placeholder" id="fakePlaceholder">
+                        搜索... <strong>警号</strong> / 办事指南 / 政策
+                    </div>
+                </div>
+                <button id="searchBtn">搜索</button>
+            </div>
+            <!-- 小结果提示框 -->
+            <div id="searchResultTip" class="search-result-tip">
+                <div class="tip-arrow"></div>
+                <div class="tip-content" id="tipContent">
+                    <!-- 动态内容会填充到这里 -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#">首页</a>
+        <a>警务资讯</a>
+        <a>信息公开</a>
+        <a href="档案查询.html" target="_blank">档案查询</a>
+        <a>警民互动</a>
+        <a>党建工作</a>
+    </nav>
+
+    <div class="container">
+        <div class="news-section">
+            <div class="section-title">
+                <span>警务要闻</span>
+                <small style="color:#999; font-size:12px; cursor:pointer;">更多 >></small>
+            </div>
+            <ul style="line-height: 2.5; color: #444;">
+                <li>邺山市公安局召开冬季治安整治专项会议 <span style="float:right; color:#999;">2025-12-15</span></li>
+<li>关于加强元旦期间道路交通管制的通告 <span style="float:right; color:#999;">2025-12-28</span></li>
+<li>我局民警成功破获一起系列盗窃沿街店铺案 <span style="float:right; color:#999;">2025-10-20</span></li>
+<li>邺山警方提醒：防范养老诈骗，守护养老钱 <span style="float:right; color:#999;">2025-09-18</span></li>
+            </ul>
+        </div>
+
+        <div class="side-bar">
+            <div class="news-section" style="min-height: auto; margin-bottom: 20px;">
+                <div class="section-title">快捷办事</div>
+                <div class="service-grid">
+                    <div class="service-card">户政业务</div>
+                    <div class="service-card">出入境管理</div>
+                    <div class="service-card">违章查询</div>
+                    <div class="service-card">重名查询</div>
+                </div>
+            </div>
+            <div class="news-section" style="min-height: auto;">
+                <div class="section-title">局长信箱</div>
+                <p style="font-size: 13px; color: #666;">您的建议是我们进步的动力。</p>
+                <button style="width: 100%; padding: 10px; background: #0055AA; color: white; border: none;">我要写信</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">网站地图</a> | <a href="#">隐私保护</a> | <a href="#">联系我们</a>
+        </div>
+        <p>“本网页为架空解谜游戏内容，所有名称、地点、事件均为虚构，与现实无关。”</p>
+        <p>版权所有：邺山市公安局  主办单位：邺山市公安局办公室</p>
+        <p>ICP备案编号：冀ICP备88888888号  政府网站标识码：1234567890</p>
+        <p>公安备案号：1101000000001号</p>
+    </footer>
+
+    <script>
+        const input = document.getElementById('searchInput');
+        const fake = document.getElementById('fakePlaceholder');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultTip = document.getElementById('searchResultTip');
+        const tipContent = document.getElementById('tipContent');
+        
+        // 模拟 placeholder 显示/隐藏
+        function toggleFakePlaceholder() {
+            if (input.value.trim() !== '') {
+                fake.style.display = 'none';
+            } else {
+                fake.style.display = 'block';
+            }
+        }
+        
+        // 隐藏小提示框
+        function hideResultTip() {
+            resultTip.classList.remove('show');
+        }
+        
+        // 显示小提示框（警号3315110专用，可点击跳转）
+        function showResultTipForPoliceNum() {
+            // 构建小结果框内容（简洁提示框风格，不包含详细档案，只提示点击跳转）
+            tipContent.innerHTML = `
+                <div class="tip-title">
+                    <span>🆔</span>
+                    <span>警号查询结果</span>
+                </div>
+                <div class="tip-desc">
+                    警号 <strong style="color:#c00;">3315110</strong> 对应：<strong>于承安</strong> 
+                </div>
+               
+            `;
+            resultTip.classList.add('show');
+        }
+        
+        // 显示无结果提示框（其他关键词）
+        function showGeneralTip(keyword) {
+            tipContent.innerHTML = `
+                <div class="tip-title">
+                    <span></span>
+                    <span>搜索结果</span>
+                </div>
+                <div class="tip-desc">
+                    没有找到有关 “<strong>${escapeHtml(keyword)}</strong>” 的相关信息
+                </div>
+            `;
+            resultTip.classList.add('show');
+        }
+        
+        // 简单的防XSS
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // 搜索核心逻辑：3315110显示可跳转小提示框，其他关键词显示无结果提示框
+        function doSearch() {
+            const keyword = input.value.trim();
+            if (keyword === '') {
+                alert('请输入搜索内容');
+                hideResultTip();
+                return;
+            }
+            
+            // 特殊关键词：警号 3315110 触发可跳转小结果框
+            if (keyword === '3315110') {
+                hideResultTip();
+                showResultTipForPoliceNum();
+            } else {
+                // 其他所有关键词：显示无结果提示框
+                hideResultTip();
+                showGeneralTip(keyword);
+            }
+        }
+        
+        // 点击提示框跳转至于承安.html（新页面，在当前窗口打开）
+        function redirectToYuchengAn() {
+            window.open('于承安.html');
+        }
+        
+        // 为警号提示框绑定点击跳转事件
+        function bindTipClick() {
+            if (resultTip) {
+                resultTip.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 阻止冒泡，避免触发document的关闭
+                    // 只有当提示框可见且当前显示的是警号3315110的结果时才跳转
+                    if (resultTip.classList.contains('show')) {
+                        // 通过内容判断是否为警号提示框（避免无结果提示框也跳转）
+                        const tipTitle = tipContent.querySelector('.tip-title span:first-child')?.innerText;
+                        if (tipTitle === '🆔') {
+                            redirectToYuchengAn();
+                        }
+                    }
+                });
+            }
+        }
+        
+        // 点击文档其他区域关闭小提示框
+        document.addEventListener('click', function(e) {
+            const searchWrapper = document.querySelector('.search-wrapper');
+            if (searchWrapper && !searchWrapper.contains(e.target)) {
+                hideResultTip();
+            }
+        });
+        
+        // 输入框内容改变时隐藏之前的提示框
+        input.addEventListener('input', function() {
+            hideResultTip();
+            toggleFakePlaceholder();
+        });
+        
+        input.addEventListener('blur', function() {
+            toggleFakePlaceholder();
+        });
+        
+        // 搜索按钮点击
+        searchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            doSearch();
+        });
+        
+        // 按回车键也可以搜索
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                doSearch();
+            }
+        });
+        
+        // 绑定提示框点击跳转
+        bindTipClick();
+        
+        // 初始占位符状态
+        toggleFakePlaceholder();
+        
+        // 附加样式微调确保提示框在搜索框正下方且对齐，并增加可点击手型
+        const styleAdjust = document.createElement('style');
+        styleAdjust.textContent = `
+            .search-wrapper {
+                position: relative;
+            }
+            .search-result-tip {
+                width: 300px;
+                left: 0;
+                cursor: pointer;
+            }
+            @media (max-width: 768px) {
+                .search-result-tip {
+                    width: 260px;
+                }
+            }
+            .tip-content .tip-detail {
+                font-size: 12px;
+                color: #555;
+            }
+            .tip-content .tip-title span:first-child {
+                font-size: 1.1rem;
+            }
+            .search-result-tip:hover {
+                background: #fefce8;
+                border-color: #0055AA;
+            }
+        `;
+        document.head.appendChild(styleAdjust);
+    </script>
+</body>
+</html>

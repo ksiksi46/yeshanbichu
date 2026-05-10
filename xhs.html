@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+    <title>小红薯界面复刻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #333;
+            line-height: 1.7;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 左侧导航栏 */
+        .sidebar {
+            width: 220px;
+            background-color: #fff;
+            border-right: 1px solid #eee;
+            padding: 20px 0;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            padding: 0 20px 20px;
+            color: #fff;
+            background-color: #e6162d;
+            display: inline-block;
+            border-radius: 0 0 8px 8px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .nav-item i {
+            margin-right: 10px;
+            font-size: 18px;
+            font-style: normal
+        }
+        
+        .nav-item .badge {
+            background-color: #ff4d4f;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: auto;
+        }
+        
+        .more {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            margin-left: 220px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 顶部搜索栏 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            padding: 5px 15px;
+            width: 300px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            padding: 5px;
+            flex: 1;
+        }
+        
+        .search-bar button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-right a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .header-right .icons {
+            display: flex;
+            margin-left: 10px;
+        }
+        
+        .header-right .icons i {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        /* 内容卡片 - 1:1 布局 */
+        .content-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-top: 20px;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-inner {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            height: 100%;
+        }
+        
+        /* 左侧图片区 - 宽度50% */
+        .image-gallery {
+            width: 50%;
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .gallery-image.active {
+            display: block;
+        }
+        
+        /* 导航按钮 */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: opacity 0.3s;
+            opacity: 0;
+            z-index: 10;
+        }
+        
+        .gallery-nav.prev {
+            left: 20px;
+        }
+        
+        .gallery-nav.next {
+            right: 20px;
+        }
+        
+        .image-gallery:hover .gallery-nav {
+            opacity: 1;
+        }
+        
+        .gallery-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        /* 图片指示器 */
+        .image-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .dot.active {
+            background: #e6162d;
+            width: 20px;
+            border-radius: 4px;
+        }
+        
+        /* 右侧文本区 - 宽度50% */
+        .post-details {
+            width: 50%;
+            border-left: 1px solid #eee;
+            padding: 28px 28px 28px 28px;
+            margin-right: 150px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            height: 100%;
+        }
+        
+        /* 滚动条样式 */
+        .post-details::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .post-details::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .post-details::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .post-header img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+        
+        .post-user-info {
+            flex: 1;
+        }
+        
+        .post-username {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+        
+        .follow-btn {
+            background-color: #e6162d;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .post-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        
+        .post-content {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        
+        .post-tag {
+            background-color: #f5f5f5;
+            padding: 5px 12px;
+            border-radius: 18px;
+            font-size: 13px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .post-meta {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 24px;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 20px 0;
+        }
+        
+        .comments-section {
+            margin-bottom: 24px;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .comment-count {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .comment-item {
+            display: flex;
+            margin-bottom: 18px;
+        }
+        
+        .comment-item img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-username {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .comment-text {
+            font-size: 14px;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        
+        .comment-meta {
+            display: flex;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .comment-meta span {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .comment-meta i {
+            margin-right: 3px;
+        }
+        
+        .end-text {
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            margin-top: 24px;
+        }
+        
+        .post-footer {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid #eee;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .comment-input-btn {
+            background: #f5f5f5;
+            border-radius: 30px;
+            padding: 8px 16px;
+            flex: 1;
+            justify-content: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-buttons-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .action-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-style: normal;  /* 新增 */
+}
+
+.action-btn i {
+    margin-right: 4px;
+    font-size: 16px;
+    font-style: normal;  /* 新增 */
+}
+        
+        .action-btn.like {
+            color: #ff4d4f;
+        }
+        
+        /* 底部链接 */
+        .footer-link {
+            position: fixed;
+            bottom: 10px;
+            left: 240px;
+            font-size: 12px;
+            color: #999;
+            z-index: 100;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .card-inner {
+                flex-direction: column;
+            }
+            .image-gallery, .post-details {
+                width: 100%;
+            }
+            .image-gallery {
+                min-height: 300px;
+            }
+            .footer-link {
+                left: 10px;
+            }
+            .post-details {
+                padding: 20px;
+            }
+        }
+      /* 回复评论样式 - 右下缩进，字体稍小 */
+/* 回复评论样式 - 右下缩进，字体稍小 */
+.comment-reply {
+    margin-left: 40px; /* 向右缩进 */
+    width: calc(100% - 40px); /* 宽度相应减少 */
+    font-size: 0.9em; /* 字体略小 */
+    margin-top: 8px;
+    margin-bottom: 8px;
+    opacity: 0.9; /* 稍微降低不透明度，区分层级 */
+}
+.comment-reply img {
+    width: 28px !important; /* 头像也相应缩小 */
+    height: 28px !important;
+}
+
+/* 作者标识样式 - 新增 */
+.comment-reply .comment-username {
+    position: relative;
+    display: inline-block;
+}
+
+.comment-reply .comment-username::after {
+    content: "作者";
+    display: inline-block;
+    font-size: 0.7em;
+    color: #e6162d; /* 深红色字体 */
+    background-color: #ffe6e8; /* 浅红色背景 */
+    padding: 1px 5px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: normal;
+    line-height: 1.2;
+}
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">04/39</div>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <div class="sidebar">
+            <div class="logo">小红薯</div>
+            <div class="nav-item">
+                <i>🏠</i> 发现
+            </div>
+            <div class="nav-item">
+                <i>📺</i> 直播
+            </div>
+            <div class="nav-item">
+                <i>➕</i> 发布
+            </div>
+            <div class="nav-item">
+                <i>🔔</i> 通知
+                <span class="badge">4</span>
+            </div>
+            <div class="nav-item">
+                <i>👤</i> 我
+            </div>
+            <div class="more">
+                <i>☰</i> 更多
+            </div>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部搜索栏 -->
+            <div class="header">
+                <div class="search-bar">
+                    <input type="text" placeholder="搜索小红薯">
+                    <button>🔍</button>
+                </div>
+                <div class="header-right">
+                    <a href="#">创作中心</a>
+                    <a href="#">业务合作</a>
+                </div>
+            </div>
+            
+            <!-- 内容卡片 -->
+            <div class="content-card">
+                <div class="card-inner">
+                    <!-- 左侧图片区 -->
+                    <div class="image-gallery">
+                        <div class="gallery-container">
+                            <button class="gallery-nav prev" onclick="prevImage()">❮</button>
+                            <button class="gallery-nav next" onclick="nextImage()">❯</button>
+                            
+                            <img src="images/xhs1.webp" class="gallery-image active" >
+                            <img src="images/xhs2.webp" class="gallery-image " >
+                            <img src="images/xhs3.webp" class="gallery-image " >
+                            <img src="images/xhs4.webp" class="gallery-image " >
+                            <img src="images/xhs5.webp" class="gallery-image " >
+                            <img src="images/xhs6.webp" class="gallery-image " >
+                            
+                            <div class="image-dots">
+                                <span class="dot active" onclick="goToImage(0)"></span>
+                                <span class="dot" onclick="goToImage(1)"></span>
+                                <span class="dot" onclick="goToImage(2)"></span>
+                                <span class="dot" onclick="goToImage(3)"></span>
+                                <span class="dot" onclick="goToImage(4)"></span>
+                                <span class="dot" onclick="goToImage(5)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧帖子详情 -->
+                    <div class="post-details">
+                        <div class="post-header">
+                            <img src="user/楼主.webp" alt="用户头像">
+                            <div class="post-user-info">
+                                <div class="post-username">夏木暖暖</div>
+                            </div>
+                            <button class="follow-btn">关注</button>
+                        </div>
+                        
+                        <div class="post-title">🌿 邺山村 · 浙西秘境的避世三天</div>
+                        
+                        <div class="post-content">
+                            原本只是想找个清净地方避暑，没想到这个偶然决定，让我们遇见了最动人的时光。连住三天都不愿离开的邺山村，一直让我念念不忘！！！<br><br>
+📍浙西·邺山村（临安山区）<br>
+🚗建议自驾，离汀州市区2h车程<br><br>
+✨必打卡体验<br>
+▫️<strong>清晨跟着村民进山采茶</strong><br>
+天蒙蒙亮就背起竹篓，跟着老师傅走进雾气弥漫的茶山。指尖掠过带露的嫩芽，空气中都是清冽的茶香。采回来的茶叶，还能在老灶台上亲手炒制一锅。<br><br>
+▫️<strong>在百年老宅门槛上发呆</strong><br>
+选一栋保存完好的明清老宅，坐在被岁月磨出凹陷的木门槛上。看阳光从雕花窗棂斜斜切进来，听风吹过天井的沙沙声，仿佛能触摸到凝固的时光。<br><br>
+▫️<strong>跟着采药人认野菌寻山珍</strong><br>
+村里老师傅会带你走进原始次生林，教你辨认哪些是能吃的野菌，哪些是珍贵的草药。运气好的话，中午就能喝到现采的菌菇汤。<br><br>
+▫️<strong>在邺山面馆体验邺山特色菜</strong><br>
+开在村口老祠堂旁的邺山面馆，是村里唯一的小馆子。老板每天用山泉水手擀面条，浇头是现摘的笋干、野菌和土猪肉。最绝的是那碗招牌汤面——汤头用散养老母鸡和山中药材文火慢炖六小时以上，面上桌时热气蒸腾，清香扑鼻。<br><br>
+🏠<strong>住宿推荐｜村东头“云起山居”（老支书家改建）</strong><br>
+✨房子本身就是一栋清中期老宅，梁柱上的木雕保存完好<br>
+✨每天吃的都是自家菜园的蔬菜，后山的竹林鸡<br>
+✨老支书会泡珍藏的老茶，讲村里代代相传的故事<br><br>
+🎑<strong>意外收获｜赶上“祭山神”仪式</strong><br>
+农历六月初六清晨，全村人在古樟树下摆上新茶、山果。老祭司用古调吟唱，感谢大山一年的馈赠。仪式结束后，家家户户会端出拿手菜，在祠堂前摆起长桌宴，陌生人也会被热情地拉入席。<br>
+老支书说，若是清明前后过来，还能赶上“开茶祭”。第一茬春茶采摘前，要在祠堂举行三天三夜的仪式，祈求今年茶香人安。<br>
+最难忘的是第二天傍晚，隔壁阿婆硬拉着我们去她家吃饭。一碗土鸡汤，一盘清炒野蕨，就着夕阳吃了两碗米饭。那一刻，真的像是回到了外婆家。<br><br>
+💡<strong>游玩Tips</strong><br>
+🔸村里早晚温差大，即使夏天也要带件薄外套<br>
+🔸采茶、采菌等活动需提前一天和民宿预约<br>
+🔸尊重当地习俗，拍照前先征得村民同意<br>
+🔸村里没有小卖部，日常用品建议自带
+                        </div>
+                        
+                        <div class="post-tags">
+                            <span class="post-tag">#古村落</span>
+                            <span class="post-tag">#小众旅行地</span>
+                            <span class="post-tag">#避暑好去处</span>
+                            <span class="post-tag">#浙西秘境</span>
+                            <span class="post-tag">#明清古建</span>
+                            <span class="post-tag">#山居生活</span>
+                            <span class="post-tag">#采茶体验</span>
+                            <span class="post-tag">#传统村落</span>
+                        </div>
+                        
+                        <div class="post-meta">2025-4-2 浙西</div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="comments-section">
+    <div class="comment-header">
+        <span>共 12 条评论</span>
+        <span>⋯</span>
+    </div>
+    
+    <!-- 第一条主评论 -->
+    <div class="comment-item">
+        <img src="user/1.webp" width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">小桃不逃</div>
+            <div class="comment-text">现在都能下水了，不冷吗？</div>
+            <div class="comment-meta">
+                <span>2025-4-03 北京</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    <!-- 作者回复（在右下角，尺寸稍小） -->
+    <div class="comment-item comment-reply">
+        <img src="user/楼主.webp" alt="用户头像">
+        <div class="comment-content">
+            <div class="comment-username">夏木暖暖</div>
+            <div class="comment-text">这是去年十一假期，正合适，最近不太清楚。</div>
+            <div class="comment-meta">
+                <span>2025-4-03 湖南</span>
+                <span><i>♡</i> 3</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    
+    <!-- 第二条主评论 -->
+    <div class="comment-item">
+        <img src="user/2.webp" width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">Miss 精致</div>
+            <div class="comment-text">人多吗？</div>
+            <div class="comment-meta">
+                <span>2025-4-10 上海</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    <!-- 作者回复 -->
+    <div class="comment-item comment-reply">
+        <img src="user/楼主.webp" width='26' height='26' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="作者头像">
+        <div class="comment-content">
+            <div class="comment-username">夏木暖暖</div>
+            <div class="comment-text">我们是去年十一假期去的，游客很少，比较冷门。</div>
+            <div class="comment-meta">
+                <span>2025-4-10 湖南</span>
+                <span><i>♡</i> 5</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    
+    <!-- 第三条主评论 -->
+    <div class="comment-item">
+        <img src="user/3.webp" width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">SugarBut盐</div>
+            <div class="comment-text">姐妹请问按照你这个攻略住同一个地方可以吗？想要带小孩去，爬换酒店不方便。</div>
+            <div class="comment-meta">
+                <span>2025-4-5 广州</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    <!-- 作者回复 -->
+    <div class="comment-item comment-reply">
+        <img src="user/楼主.webp" width='26' height='26' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="作者头像">
+        <div class="comment-content">
+            <div class="comment-username">夏木暖暖</div>
+            <div class="comment-text">可以的，我们就没换。</div>
+            <div class="comment-meta">
+                <span>2025-4-5 湖南</span>
+                <span><i>♡</i> 2</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    
+    <!-- 第四条主评论（无回复） -->
+    <div class="comment-item">
+        <img src="user/4.webp" width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">携华旅行</div>
+            <div class="comment-text">令人向往的地方。</div>
+            <div class="comment-meta">
+                <span>2025-4-20 杭州</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    
+    <!-- 第五条主评论 -->
+    <div class="comment-item">
+        <img src="user/5.webp" width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">元宝不叫元宝</div>
+            <div class="comment-text">姐妹有民宿链接吗，实在搜不到。</div>
+            <div class="comment-meta">
+                <span>2025-4-29 深圳</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    <!-- 作者回复 -->
+    <div class="comment-item comment-reply">
+        <img src="user/楼主.webp" width='26' height='26' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="作者头像">
+        <div class="comment-content">
+            <div class="comment-username">夏木暖暖</div>
+            <div class="comment-text">链接我没保存，你去<strong>公众号</strong>看看。</div>
+            <div class="comment-meta">
+                <span>2025-4-29 湖南</span>
+                <span><i>♡</i> 1</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    <!-- 用户再次回复 -->
+    <div class="comment-item comment-reply">
+        <img src="user/5.webp" width='24' height='24' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">元宝不叫元宝</div>
+            <div class="comment-text">ok，找到了，多谢多谢。</div>
+            <div class="comment-meta">
+                <span>2025-4-29 深圳</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+    
+    <!-- 第六条主评论（无回复） -->
+    <div class="comment-item">
+        <img src="user/6.webp" width='30' height='30' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
+        <div class="comment-content">
+            <div class="comment-username">NoSleep</div>
+            <div class="comment-text">确实很漂亮，也很干净，看着很放松，不像其他景区到处都是视觉污染。</div>
+            <div class="comment-meta">
+                <span>2025-4-16 南京</span>
+                <span><i>♡</i> 赞</span>
+                <span><i>💬</i> 回复</span>
+            </div>
+        </div>
+        <span>⋯</span>
+    </div>
+</div>
+                        
+                        <div class="end-text">- THE END -</div>
+                        
+                        <div class="post-footer">
+                            <div class="post-actions">
+                                <button class="action-btn comment-input-btn">
+                                    <i>🐶</i> 说点什么...
+                                </button>
+                                <div class="action-buttons-group">
+                                    <button class="action-btn like">
+                                        <i>♡</i> 1.2万
+                                    </button>
+                                    <button class="action-btn">
+                                        <i>⭐</i> 收藏
+                                    </button>
+                                    <button class="action-btn">
+                                        <i>💬</i> 12
+                                    </button>
+                                    <button class="action-btn">
+                                        <i>↩️</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部链接 -->
+            <div class="footer-link">
+                https://www.xiaohongshu.com/explore/channel_type=web_note_detail_r10
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const totalImages = 6;
+        
+        function updateGallery() {
+            const images = document.querySelectorAll('.gallery-image');
+            const dots = document.querySelectorAll('.dot');
+            
+            images.forEach((img, idx) => {
+                img.classList.toggle('active', idx === currentIndex);
+            });
+            
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentIndex);
+            });
+        }
+        
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % totalImages;
+            updateGallery();
+        }
+        
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+            updateGallery();
+        }
+        
+        function goToImage(index) {
+            currentIndex = index;
+            updateGallery();
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevImage();
+            } else if (e.key === 'ArrowRight') {
+                nextImage();
+            }
+        });
+    </script>
+</body>
+</html>

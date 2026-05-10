@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>end2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            color: #1e2a2e;
+            line-height: 1.6;
+        }
+
+        /* 首屏：只有大标题 没有任何额外框线、卡片、装饰背景 */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #ffffff;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 大标题样式 —— 纯粹文字之美，无背景、无边框、无阴影轮廓 */
+        .hero h1 {
+            font-size: clamp(2.8rem, 10vw, 5.2rem);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #1a2c2c;
+            margin: 0;
+            padding: 0;
+            background: none;
+            text-shadow: none;
+            line-height: 1.2;
+        }
+
+        /* 下滑提示：只是极小的一行轻盈文字，无装饰框、无背景块 */
+        .hero .scroll-hint {
+            margin-top: 2.2rem;
+            font-size: 0.85rem;
+            font-weight: 350;
+            color: #9babb0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .scroll-hint span {
+            font-size: 0.9rem;
+            display: inline-block;
+            animation: gentleHop 1.8s infinite ease;
+        }
+
+        @keyframes gentleHop {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        /* ---------- 内容区域：没有任何卡片、边框、背景色块、阴影 ---------- */
+        .text-content {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 2rem 1.8rem 5rem 1.8rem;
+            background: transparent;
+        }
+
+        /* 所有文本块：纯文字流，无边框无背景无卡片效果 */
+        .text-block {
+            margin-bottom: 3.2rem;
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        /* 纯文字标题 — 只有文字大小和粗细，无装饰线、无背景、无左栏 */
+        .text-title {
+            font-size: 1.8rem;
+            font-weight: 520;
+            color: #2c423f;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.2px;
+            border: none;
+            padding: 0;
+            background: none;
+        }
+
+        /* 段落：纯粹的阅读质感 */
+       .paragraph {
+        max-width: 100%;
+    word-break: normal; 
+    font-size: 2rem;
+    color: #2d3e3c;
+    margin-bottom: 1.1rem;
+    line-height: 1.8;
+    text-align: left;
+    background: none;
+    border: none;
+    letter-spacing: 0.05em; /* 增加字间距，使阅读更舒展。常用范围：0.01em - 0.05em */
+}
+
+        /* 小标题或者引子文字块（非装饰） */
+        .sub-quote {
+            font-size: 1rem;
+            font-style: normal;
+            color: #5b6e6b;
+            margin: 1.8rem 0 1.2rem 0;
+            padding-left: 0;
+            border-left: none;
+            background: none;
+        }
+
+        /* 分割线采用极细线，但不是卡片框，只是内容自然分割 */
+        .soft-divider {
+            width: 48px;
+            height: 1px;
+            background: #d9e1df;
+            margin: 2rem 0 2rem 0;
+            border: none;
+        }
+
+        /* 尾注脚区域 — 纯文本无框 */
+        .footer-note {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #9faeaa;
+            padding-top: 1.8rem;
+            border-top: 1px solid #ecece6;
+            background: none;
+        }
+
+        /* 保证没有任何卡片和内边框、背景块、圆角框 */
+        a, button, .card, .box, .panel {
+            all: unset;
+        }
+
+        /* 滚动条保持整洁 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            background-color: #f1f1ec;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5d1;
+            border-radius: 0px;
+        }
+
+        /* 首屏下方的过渡非常自然——下方内容在视口外，下滑才出现 */
+        .content-start {
+            background: transparent;
+        }
+
+        /* 让所有文本块加载时如果有淡入平滑效果，但无框无装饰，并且不影响「纯文字」要求，且保证下滑后才可见区域不受影响 */
+        .fade-text {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.65s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .fade-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 650px) {
+            .text-content {
+                padding: 1.5rem 1.5rem 4rem 1.5rem;
+            }
+            .text-title {
+                font-size: 1.6rem;
+            }
+            .paragraph {
+                font-size: 0.98rem;
+            }
+        }
+
+        /* 确保没有多余背景或边框污染 */
+        body, .hero, .text-content, .text-block, .paragraph, .text-title, .footer-note {
+            background-color: transparent;
+        }
+        body {
+            background: #ffffff;
+        }
+        .text-content {
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 首屏：只有标题 + 极简下滑文字提示（无框） -->
+    <section class="hero">
+        <h1>结局2  袖手邺山 · 永失其友</h1>
+        <div class="scroll-hint">
+            <span>︾</span> 向下滑动，读文 <span>︾</span>
+        </div>
+    </section>
+
+    <!-- 所有内容只有文本，没有任何卡片、色块、边框、圆角背景框 -->
+    <div class="text-content">
+        <!-- 第一组文字：随笔 -->
+        <div class="text-block fade-text" data-scroll>
+           
+            <div class="paragraph" style="text-indent: 2em;">
+               那晚你没有去。你后来想过很多次，你为什么没去。不是因为害怕什么窅大人，也不是因为不知道邺山在哪——你只是不敢。不敢在凌晨独自走那条路，不敢面对那个你从来不信却又隐隐发怵的东西，更不敢承认自己其实是个胆小的人。陈宇就这样消失了。电话打不通，消息没人回，好像这个人从来没存在过。你问过几个人，没有人知道他去了哪。只有你知道，他发过那条消息，而你没有去。日子还是照常过。你上班，吃饭，跟人笑，跟人闹，偶尔想起他，胸口会闷一下，但那点感觉很快就散了。你告诉自己，这不怪你。是他自己要去的。你没有义务去管他。这种话说多了，你自己都快信了。
+
+
+            </div>
+             <div class="paragraph" style="text-indent: 2em;">
+            好几年过去了。你真的快忘了。有一天傍晚你坐在沙发上刷手机，微信里弹出一篇公众号推送。你不知道为什么要点进去，也许只是手滑，也许是什么说不清的东西拽了你一下。文章往下翻，翻到最后的时候，你的手指突然停住了。
+
+你整个人僵在那里。
+</div>
+        </div>
+<div style="text-align: center; margin: 3rem auto 4rem auto; padding: 0 1.5rem;">
+    <button id="endButton" style="
+        background: none;
+        border: 1px solid #d1dbd8;
+        padding: 0.7rem 2rem;
+        font-size: 0.9rem;
+        font-family: inherit;
+        color: #5b6e6b;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        letter-spacing: 0.05em;
+    " onmouseover="this.style.borderColor='#8ba39e';this.style.color='#2c423f'" onmouseout="this.style.borderColor='#d1dbd8';this.style.color='#5b6e6b'">
+        NEXT
+    </button>
+
+        
+
+        
+
+    <script>
+        // 实现交互: 刚打开页面只显示大标题，下滑后下面的文字才逐步出现。
+        // 技术上: 下方所有文字位于视口之外，滚动进入时添加可见类，制造淡入平滑效果。
+        // 同时保持所有文本形态 —— 无卡片、无背景框，只是文字显现。
+        (function() {
+            // 获取所有添加了data-scroll属性的文本块(.fade-text)
+            const textBlocks = document.querySelectorAll('.fade-text');
+            
+            // 使用Intersection Observer 来让文本块滚动到视野内时显示，优雅符合滑动阅读
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // 显示一次后不再观察，节省资源
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" }); // 轻微偏移确保滚动进入时自然
+            
+            textBlocks.forEach(block => {
+                observer.observe(block);
+                // 初始化额外安全保障: 如果由于某些原因刷新后位置已经在视口内(基本不会，但以防万一)
+                const rect = block.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50 && rect.bottom > 20) {
+                    block.classList.add('visible');
+                    observer.unobserve(block);
+                }
+            });
+            
+            // 兜底: 滚动时重复检测，保证全部可见 (确保任意缩放或加载后没有遗漏)
+            let scrollTimer;
+            function manualCheck() {
+                textBlocks.forEach(block => {
+                    if (block.classList.contains('visible')) return;
+                    const rect = block.getBoundingClientRect();
+                    const winH = window.innerHeight;
+                    if (rect.top < winH - 40 && rect.bottom > 30) {
+                        block.classList.add('visible');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', () => {
+                if (scrollTimer) clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(manualCheck, 70);
+            });
+            window.addEventListener('resize', () => {
+                manualCheck();
+            });
+            
+            // 强制页面初始滚动位置为顶部，确保首屏只显示标题「檐下听雨」
+            // 如果用户加载时页面滚动位置不为0，立即滚动到顶部 (避免某些浏览器刷新残留滚动)
+            if (window.scrollY !== 0) {
+                window.scrollTo(0, 0);
+            }
+            
+            // 可选的细小体验: 点击下滑提示，平滑滚动至第一个文字段落 (但不会添加任何框)
+            const hintElement = document.querySelector('.scroll-hint');
+            if (hintElement) {
+                hintElement.style.cursor = 'pointer';
+                hintElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const firstTextBlock = document.querySelector('.text-block');
+                    if (firstTextBlock) {
+                        firstTextBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            }
+            
+            // 为了避免页面加载后任何额外的装饰或边框，校验所有元素样式
+            // 确保没有遗漏的卡片类 —— 保证只有纯粹文字
+            // 附加: 由于完全符合要求，不需要再做额外样式注入。
+        })();
+         (function() {
+        var endBtn = document.getElementById('endButton');
+        if (endBtn) {
+            endBtn.addEventListener('click', function() {
+                // 点击 END 按钮后执行的操作：可滚动回顶部，或显示提示等
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // 如需完全退出/关闭页面（谨慎使用）：
+                // window.close(); 
+            });
+        }
+    })();
+     document.getElementById('endButton').addEventListener('click', function() {
+        window.location.href = 'next2.html';  // 替换成您要跳转的页面
+    });
+    </script>
+    <!-- 
+        设计保证：
+        1. 刚开始只显示大标题「檐下听雨」以及极简的下滑提示（纯文字无框）。
+        2. 往下滚动，才出现下面的散文、随笔、段落等内容。无任何卡片/背景框/边框/阴影装饰。
+        3. 所有内容均为纯文本，没有图片、没有图形框、没有卡片容器、没有圆角色块。
+        4. 文字使用干净的黑灰色系，排版轻松留白，阅读体验舒展。
+    -->
+</body>
+</html>

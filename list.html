@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>邺山村村民委员会 - 时序名册公告</title>
+    <meta name="keywords" content="邺山村,通告,时序,生辰" />
+    <meta name="description" content="邺山村村民委员会时序名册公告" />
+    
+    <style type="text/css">
+        /* ==================== 基础重置 + 全局黑白滤镜 ==================== */
+        html {
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body { 
+            background-color: #eaf1f7; 
+            font-family: "Microsoft YaHei", "微软雅黑", "SimSun", "宋体", sans-serif; 
+            font-size: 14px; 
+            color: #333; 
+        }
+        a { text-decoration: none; color: #333; }
+        a:hover { color: #c00; text-decoration: underline; }
+        .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+        .clearfix { display: block; }
+        .fl { float: left; }
+        .fr { float: right; }
+
+        /* ==================== 整体布局 ==================== */
+        .wrapper { width: 1200px; margin: 0 auto; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        /* 顶部栏 */
+        .top-bar { height: 35px; line-height: 35px; background: #f7f7f7; border-bottom: 1px solid #ddd; font-size: 12px; color: #666; padding: 0 20px; }
+        .top-bar a { color: #666; margin: 0 5px; }
+        
+        /* 头部 */
+        .header { height: 180px; background: #c8161d; position: relative; }
+        .logo-text { position: absolute; top: 45px; left: 170px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .logo-text h1 { font-size: 48px; letter-spacing: 5px; font-weight: bold; font-family: "SimHei", "黑体"; }
+        .logo-text p { font-size: 20px; letter-spacing: 15px; margin-top: 5px; font-family: "KaiTi", "楷体"; }
+        
+        /* 导航栏 */
+        .nav { height: 50px; background: #004b97; }
+        .nav ul { width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; list-style: none; }
+        .nav li a { display: block; color: #fff; font-size: 18px; font-weight: bold; line-height: 50px; padding: 0 25px; font-family: "SimHei", "黑体"; }
+        .nav li a:hover, .nav li.active a { background: #003366; text-decoration: none; }
+        
+        /* 面包屑 */
+        .breadcrumb { padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #eee; font-size: 14px; }
+        .breadcrumb a { color: #333; }
+        .breadcrumb a:hover { color: #c8161d; }
+        .breadcrumb .current { color: #c8161d; font-weight: bold; }
+        
+        /* 主体内容区 - 公告列表样式 (正式风格) */
+        .main-container {
+            padding: 20px 25px 30px 25px;
+            min-height: 500px;
+        }
+        .notice-header {
+            font-size: 22px;
+            font-family: 'SimHei', '黑体';
+            color: #c8161d;
+            border-left: 5px solid #c8161d;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        /* 公告表格样式 (同一行: 标题 + 日期) */
+        .notice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        .notice-table tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .notice-table td {
+            padding: 14px 8px;
+            font-size: 14px;
+            font-family: 'SimSun', '宋体';
+            vertical-align: middle;
+        }
+        .notice-title {
+            width: 75%;
+            color: #1e466e;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        /* 可点击的标题样式 (仅第一条/最新) */
+        .notice-title.clickable-title {
+            color: #c8161d;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .notice-title.clickable-title:hover {
+            text-decoration: underline;
+        }
+        /* 不可点击的标题样式 */
+        .notice-title.non-clickable-title {
+            color: #333;
+            cursor: default;
+            font-weight: normal;
+        }
+        .notice-date {
+            width: 25%;
+            text-align: right;
+            color: #777;
+            font-family: 'SimSun', '宋体';
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+        /* 分页样式 - 正式庄重 */
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px 0 10px;
+            border-top: 1px solid #eee;
+        }
+        .pagination a, .pagination span.current-page {
+            display: inline-block;
+            padding: 5px 12px;
+            margin: 0 4px;
+            font-size: 14px;
+            font-family: 'SimSun', '宋体';
+            text-decoration: none;
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+            min-width: 32px;
+            text-align: center;
+        }
+        .pagination a:hover {
+            background-color: #c8161d;
+            color: #fff;
+            border-color: #c8161d;
+        }
+        .pagination span.current-page {
+            background: #c8161d;
+            color: #fff;
+            border-color: #c8161d;
+            font-weight: bold;
+        }
+        .pagination .disabled-btn {
+            color: #bbb;
+            background: #fafafa;
+            cursor: default;
+            border-color: #eee;
+        }
+        .pagination .disabled-btn:hover {
+            background: #fafafa;
+            color: #bbb;
+            border-color: #eee;
+        }
+        
+        /* 打印按钮 */
+        .print-btn { text-align: center; margin: 30px 0 20px; }
+        .print-btn button { padding: 8px 25px; background: #004b97; color: #fff; border: none; cursor: pointer; font-size: 14px; border-radius: 4px; margin: 0 5px; }
+        .print-btn button:hover { background: #c8161d; }
+        
+        /* 页脚 */
+        .footer { background: #e5e5e5; border-top: 3px solid #c8161d; padding: 30px 0; margin-top: 20px; }
+        .footer-content { width: 1000px; margin: 0 auto; text-align: center; }
+        .footer-text { font-family: "SimSun"; font-size: 12px; line-height: 24px; color: #555; }
+        .footer-text span { margin: 0 10px; }
+        
+        /* 返回顶部 */
+        #goTop { position: fixed; right: 30px; bottom: 50px; width: 45px; height: 45px; background: #004b97; color: #fff; text-align: center; line-height: 45px; border-radius: 50%; cursor: pointer; display: none; transition: all 0.3s; font-size: 20px; }
+        #goTop:hover { background: #c8161d; }
+        
+        /* 弹窗样式 - 详情展示 (仅最新条目点击后展示) */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            width: 550px;
+            max-width: 90%;
+            padding: 25px 30px;
+            border-top: 5px solid #c8161d;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            font-family: 'SimSun', '宋体';
+            position: relative;
+        }
+        .modal-content h3 {
+            font-size: 20px;
+            font-family: 'SimHei', '黑体';
+            color: #c8161d;
+            margin-bottom: 10px;
+            padding-right: 25px;
+        }
+        .modal-date {
+            color: #777;
+            font-size: 12px;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 18px;
+        }
+        .modal-content p {
+            line-height: 1.8;
+            text-indent: 2em;
+            font-size: 14px;
+            margin: 12px 0;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        .close-modal:hover { color: #c8161d; }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">35/39</div>
+
+<div class="wrapper">
+    <!-- 顶部栏 -->
+    <div class="top-bar">
+        <div class="fl">
+            <span id="date-str"></span>
+        </div>
+        <div class="fr">
+            <a href="#" onclick="alert('功能维护中')">设为首页</a> | 
+            <a href="#" onclick="alert('请使用浏览器收藏功能')">加入收藏</a>
+        </div>
+    </div>
+
+    <!-- 头部 -->
+    <div class="header">
+        <div style="position: absolute; top: 30px; left: 30px;">
+            <img src="images/符咒.webp" alt="邺山村标识" style="height: 120px; width: auto;filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.4));" onerror="this.src='https://placehold.co/120x120/cc0000/white?text=邺山'">
+        </div>
+        <div class="logo-text" style="margin-left: 120px;">
+            <h1>奉自祈福 窅报邺山</h1>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <ul class="clearfix">
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#" class="active">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+        </ul>
+    </div>
+
+    
+
+    <!-- 主体内容区：公告列表（同一行标题+日期，分页展示） -->
+    <div class="main-container">
+        <div class="notice-header"></div>
+        
+        <table class="notice-table">
+            <tbody id="tableBody">
+                <!-- JS 动态渲染分页内容 -->
+            </tbody>
+        </table>
+        
+        <!-- 分页控件 -->
+        <div class="pagination" id="paginationContainer"></div>
+        <div style="clear:both"></div>
+        <div style="margin-top: 12px; font-size:12px; color:#888; text-align:right;">共 <span id="totalCountSpan">52</span> 条记录</div>
+        
+        <!-- 打印按钮 -->
+        <div class="print-btn">
+            <button onclick="window.close()">✖ 关闭窗口</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-text">
+
+                <p>【解谜游戏】本页面为虚构内容，所有名称、事件、文件均为架空设定，与现实无关</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div id="goTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+    <!-- 详情弹窗 (仅最新条目可触发) -->
+    <div id="detailModal" class="detail-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <div class="modal-date" id="modalDate"></div>
+            <p id="modalContent"></p>
+            <div style="text-align: right; margin-top: 15px; color: #888;">邺山村村民委员会 谨示</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // 显示当前日期
+        (function() {
+            var dateObj = new Date();
+            var year = dateObj.getFullYear();
+            var month = dateObj.getMonth() + 1;
+            var date = dateObj.getDate();
+            var dayArr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            var day = dayArr[dateObj.getDay()];
+            var dateSpan = document.getElementById("date-str");
+            if(dateSpan) dateSpan.innerHTML = year + "年" + month + "月" + date + "日 " + day;
+        })();
+
+        // 返回顶部按钮显示隐藏
+        window.addEventListener('scroll', function() {
+            var goTop = document.getElementById('goTop');
+            if (goTop) {
+                if (window.scrollY > 300) goTop.style.display = 'block';
+                else goTop.style.display = 'none';
+            }
+        });
+
+        // ==================== 数据生成 ====================
+        // 52条生辰八字数据 (庄重正式风格)
+        const baziList = [
+            "甲子 丙寅 戊辰 庚午", "乙丑 丁卯 己巳 辛未", "丙寅 戊辰 庚午 壬申", "丁卯 己巳 辛未 癸酉", "戊辰 庚午 壬申 甲戌",
+            "己巳 辛未 癸酉 乙亥", "庚午 壬申 甲戌 丙子", "辛未 癸酉 乙亥 丁丑", "壬申 甲戌 丙子 戊寅", "癸酉 乙亥 丁丑 己卯",
+            "甲戌 丙子 戊寅 庚辰", "乙亥 丁丑 己卯 辛巳", "丙子 戊寅 庚辰 壬午", "丁丑 己卯 辛巳 癸未", "戊寅 庚辰 壬午 甲申",
+            "己卯 辛巳 癸未 乙酉", "庚辰 壬午 甲申 丙戌", "辛巳 癸未 乙酉 丁亥", "壬午 甲申 丙戌 戊子", "癸未 乙酉 丁亥 己丑",
+            "甲申 丙戌 戊子 庚寅", "乙酉 丁亥 己丑 辛卯", "丙戌 戊子 庚寅 壬辰", "丁亥 己丑 辛卯 癸巳", "戊子 庚寅 壬辰 甲午",
+            "己丑 辛卯 癸巳 乙未", "庚寅 壬辰 甲午 丙申", "辛卯 癸巳 乙未 丁酉", "壬辰 甲午 丙申 戊戌", "癸巳 乙未 丁酉 己亥",
+            "甲午 丙申 戊戌 庚子", "乙未 丁酉 己亥 辛丑", "丙申 戊戌 庚子 壬寅", "丁酉 己亥 辛丑 癸卯", "戊戌 庚子 壬寅 甲辰",
+            "己亥 辛丑 癸卯 乙巳", "庚子 壬寅 甲辰 丙午", "辛丑 癸卯 乙巳 丁未", "壬寅 甲辰 丙午 戊申", "癸卯 乙巳 丁未 己酉",
+            "甲辰 丙午 戊申 庚戌", "乙巳 丁未 己酉 辛亥", "丙午 戊申 庚戌 壬子", "丁未 己酉 辛亥 癸丑", "戊申 庚戌 壬子 甲寅",
+            "己酉 辛亥 癸丑 乙卯", "庚戌 壬子 甲寅 丙辰", "辛亥 癸丑 乙卯 丁巳", "壬子 甲寅 丙辰 戊午", "癸丑 乙卯 丁巳 己未",
+            "甲寅 丙辰 戊午 庚申", "乙卯 丁巳 己未 辛酉"
+        ];
+        
+      const generateDates = () => {
+    const dates = [];
+    const latestDate = new Date(2026, 1, 20); // 第52条: 2026年2月17日
+    
+    for (let i = 0; i < 52; i++) {
+        // i=0 → 第52条(最新)
+        // i=51 → 第1条(最早)
+        // 从最新往前推 (51 - i) 个间隔
+        const stepsBack = 51 - i;
+        const d = new Date(latestDate);
+        // 每个间隔约5.5个月 = 165天
+        const daysOffset = stepsBack * 165;
+        d.setTime(latestDate.getTime() - daysOffset * 24 * 60 * 60 * 1000);
+        
+        const year = d.getFullYear();
+        const month = d.getMonth() + 1;
+        const day = d.getDate();
+        dates.push(`${year}.${month}.${day}`);
+    }
+    return dates;
+};
+
+const allDates = generateDates();
+        
+        // 构建记录数组: 按展示顺序从最新到最旧（第一条为第52个，最新）
+        let records = [];
+        for (let i = 51; i >= 0; i--) {
+            const serialNumber = i + 1;      // 原始序号 1~52，倒序后第一条原始序号52
+            const bazi = baziList[i];
+            const pubDate = allDates[i];
+            const titleText = `《${serialNumber}》 ${bazi}`;
+            records.push({
+                id: serialNumber,
+                title: titleText,
+                date: pubDate,
+                isClickable: (serialNumber === 52)   // 只有第52个（最新）可点击
+            });
+        }
+        // 此时 records[0] 是第52个(最新) isClickable=true；records[51] 是第1个不可点击
+        
+        // 分页配置
+        const pageSize = 10;
+        let currentPage = 1;
+        const totalRecords = records.length;  // 52
+        const totalPages = Math.ceil(totalRecords / pageSize);
+        
+        // 获取DOM元素
+        const tbody = document.getElementById('tableBody');
+        const paginationContainer = document.getElementById('paginationContainer');
+        const totalCountSpan = document.getElementById('totalCountSpan');
+        
+        // 弹窗相关
+        const modal = document.getElementById('detailModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDateSpan = document.getElementById('modalDate');
+        const modalContentPara = document.getElementById('modalContent');
+        
+        // 打开详情弹窗 (仅可点击条目调用)
+      function openDetailPage(record) {
+    if (!record.isClickable) return;
+    // 构建新页面URL，将参数通过URL传递
+    const detailUrl = `morelist.html?id=${record.id}&title=${encodeURIComponent(record.title)}&date=${record.date}`;
+    window.open(detailUrl, '_blank');
+}
+
+        
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        
+        // 渲染当前页表格
+        function renderTable() {
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageRecords = records.slice(start, end);
+            tbody.innerHTML = '';
+            
+            pageRecords.forEach(record => {
+                const row = tbody.insertRow();
+                // 标题单元格
+                const cellTitle = row.insertCell(0);
+                const titleSpan = document.createElement('span');
+                titleSpan.textContent = record.title;
+                titleSpan.className = 'notice-title';
+               if (record.isClickable) {
+    titleSpan.classList.add('clickable-title');
+    titleSpan.style.cursor = 'pointer';
+    titleSpan.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDetailPage(record);  // ✅ 改为 openDetailPage
+    });
+}else {
+                    titleSpan.classList.add('non-clickable-title');
+                    titleSpan.style.cursor = 'default';
+                    // 完全不设置点击事件，且无任何交互效果
+                }
+                cellTitle.appendChild(titleSpan);
+                
+                // 日期单元格
+                const cellDate = row.insertCell(1);
+                cellDate.className = 'notice-date';
+                cellDate.textContent = record.date;
+            });
+            
+            // 更新总条数显示
+            if (totalCountSpan) totalCountSpan.innerText = totalRecords;
+            renderPagination();
+        }
+        
+        // 渲染分页控件
+        function renderPagination() {
+            if (!paginationContainer) return;
+            paginationContainer.innerHTML = '';
+            
+            // 上一页
+            const prevLink = document.createElement('a');
+            prevLink.textContent = '« 上一页';
+            if (currentPage === 1) {
+                prevLink.classList.add('disabled-btn');
+                prevLink.href = 'javascript:void(0);';
+            } else {
+                prevLink.href = 'javascript:void(0);';
+                prevLink.addEventListener('click', () => {
+                    currentPage--;
+                    renderTable();
+                });
+            }
+            paginationContainer.appendChild(prevLink);
+            
+            // 页码数字 (最多显示7个)
+            let startPage = Math.max(1, currentPage - 3);
+            let endPage = Math.min(totalPages, startPage + 6);
+            if (endPage - startPage < 6 && startPage > 1) startPage = Math.max(1, endPage - 6);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                if (i === currentPage) {
+                    const span = document.createElement('span');
+                    span.textContent = i;
+                    span.className = 'current-page';
+                    paginationContainer.appendChild(span);
+                } else {
+                    const pageLink = document.createElement('a');
+                    pageLink.textContent = i;
+                    pageLink.href = 'javascript:void(0);';
+                    pageLink.addEventListener('click', (function(pageNum) {
+                        return function() { 
+                            currentPage = pageNum; 
+                            renderTable(); 
+                        };
+                    })(i));
+                    paginationContainer.appendChild(pageLink);
+                }
+            }
+            
+            // 下一页
+            const nextLink = document.createElement('a');
+            nextLink.textContent = '下一页 »';
+            if (currentPage === totalPages) {
+                nextLink.classList.add('disabled-btn');
+                nextLink.href = 'javascript:void(0);';
+            } else {
+                nextLink.href = 'javascript:void(0);';
+                nextLink.addEventListener('click', () => {
+                    currentPage++;
+                    renderTable();
+                });
+            }
+            paginationContainer.appendChild(nextLink);
+        }
+        
+        // 弹窗关闭事件
+        document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        
+        // 初始化渲染
+        renderTable();
+    </script>
+</body>
+</html>

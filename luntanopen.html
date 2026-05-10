@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山村 · 后山红绳洞的传说 - 七闻论坛</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            display: flex;
+            background-color: #f5f5f5;
+        }
+        
+        .forum-header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4a5568;
+            position: relative;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
+
+        .forum-title {
+            font-family: 'Long Cang', cursive;
+            font-size: 56px;
+            font-weight: normal;
+            color: #2c1810;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            letter-spacing: 4px;
+        }
+        
+        .forum-subtitle {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            padding-right: 50px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .login-area {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffd700;
+            font-size: 14px;
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #395b80;
+            font-weight: bold;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        .sidebar {
+            width: 180px;
+            background-color: #e6f0fa;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+        }
+        .sidebar h3 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar li {
+            margin-bottom: 5px;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .sidebar a:hover {
+            background-color: #d0e7ff;
+        }
+
+        .main {
+            flex: 1;
+            padding: 10px;
+        }
+        
+        .top-nav {
+            background-color: #0078d4;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+        }
+        .top-nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .top-nav a.active {
+            font-weight: bold;
+        }
+        .top-nav .quick {
+            margin-left: auto;
+            position: relative;
+        }
+        .top-nav .quick select {
+            padding: 2px 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .thread-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .thread-header {
+            padding: 20px 25px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .thread-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        .thread-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .thread-body {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            line-height: 1.8;
+            color: #444;
+            font-size: 15px;
+        }
+        .thread-body p {
+            margin-bottom: 15px;
+        }
+        
+        .replies-section {
+            padding: 0 25px 25px;
+        }
+        .replies-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            padding: 20px 0 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        .reply-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+        .reply-author {
+            font-weight: 600;
+            color: #0078d4;
+            font-size: 14px;
+            margin-right: 12px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .reply-author:hover {
+            text-decoration: underline;
+        }
+        .reply-time {
+            font-size: 12px;
+            color: #999;
+        }
+        .reply-text {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .ban-warning {
+            background-color: #fef5f0;
+            border-left: 4px solid #c0392b;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .ban-warning .reply-text {
+            color: #c0392b;
+            font-weight: 500;
+        }
+        
+        .thread-banned {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f0e0;
+            border: 2px solid #c0392b;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .thread-banned h4 {
+            font-size: 20px;
+            color: #c0392b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .thread-banned p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #0078d4;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            z-index: 1001;
+            display: none;
+        }
+        
+        /* 用户信息卡片 */
+        .user-card-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .user-card {
+            background: #fff;
+            border-radius: 12px;
+            width: 380px;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: fadeIn 0.2s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .user-card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .user-card-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #395b80;
+            margin: 0 auto 12px;
+        }
+        .user-card-name {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .close-card {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+        }
+        .user-card-body {
+            padding: 20px;
+        }
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .user-stats li {
+            list-style: none;
+            font-size: 13px;
+            color: #666;
+        }
+        .user-stats li strong {
+            color: #333;
+        }
+        .user-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .user-action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .user-action-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        .user-action-btn.primary {
+            background: #667eea;
+            color: white;
+        }
+        .user-action-btn.primary:hover {
+            background: #5a67d8;
+        }
+        .friend-tip {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* 私信界面样式 */
+        .private-message-container {
+            display: flex;
+            height: 600px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+        
+        .chat-sidebar {
+            width: 280px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 20px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .sidebar-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .chat-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .chat-item.active {
+            background: #f3f4f6;
+        }
+        
+        .chat-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .chat-avatar.admin { background: #667eea; }
+        .chat-avatar.xiangguo { background: #e74c3c; }
+        .chat-avatar.lvyou { background: #2ecc71; }
+        
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .chat-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .online-badge {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2ecc71;
+            margin-left: 6px;
+        }
+        
+        .chat-preview {
+            font-size: 12px;
+            color: #999;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .chat-time {
+            font-size: 11px;
+            color: #bbb;
+            margin-top: 4px;
+        }
+        
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+        
+        .chat-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            background: #fff;
+        }
+        
+        .chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            margin-right: 12px;
+        }
+        
+        .chat-header-avatar.admin { background: #667eea; }
+        .chat-header-avatar.xiangguo { background: #e74c3c; }
+        .chat-header-avatar.lvyou { background: #2ecc71; }
+        
+        .chat-header-info {
+            flex: 1;
+        }
+        
+        .chat-header-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .chat-header-status {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .back-to-forum {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666;
+            transition: all 0.2s;
+        }
+        
+        .back-to-forum:hover {
+            background: #e0e0e0;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .message-row {
+            display: flex;
+            margin-bottom: 16px;
+        }
+        
+        .message-left {
+            justify-content: flex-start;
+        }
+        
+        .message-right {
+            justify-content: flex-end;
+        }
+        
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .message-avatar.admin { background: #667eea; }
+        .message-avatar.xiangguo { background: #e74c3c; }
+        .message-avatar.lvyou { background: #2ecc71; }
+        
+        .message-bubble {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        
+        .message-left .message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e9ecef;
+        }
+        
+        .message-right .message-bubble {
+            background: #399837;
+            color: white;
+        }
+        
+        .message-time {
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+            margin: 8px 0 16px;
+        }
+        
+        .chat-input-area {
+            padding: 15px 20px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+            background: white;
+        }
+        
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .chat-input-area input:disabled {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .chat-input-area button {
+            padding: 8px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .chat-input-area button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .message-bubble a {
+            color: #9eabe0;
+            text-decoration: none;
+        }
+        
+        .message-bubble a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">03/39</div>
+    <div class="toast" id="toastMsg"></div>
+
+    <!-- 用户信息卡片弹窗 -->
+    <div class="user-card-modal" id="userCardModal">
+        <div class="user-card">
+            <div class="user-card-header">
+                <span class="close-card" onclick="closeUserCard()">&times;</span>
+                <div class="user-card-avatar" id="cardAvatar">旅</div>
+                <div class="user-card-name" id="cardUsername">旅游发烧者</div>
+            </div>
+            <div class="user-card-body">
+                <ul class="user-stats" id="userStats">
+                    <li><strong>空间访问量:</strong> 0</li>
+                    <li><strong>好友数:</strong> 0</li>
+                    <li><strong>帖子数:</strong> 2</li>
+                    <li><strong>主题数:</strong> 2</li>
+                    <li><strong>精华数:</strong> 0</li>
+                    <li><strong>记录数:</strong> 0</li>
+                    <li><strong>日志数:</strong> 0</li>
+                    <li><strong>相册数:</strong> 0</li>
+                    <li><strong>积分:</strong> 6</li>
+                    <li><strong>威望:</strong> 6</li>
+                    <li><strong>金钱:</strong> 12</li>
+                    <li><strong>信用:</strong> 100</li>
+                </ul>
+                <div class="user-actions">
+                    <button class="user-action-btn" onclick="addFriend()">加为好友</button>
+                    <button class="user-action-btn" onclick="sayHello()">打个招呼</button>
+                    <button class="user-action-btn primary" id="sendMsgBtn">发送消息</button>
+                </div>
+                <div class="friend-tip">请加入到我的好友中，您就可以了解我的近况，与我一起交流</div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <h3>版块导航</h3>
+        <ul>
+            <li><a href="#">天涯杂谈</a> ▾</li>
+            <li><a href="#">国际观察</a></li>
+            <li><a href="#">经济论坛</a></li>
+            <li><a href="#">莲蓬鬼话</a></li>
+            <li><a href="#">情感天地</a></li>
+            <li><a href="#">旅游休闲</a></li>
+            <li><a href="#">美食厨房</a></li>
+            <li><a href="#">房产观澜</a></li>
+            <li><a href="#">体育聚焦</a></li>
+            <li><a href="#">娱乐八卦</a></li>
+            <li><a href="#">时尚资讯</a></li>
+            <li><a href="#">职场人生</a> ▾</li>
+            <li><a href="#">股市论谈</a></li>
+            <li><a href="#">车行天下</a></li>
+            <li><a href="#">亲子中心</a></li>
+            <li><a href="#">健康生活</a> ▾</li>
+            <li><a href="#">意见建议</a></li>
+            <li><a href="#">站务管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main">
+        <div class="forum-header">
+            <div class="login-area">
+                <div class="user-info">
+                    <div class="user-avatar">陈</div>
+                    <span>chenyu0912</span>
+                    <div class="logout-btn" onclick="showToast('已退出登录')">退出</div>
+                </div>
+            </div>
+            <h1 class="forum-title">七闻论坛</h1>
+            <p class="forum-subtitle">汇聚八方声音，纵论天下大事</p>
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchInput" placeholder="搜索帖子、用户、关键词...">
+                <button class="search-button" id="searchBtn">🔍</button>
+            </div>
+        </div>
+
+        <nav class="top-nav">
+            <a href="#" class="active">首页</a>
+            <a href="#">天涯杂谈</a>
+            <a href="#">国际观察</a>
+            <a href="#">情感天地</a>
+            <a href="#">莲蓬鬼话</a>
+            <a href="#">体育聚焦</a>
+            <a href="#">经济论坛</a>
+            <div class="quick">
+                <select name="quickv">
+                    <option>快捷导航</option>
+                    <option>我的帖子</option>
+                    <option>我的回复</option>
+                    <option>我的收藏</option>
+                    <option>个人中心</option>
+                </select>
+            </div>
+        </nav>
+
+        <!-- 帖子详情区域 -->
+        <div id="forumView">
+            <a class="back-link" onclick="goBack()">← 返回搜索结果</a>
+
+            <div class="thread-container">
+                <div class="thread-header">
+                    <div class="thread-title">冷门小众旅游景点推荐 - 邺山村</div>
+                    <div class="thread-meta">
+                        <span>👤 旅游发烧者</span>
+                        <span>📅 2026-01-18</span>
+                        <span>👁️ 浏览 1286</span>
+                        <span>💬 回复 36</span>
+                    </div>
+                </div>
+                
+                <div class="thread-body">
+                    <p>上周去了一个超冷门的小村子——邺山村，真的是太值得一去了，清晨的薄雾笼罩山间，傍晚的夕阳洒在青瓦白墙上，美得像一幅水墨画。</p>
+                    <p>村子在山里，虽然风景确实不错，但村民看到游客好像都不太热情。村口有家老面馆，老板倒是挺和善的，我点了腊肉拌面和艾草煎蛋，味道真是不错。</p>
+                    <p>我去了邺山古民居群，有保存完好的明清建筑十余栋，石板老街，青石板路被岁月磨得光滑如镜，邺山湖等等，最让我震惊的是青峰云海，云雾缭绕山间，站在山顶俯瞰，云海翻腾，宛如仙境。当地人说这是"山神呼吸"的气息。</p>
+                </div>
+                
+                <div class="replies-section">
+                    <div class="replies-title">全部回复</div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('山野猎人')">山野猎人</span>
+                        <span class="reply-time">2026-01-18 09:23</span>
+                        <div class="reply-text">我也去过！如此风景真是少见。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('驴友小张')">驴友小张</span>
+                        <span class="reply-time">2026-01-18 10:57</span>
+                        <div class="reply-text">+1+1，我是24年去的，也点了腊肉拌面，回味无穷，有时间一定二刷。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('想过就哭了吗')">想过就哭了吗</span>
+                        <span class="reply-time">2026-01-18 12:05</span>
+                        <div class="reply-text">不是，出了那一档子事你们真敢去呀，哈人。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('驴友小张')">驴友小张</span>
+                        <span class="reply-time">2026-01-18 12:10</span>
+                        <div class="reply-text">@想过就哭了吗 什么意思，你别吓我。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('想过就哭了吗')">想过就哭了吗</span>
+                        <span class="reply-time">2026-01-18 12:15</span>
+                        <div class="reply-text">那边人没有给你们说邺山村后山吗</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('旅游发烧者')">旅游发烧者（作者）</span>
+                        <span class="reply-time">2026-01-18 12:16</span>
+                        <div class="reply-text">好像是说过，但是天气这么干不让游客去不是很正常吗，防止火灾。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('想过就哭了吗')">想过就哭了吗</span>
+                        <span class="reply-time">2026-01-18 12:18</span>
+                        <div class="reply-text">你还真信，只是表面说辞罢了，听说这后山失踪过不少人，到现在也没找到。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('驴友小张')">驴友小张</span>
+                        <span class="reply-time">2026-01-18 12:18</span>
+                        <div class="reply-text">我艹，真的假的？</div>
+                    </div>
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('旅游发烧者')">旅游发烧者（作者）</span>
+                        <span class="reply-time">2026-01-18 12:20</span>
+                        <div class="reply-text">经典听说，不要以谣传谣好不好！</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('灵感枯竭的菜鸡')">灵感枯竭的菜鸡</span>
+                        <span class="reply-time">2026-01-18 12:25</span>
+                        <div class="reply-text">应该不是假的，我是做记者相关专业的，有很多网站查不到的内容，我刚才也以为是骗人水经验的，结果回系统一查好像真有这回事。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('旅游发烧者')">旅游发烧者（作者）</span>
+                        <span class="reply-time">2026-01-18 12:27</span>
+                        <div class="reply-text">！你们不是合伙吓人的吧，我现在鸡皮疙瘩都起来了。</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('驴友小张')">驴友小张</span>
+                        <span class="reply-time">2026-01-18 12:28</span>
+                        <div class="reply-text">@旅游发烧者 +1.....</div>
+                    </div>
+                    
+                    <div class="reply-item">
+                        <span class="reply-author" onclick="showUserCard('灵感枯竭的菜鸡')">灵感枯竭的菜鸡</span>
+                        <span class="reply-time">2026-01-18 12:30</span>
+                        <div class="reply-text">正愁没有素材了，@想过就哭了吗 可以私信吗。</div>
+                    </div>
+                    
+                <div style="background: #FFFFE0; border: 1px solid #FFD700; border-bottom: 2px solid #FFC107; padding: 10px 14px; margin: 15px 0;">
+    <span style="background: #FFC107; color: #333; padding: 2px 8px; font-size: 12px; font-weight: bold;">⚠️ 警告</span>
+    <span style="color: #666; font-size: 12px; margin-left: 8px;">管理员 2026-01-18 12:30</span>
+    <div style="color: #D32F2F; font-size: 13px; margin-top: 8px;">
+        ❗ 该帖内容违规，已被封禁
+    </div>
+</div>
+
+<div style="background: #FFF9C4; border: 1px solid #FBC02D; border-radius: 4px; padding: 28px; text-align: center; margin: 20px 0;">
+    <div style="font-size: 48px; margin-bottom: 8px;">⛔</div>
+    <p style="font-size: 15px; font-weight: bold; color: #E65100;">本主题禁止回复</p>
+    <p style="font-size: 12px; color: #F57C00;">因违反版规，该帖已被锁定</p>
+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 私信界面 -->
+        <div id="privateView" style="display: none;">
+            <div class="private-message-container">
+                <div class="chat-sidebar">
+                    <div class="sidebar-header">
+                        <h3>💬 消息列表</h3>
+                    </div>
+                    <div class="chat-list">
+                        <div class="chat-item" onclick="switchChat('admin')" id="chat-item-admin">
+                            <div class="chat-avatar admin">管</div>
+                            <div class="chat-info">
+                                <div class="chat-name">论坛管理员<span class="online-badge"></span></div>
+                                <div class="chat-preview">亲爱的新用户：您好！欢迎注册...</div>
+                                <div class="chat-time">2026-01-18</div>
+                            </div>
+                        </div>
+                        <div class="chat-item" onclick="switchChat('xiangguo')" id="chat-item-xiangguo">
+                            <div class="chat-avatar xiangguo">想</div>
+                            <div class="chat-info">
+                                <div class="chat-name">想过就哭了吗<span class="online-badge"></span></div>
+                                <div class="chat-preview">挺懂算不上，就是出事这个人...</div>
+                                <div class="chat-time">2026-01-18</div>
+                            </div>
+                        </div>
+                        <div class="chat-item" onclick="switchChat('lvyou')" id="chat-item-lvyou">
+                            <div class="chat-avatar lvyou">驴</div>
+                            <div class="chat-info">
+                                <div class="chat-name">驴友小张<span class="online-badge"></span></div>
+                                <div class="chat-preview">兄弟你们是开玩笑对吧？</div>
+                                <div class="chat-time">2026-01-18</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-main">
+                    <div id="chat-admin" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                        <div class="chat-header">
+                            <div class="chat-header-avatar admin">管</div>
+                            <div class="chat-header-info">
+                                <div class="chat-header-name">论坛管理员</div>
+                                <div class="chat-header-status"><span class="online-badge"></span> 在线 · 官方账号</div>
+                            </div>
+                            <button class="back-to-forum" onclick="showForum()">← 返回论坛</button>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="message-row message-left">
+                                <div class="message-avatar admin">管</div>
+                                <div class="message-bubble">亲爱的新用户：<br>您好！欢迎注册加入本论坛，感谢您的信任与选择。<br>这里是交流分享、互助成长、理性友善的公共平台，我们致力于为大家营造文明、合规、有序的沟通环境。请您在发布内容、参与互动时，遵守法律法规及论坛管理规定，尊重他人、理性发言，不传播违规、低俗、侵权内容。<br>如有使用疑问、功能建议或需要帮助，可随时联系论坛管理员。期待与您一起，共建积极健康、有温度、有价值的社区氛围。祝您在论坛交流愉快！<br>论坛管理组 官方敬上。</div>
+                            </div>
+                            <div class="message-time">2026-01-18 14:30</div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" placeholder="输入消息..." value="输入消息..." disabled>
+                            <button disabled>发送</button>
+                        </div>
+                    </div>
+
+                    <div id="chat-xiangguo" style="display: none; flex-direction: column; height: 100%; width: 100%;">
+                        <div class="chat-header">
+                            <div class="chat-header-avatar xiangguo">想</div>
+                            <div class="chat-header-info">
+                                <div class="chat-header-name">想过就哭了吗</div>
+                                <div class="chat-header-status"><span class="online-badge"></span>离线</div>
+                            </div>
+                            <button class="back-to-forum" onclick="showForum()">← 返回论坛</button>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="message-row message-right"><div class="message-bubble">您好，刚才邺山村那帖子您看到了吧？官方动作是真快，发出来没几分钟就封了。我是做记者的，看您好像知道些内幕，方便的话可以提供点线索吗？</div></div>
+                            <div class="message-time">2026-01-18 12:35</div>
+                            <div class="message-row message-left"><div class="message-avatar xiangguo">想</div><div class="message-bubble">内幕谈不上。就是好几年前我有一个远方亲戚也去了那里旅游，结果失踪了到现在连人也没找到，后来道听途说那里失踪过不少人。</div></div>
+                            <div class="message-time">2026-01-18 12:40</div>
+                            <div class="message-row message-right"><div class="message-bubble">的确有点离奇，OK，等过了年，我去一趟看看，感谢您的消息。</div></div>
+                            <div class="message-time">2026-01-18 12:42</div>
+                            <div class="message-row message-left"><div class="message-avatar xiangguo">想</div><div class="message-bubble">哥们，你是真牛逼，这是明知山有虎偏向虎山行，行，别怪我没说过。</div></div>
+                            <div class="message-time">2026-01-18 12:45</div>
+                            <div class="message-row message-right"><div class="message-bubble">没有办法，现在有个素材，就有无数媒体记者凑上去，吃的一点不剩，狼多肉少呀，现在这个素材估计就我知道，我要把握好这个机会。</div></div>
+                            <div class="message-time">2026-01-18 12:48</div>
+                            <div class="message-row message-left"><div class="message-avatar xiangguo">想</div><div class="message-bubble">......没啥好说的了哥们，安全最重要。</div></div>
+                            <div class="message-time">2026-01-18 12:50</div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" placeholder="输入消息..." value="输入消息..." disabled>
+                            <button disabled>发送</button>
+                        </div>
+                    </div>
+
+                    <div id="chat-lvyou" style="display: none; flex-direction: column; height: 100%; width: 100%;">
+                        <div class="chat-header">
+                            <div class="chat-header-avatar lvyou">驴</div>
+                            <div class="chat-header-info">
+                                <div class="chat-header-name">驴友小张</div>
+                                <div class="chat-header-status"><span class="online-badge"></span> 离线</div>
+                            </div>
+                            <button class="back-to-forum" onclick="showForum()">← 返回论坛</button>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="message-row message-left"><div class="message-avatar lvyou">驴</div><div class="message-bubble">兄弟你们是开玩笑对吧？</div></div>
+                            <div class="message-row message-right"><div class="message-bubble">兄弟要不我把我的记者证亮出来。</div></div>
+                  
+                            <div class="message-row message-left"><div class="message-avatar lvyou">驴</div><div class="message-bubble">啊啊啊，要把邺山村放到我旅游黑名单了。</div></div>
+                       
+                            <div class="message-row message-right"><div class="message-bubble">哈哈，不用这么害怕，哪里不会发生一些事情呀，对了兄弟你有没有什么线索可以分享的。</div></div>
+                        
+                            <div class="message-row message-left"><div class="message-avatar lvyou">驴</div><div class="message-bubble">emm，线索，没有啥线索，当时我是看小红书上的帖子去的。</div></div>
+                        
+                            <div class="message-row message-right"><div class="message-bubble">可以麻烦转发一下吗。</div></div>
+                           
+                            <div class="message-row message-left"><div class="message-avatar lvyou">驴</div><div class="message-bubble">我找找哈</div></div>
+                          
+                             <div class="message-row message-left"><div class="message-avatar lvyou">驴</div><div class="message-bubble">找到了<a href="xhs.html" onclick="showToast()">https://www.xiaohongshu.com/user/profile/5e81770300000000010030bb </a></div></div>
+                          
+                            <div class="message-row message-right"><div class="message-bubble">好的，谢谢啦，有消息再联系。</div></div>
+                         
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" placeholder="输入消息..." value="输入消息..." disabled>
+                            <button disabled>发送</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTargetUser = '';
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 1500);
+        }
+        
+        function showUserCard(username) {
+            currentTargetUser = username;
+            let firstChar = username.charAt(0);
+            if (username.includes('作者')) firstChar = '作';
+            if (username === '灵感枯竭的菜鸡') firstChar = '灵';
+            if (username === '论坛管理员') firstChar = '管';
+            document.getElementById('cardAvatar').textContent = firstChar;
+            document.getElementById('cardUsername').textContent = username;
+            document.getElementById('userCardModal').style.display = 'flex';
+        }
+        
+        function closeUserCard() {
+            document.getElementById('userCardModal').style.display = 'none';
+        }
+        
+        function addFriend() {
+            showToast(`已向 ${currentTargetUser} 发送好友申请`);
+        }
+        
+        function sayHello() {
+            showToast(`已向 ${currentTargetUser} 打个招呼`);
+        }
+        
+        // 发送消息 - 跳转到私信界面
+        function sendMessageTo() {
+            closeUserCard();
+            document.getElementById('forumView').style.display = 'none';
+            document.getElementById('privateView').style.display = 'block';
+            
+            if (currentTargetUser === '想过就哭了吗') {
+                switchChat('xiangguo');
+                document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+                document.getElementById('chat-item-xiangguo').classList.add('active');
+            } else if (currentTargetUser === '驴友小张') {
+                switchChat('lvyou');
+                document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+                document.getElementById('chat-item-lvyou').classList.add('active');
+            } else {
+                switchChat('admin');
+                document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+                document.getElementById('chat-item-admin').classList.add('active');
+            }
+        }
+        
+        function switchChat(chatId) {
+            document.getElementById('chat-admin').style.display = 'none';
+            document.getElementById('chat-xiangguo').style.display = 'none';
+            document.getElementById('chat-lvyou').style.display = 'none';
+            document.getElementById(`chat-${chatId}`).style.display = 'flex';
+        }
+        
+        function showForum() {
+            document.getElementById('forumView').style.display = 'block';
+            document.getElementById('privateView').style.display = 'none';
+        }
+        
+        function goBack() {
+            window.location.href = 'luntan1.html';
+        }
+        
+        function doSearch() {
+            const keyword = document.getElementById('searchInput').value.trim();
+            if (keyword === '') { showToast('请输入搜索关键词'); return; }
+            if (keyword === '邺山村') { showToast('已找到关于邺山村的内容'); }
+            else { showToast(`搜索“${keyword}”暂无结果`); }
+        }
+        
+        document.getElementById('searchBtn').addEventListener('click', doSearch);
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') doSearch();
+        });
+        
+        document.querySelectorAll('.sidebar a, .top-nav a').forEach(link => {
+            link.addEventListener('click', function(e) { e.preventDefault(); showToast('功能开发中'); });
+        });
+        
+        document.querySelector('.quick select')?.addEventListener('change', function() {
+            showToast('功能开发中');
+            this.selectedIndex = 0;
+        });
+        
+        document.getElementById('sendMsgBtn').addEventListener('click', sendMessageTo);
+        
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('userCardModal')) closeUserCard();
+        }
+    </script>
+</body>
+</html>

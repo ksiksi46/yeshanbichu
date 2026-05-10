@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>邺山寺 · 窅字幽影 · 古本残册</title>
+    <style>
+        /* --- 古旧行书字体库 · 安心晨行书 --- */
+        @font-face {
+           font-family: 'LXGWenKai';  /* 霞鹜文楷，很美观 */
+    src: url('LXGWWenKai-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* 全局重置：深黄古纸背景，仿裱褙旧气 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #dac292;        /* 外围老化檀色 */
+            font-family:'华文行书', 'STXingkai', 'KaiTi', '楷体', 'Times New Roman', serif;
+            color: #2f2a22;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        /* 主容器：古书册页质感，无标题区域无脚注 */
+        .ancient-scroll {
+            max-width: 980px;
+            margin: 0 auto;
+            background-color: #f9efcf;          /* 老宣纸米黄 */
+            /* 细微杂点＋纤维纸纹，增强古旧纸张感 */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" opacity="0.12"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.4"/></svg>');
+            background-repeat: repeat;
+            background-size: 320px 240px;
+            background-blend-mode: multiply;
+            padding: 2.2rem 2.8rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: none;
+            transition: all 0.2s;
+        }
+
+        /* 高清屏叠印细密纸纹 */
+        @media (min-resolution: 2dppx) {
+            .ancient-scroll {
+                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" opacity="0.1"><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" /><feDiffuseLighting in="noise" lighting-color="#fff" surfaceScale="1.5" result="light"><feDistantLight azimuth="45" elevation="60" /></feDiffuseLighting><feComposite in="SourceGraphic" in2="light" operator="arithmetic" k1="0.8" k2="0.2" k3="0" k4="0"/></filter><rect width="100%" height="100%" filter="url(%23paper)" opacity="0.15"/></svg>');
+                background-size: 280px 200px;
+            }
+        }
+
+        /* 正文区域：放大字体，古籍疏朗感 */
+        .prose {
+            font-size: 1.8rem;
+            text-align: justify;
+            word-break: break-word;
+        }
+
+        .prose p {
+            margin-bottom: 1.3rem;
+            text-indent: 2em;
+            line-height: 1.8;
+            letter-spacing: 0.012em;
+        }
+
+       .prose1 {
+    font-size: 5rem;
+    text-align: center;
+    word-break: break-word;
+    color: #8b2c1a;                    /* 暗红色主色 */
+    
+    /* 文字描边（兼容多数现代浏览器） */
+    -webkit-text-stroke-width: 0.8px;  /* 描边粗细 */
+    -webkit-text-stroke-color: #3a1a0c; /* 描边颜色（深褐/近黑） */
+    
+    /* 文字阴影（层次感，非发光特效） */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+ .blur-unselectable {
+    filter: blur(15px);           /* 模糊程度，可调整 */
+    display: inline-block;
+    user-select: none;           /* 标准：无法选中 */
+    -webkit-user-select: none;   /* Safari/Chrome */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    pointer-events: none;        /* 可选：阻止鼠标交互，进一步防止复制行为 */
+  }
+
+        /* 石刻文字样式 —— “奉人”保持清晰，而“窅”字独立添加模糊效果 */
+        .stone-words {
+            font-weight: 560;
+            font-size: 1.32rem;
+            color: #3c2d1b;
+            background: none;
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+        }
+        
+        .special-glyph {
+            font-weight: 560;
+            letter-spacing: 0.02em;
+        }
+        
+       
+        
+        /* 为了保留古书真实感，模糊不可太过剧烈，保留可读性与神秘之间平衡 */
+        /* 同时为了兼容不同浏览器，增加模糊平滑度 */
+        
+        /* 完全隐藏任何标题/脚注区域 —— 绝对无残留 */
+        .title-section, .main-title, .sub, .colophon, [class*="title"], [class*="colophon"], .subtitle, .footer, .signature {
+            display: none !important;
+        }
+
+        /* 手机适配：字体比例稍调，模糊相应微调保证辨识 */
+        @media (max-width: 680px) {
+            .ancient-scroll {
+                padding: 1.5rem 1.2rem;
+            }
+            .prose {
+                font-size: 1.1rem;
+            }
+            .stone-words {
+                font-size: 1.16rem;
+            }
+            .blur-glyph {
+                filter: blur(1.8px) drop-shadow(0 0 1px rgba(60,45,27,0.2));
+            }
+        }
+        
+        /* 选中仿古籍墨色 */
+        ::selection {
+            background-color: #cbb67e;
+            color: #2b241a;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">34/39</div>
+<div class="ancient-scroll">
+    <div class="prose">
+        <p>邺山之阳，去村三里许，有寺焉。寺无名，村人但呼为邺山寺。寺之始建，岁月莫考。断碑残础，无文可寻；邑乘阙如，家谱不载。檐瓦剥落，苔绣斑斑；门扉半朽，阖之有声。</p>
+        
+        <!-- 此处 “窅” 字应用模糊幽邃特效，其余文字如常，奉人保持清晰(符合原文灵异显现之后的反差) -->
+        <p>正殿不供佛，不奉道，中设一石龛。龛中供石，石上有字曰：<span style="filter: blur(4px); ">窅</span>。其字非镌非铸，若有自而生。凹处幽邃，烛照而不见底，目注而若将迷。村人莫知其神，因呼为“<span style="filter: blur(4px); ">窅</span>爷”。</p>
+        
+        <p>初时村人淳朴，但祈岁时丰稔、闾里平安。每岁春分秋分，携新谷一升、山果五枚、清泉一盏，供于石前。供毕，退行三步，不拜不揖，默然而返。</p>
+        
+        <p>其后渐有求者。或求田产，或求货利，或祈生男，或诅对头。凡所求者，无不遂；遂者，无不验。于是四方渐闻，入寺者日众，供品日丰。自一升新谷，至一斗；自一斗，至酒肉；自酒肉，至整羊豕。窅爷不受叩首，然受其享。</p>
+        
+        <p>又数年，供品虽极丰腆，灵验渐稀。求田者田不至，求财者财不来，有诅其仇者，仇反擢为里正。入寺者窃语曰：“<span style="filter: blur(4px); ">窅</span>爷其不灵乎？”老人呵之曰：“勿妄言，尔心不诚耳。”于是供品愈丰。一羊不足，三羊；三羊不足，整豕；整豕不足，乃杀牛。牛者耕田之本，律禁私宰，然夜半无人知。灵验终不至。</p>
+        
+        <p>村人焦灼，夜不能寐。有连夜跪祷于石前者，跪至旦，寂然无应；有倾家财以奉供者，供至月晦，所求如故。渐而人迹稀矣。非不欲求，实不知所以求也。</p>
+        
+        <p>是年夏末，大旱月余，田禾尽槁。村老率众入寺，陈三牲，焚楮币，跪祷三日三夜。第三日薄暮，天边忽起乌云，夜半大雨如注。村人相庆，以为<span style="filter: blur(4px); ">窅</span>爷终应其祷，或泣或笑。</p>
+        
+        <!-- 后半段窅字与奉人二字：窅字依然保留模糊（因其本体即是神秘之源），奉人字样清晰无模糊，体现神谕昭然 -->
+        <p>明日雨霁，有人携香入谢。方入殿，即惊愕不前——但见石上“<span style="filter: blur(4px); ">窅</span>”字之旁，凭空又多二字，深浅与旧字类，若镌若生，曰：奉人。</p>
+        
+        
+    </div>
+    <!-- 无标题、无落款、无页脚，完全符合要求 -->
+    <div class="prose1">
+  无求自应，
+  <span class="blur-unselectable">必先奉之</span>
+</div>
+
+
+</body>
+</html>

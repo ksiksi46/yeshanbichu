@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>赐福·祭祀详情 - 邺山村村民委员会</title>
+    <meta name="keywords" content="赐福,祭祀,邺山,祈福" />
+    <meta name="description" content="邺山村祭祀赐福详情" />
+    
+    <style type="text/css">
+        /* 全局黑白滤镜 + 黑底白字 */
+        html {
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+        }
+        html {
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body { 
+            background-color: #eaf1f7; 
+             font-family: 'AnJingChenXingShu', '华文行书', 'STXingkai', 'KaiTi', '楷体', 'Times New Roman', serif;
+            font-size: 14px; 
+            color: #333; 
+        }
+        a { text-decoration: none; color: #333; }
+        a:hover { color: #c00; text-decoration: underline; }
+        .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+        .clearfix { display: block; }
+        .fl { float: left; }
+        .fr { float: right; }
+
+        /* ==================== 整体布局 ==================== */
+        .wrapper { width: 1200px; margin: 0 auto; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        /* 顶部栏 */
+        .top-bar { height: 35px; line-height: 35px; background: #f7f7f7; border-bottom: 1px solid #ddd; font-size: 12px; color: #666; padding: 0 20px; }
+        .top-bar a { color: #666; margin: 0 5px; }
+        
+        /* 头部 */
+        .header { height: 180px; background: #c8161d; position: relative; }
+        .logo-text { position: absolute; top: 45px; left: 170px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .logo-text h1 { font-size: 48px; letter-spacing: 5px; font-weight: bold; font-family: "SimHei", "黑体"; }
+        .logo-text p { font-size: 20px; letter-spacing: 15px; margin-top: 5px; font-family: "KaiTi", "楷体"; }
+        
+        /* 导航栏 */
+        .nav { height: 50px; background: #004b97; }
+        .nav ul { width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; list-style: none; }
+        .nav li a { display: block; color: #fff; font-size: 18px; font-weight: bold; line-height: 50px; padding: 0 25px; font-family: "SimHei", "黑体"; }
+        .nav li a:hover, .nav li.active a { background: #003366; text-decoration: none; }
+        
+        /* 面包屑 */
+        .breadcrumb { padding: 12px 20px; background: #f9f9f9; border-bottom: 1px solid #eee; font-size: 14px; }
+        .breadcrumb a { color: #333; }
+        .breadcrumb a:hover { color: #c8161d; }
+        .breadcrumb .current { color: #c8161d; font-weight: bold; }
+        
+        /* 主体内容区 */
+        .main-container { padding: 20px; min-height: 500px; }
+        
+        /* 详情区 */
+        .detail-area { 
+            width: 900px; 
+            margin: 0 auto; 
+        }
+        
+        /* 祭祀详情卡片 - 黑底白字风格 */
+        .blessing-container {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 0px;
+        }
+        .inner-padding {
+            padding: 35px 40px 45px;
+        }
+        .title-section {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 18px;
+        }
+        .title-section h1 {
+            font-size: 32px;
+            font-family: "SimHei", "黑体";
+            color: #ffffff;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+        .detail-card {
+            background: #111111;
+            border-left: 4px solid #666;
+            margin: 25px 0;
+            padding: 20px 25px;
+        }
+        .detail-row {
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2a2a2a;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .detail-label {
+            width: 110px;
+            font-weight: bold;
+            color: #cccccc;
+            font-family: "SimHei", "黑体";
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+        .detail-value {
+            flex: 1;
+            color: #ffffff;
+            font-size: 18px;
+            font-family: "SimSun", "宋体";
+            font-weight: 500;
+        }
+        .bazi-highlight {
+            font-family: "Courier New", monospace;
+            letter-spacing: 2px;
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 17px;
+            color: #ffffff;
+        }
+        .ritual-status {
+            color: #ffaa66;
+            font-weight: bold;
+        }
+        .notice-ritual {
+            background: #0d0d0d;
+            padding: 18px 22px;
+            margin: 25px 0 20px;
+            text-align: center;
+            border: 1px solid #2a2a2a;
+        }
+        .countdown-box {
+            font-size: 16px;
+            color: #ccccaa;
+            margin-top: 12px;
+            font-family: "SimHei", "黑体";
+        }
+        .countdown-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffaa66;
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 4px 16px;
+            margin: 0 6px;
+            letter-spacing: 2px;
+            font-family: monospace;
+        }
+        .seal-mark {
+            text-align: right;
+            margin-top: 35px;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a2a;
+            font-size: 14px;
+            color: #888888;
+            font-family: "KaiTi", "楷体";
+        }
+        .print-btn { text-align: center; margin: 30px 0 20px; }
+        .print-btn button { 
+            padding: 8px 25px; 
+            background: #2a2a2a; 
+            color: #fff; 
+            border: 1px solid #444; 
+            cursor: pointer; 
+            font-size: 14px; 
+            border-radius: 4px; 
+            margin: 0 5px; 
+        }
+        .print-btn button:hover { background: #444; }
+        
+        /* 页脚 */
+        .footer { background: #0a0a0a; border-top: 1px solid #333; padding: 30px 0; margin-top: 20px; }
+        .footer-content { width: 1000px; margin: 0 auto; text-align: center; }
+        .footer-text { font-family: "SimSun"; font-size: 12px; line-height: 24px; color: #777; }
+        .footer-text span { margin: 0 10px; }
+        .footer-text a { color: #888; }
+        .footer-text a:hover { color: #fff; }
+        
+        /* 返回顶部 */
+        #goTop { 
+            position: fixed; 
+            right: 30px; 
+            bottom: 50px; 
+            width: 45px; 
+            height: 45px; 
+            background: #2a2a2a; 
+            color: #fff; 
+            text-align: center; 
+            line-height: 45px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: none; 
+            transition: all 0.3s; 
+            font-size: 20px; 
+            border: 1px solid #444;
+        }
+        #goTop:hover { background: #444; }
+        .prose1 {
+    font-size: 5rem;
+    text-align: center;
+    word-break: break-word;
+    color: #8b2c1a;                    /* 暗红色主色 */
+    
+    /* 文字描边（兼容多数现代浏览器） */
+    -webkit-text-stroke-width: 0.8px;  /* 描边粗细 */
+    -webkit-text-stroke-color: #3a1a0c; /* 描边颜色（深褐/近黑） */
+    
+    /* 文字阴影（层次感，非发光特效） */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+ .blur-unselectable {
+    filter: blur(15px);           /* 模糊程度，可调整 */
+    display: inline-block;
+    user-select: none;           /* 标准：无法选中 */
+    -webkit-user-select: none;   /* Safari/Chrome */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    pointer-events: none;        /* 可选：阻止鼠标交互，进一步防止复制行为 */
+  }
+    </style>
+</head>
+<body>
+        <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">36/39</div>
+
+<div class="wrapper">
+    <!-- 顶部栏 - 与list.html同款 -->
+    <div class="top-bar">
+        <div class="fl">
+            <span id="date-str"></span>
+        </div>
+        <div class="fr">
+            <a href="#" onclick="alert('功能维护中')">设为首页</a> | 
+            <a href="#" onclick="alert('请使用浏览器收藏功能')">加入收藏</a>
+        </div>
+    </div>
+
+    <!-- 头部 - 与list.html同款 -->
+    <div class="header">
+        <div style="position: absolute; top: 30px; left: 30px;">
+            <img src="images/符咒.webp" alt="邺山村标识" style="height: 100px; width: auto;" onerror="this.src='https://placehold.co/100x100/333/white?text=邺山'">
+        </div>
+        <div class="logo-text" style="margin-left: 120px;">
+            <h1>奉自祈福 窅报邺山</h1>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <ul class="clearfix">
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#" class="active">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+            <li><a href="#">奉</a></li>
+        </ul>
+    </div>
+
+    <!-- 主体内容 -->
+    <div class="main-container">
+        <div class="detail-area">
+            <div class="blessing-container">
+                <div class="inner-padding">
+                    <div class="title-section">
+                        <h1>祈 福 之 祀</h1>
+                    </div>
+
+                    <!-- 祭祀/祈福详情核心区域 -->
+                    <div class="detail-card">
+                        <div class="detail-row">
+                            <div class="detail-label">祈福之物：</div>
+                            <div class="detail-value">陈宇</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">生辰八字：</div>
+                            <div class="detail-value">
+                                <span class="bazi-highlight">乙卯 丁巳 己未 辛酉</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">祈福之礼：</div>
+                            <div class="detail-value"><span class="ritual-status">毕</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">祀典吉期：</div>
+                            <div class="detail-value">奉天承运 · 将于 <strong style="color:#ffaa66;">一日后</strong> 行祈福仪式</div>
+                        </div>
+                    </div>
+
+                    <!-- 倒计时 + 祈福提示 -->
+                    <div class="notice-ritual">
+                        <p style="font-size: 16px; margin-bottom: 8px;">吉日将至 </p>
+                        <div class="countdown-box">
+                            <span class="countdown-number" id="countdownTimer">-- 时 -- 分 -- 秒</span>
+                        </div>
+                  
+                    
+                  
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 无标题、无落款、无页脚，完全符合要求 -->
+    <div class="prose1">
+  <span class="blur-unselectable">无求自应</span>
+  ，必先奉之
+</div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                <p>【解谜游戏】本页面为虚构内容，所有名称、事件、文件均为架空设定，与现实无关</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div id="goTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+</div>
+
+<script type="text/javascript">
+    // 显示当前日期
+    (function() {
+        var dateObj = new Date();
+        var year = dateObj.getFullYear();
+        var month = dateObj.getMonth() + 1;
+        var date = dateObj.getDate();
+        var dayArr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        var day = dayArr[dateObj.getDay()];
+        var dateSpan = document.getElementById("date-str");
+        if(dateSpan) dateSpan.innerHTML = year + "年" + month + "月" + date + "日 " + day;
+    })();
+
+    // 返回顶部按钮显示隐藏
+    window.addEventListener('scroll', function() {
+        var goTop = document.getElementById('goTop');
+        if (goTop) {
+            if (window.scrollY > 300) goTop.style.display = 'block';
+            else goTop.style.display = 'none';
+        }
+    });
+
+    // 倒计时: 一日后
+    function startCountdown() {
+        const now = new Date();
+        const target = new Date(now);
+        target.setDate(target.getDate() + 1);
+        
+        function updateTimer() {
+            const current = new Date();
+            const diffMs = target - current;
+            if (diffMs <= 0) {
+                const timerSpan = document.getElementById('countdownTimer');
+                if (timerSpan) timerSpan.innerHTML = "祈福大典正在进行";
+                return;
+            }
+            const totalSeconds = Math.floor(diffMs / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const timerSpan = document.getElementById('countdownTimer');
+            if (timerSpan) {
+                timerSpan.innerHTML = `${hours.toString().padStart(2, '0')} 时 ${minutes.toString().padStart(2, '0')} 分 ${seconds.toString().padStart(2, '0')} 秒`;
+            }
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+    
+    // 接收URL参数
+    (function initFromParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const recordTitle = urlParams.get('title');
+        if (recordTitle) {
+            const sealDiv = document.querySelector('.seal-mark');
+            if (sealDiv) {
+                const extraRef = document.createElement('div');
+                extraRef.style.marginTop = '8px';
+                extraRef.style.fontSize = '12px';
+                extraRef.style.color = '#888';
+                extraRef.innerHTML = `※ 承应「${decodeURIComponent(recordTitle)}」名录 · 吉日相衔`;
+                sealDiv.appendChild(extraRef);
+            }
+        }
+    })();
+    
+    startCountdown();
+</script>
+</body>
+</html>

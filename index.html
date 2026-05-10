@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="邺山彼处 - 中式民俗恐怖解谜游戏">
+    <title>邺山彼处</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f0e8;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Georgia', serif;
+            color: #2c2a27;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* 全屏首图容器 — 改为普通块级，不固定，下滑正常滚动 */
+        .hero-screen {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #f5f0e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+            filter: brightness(0.98) contrast(1.02);
+        }
+
+        /* 简单提示下滑（首图期间微交互） */
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 10;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: rgba(60, 50, 40, 0.7);
+            font-family: 'Inter', monospace;
+            text-transform: uppercase;
+            background: none;
+            pointer-events: none;
+            animation: gentlePulse 1.8s infinite;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { opacity: 0.5; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(6px); }
+        }
+
+        /* 主要内容区域 — 米白底 */
+        .main-content {
+            background: #f5f0e8;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 80px;
+        }
+
+        /* 游戏玩法区 */
+        .gameplay-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 100px 32px 80px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #8b765c;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .gameplay-title {
+            font-size: 44px;
+            font-weight: 450;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #3a3228;
+            margin-bottom: 48px;
+            letter-spacing: -0.5px;
+            border-left: 2px solid #ba9e7b;
+            padding-left: 24px;
+        }
+
+        .gameplay-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            justify-content: space-between;
+        }
+
+        .gameplay-card {
+            flex: 1;
+            min-width: 220px;
+            background: #faf7f0;
+            padding: 28px 24px;
+            border-radius: 4px;
+            border-bottom: 1px solid #e0d6c8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .gameplay-card h3 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #5e4b34;
+        }
+
+        .gameplay-card p {
+            font-size: 15px;
+            line-height: 1.65;
+            color: #6b5e4e;
+        }
+
+        /* 游戏简介区 */
+        .intro-section {
+            max-width: 960px;
+            margin: 60px auto 80px;
+            padding: 0 28px;
+            text-align: center;
+        }
+
+        .intro-quote {
+            font-size: 24px;
+            font-weight: 380;
+            line-height: 1.5;
+            font-family: 'Georgia', serif;
+            color: #5e4b34;
+            margin-bottom: 32px;
+            font-style: normal;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            color: #6b5e4e;
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* 按钮区域 */
+        .button-area {
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .enter-btn {
+            background: none;
+            border: 1px solid #ba9e7b;
+            padding: 14px 42px;
+            font-size: 14px;
+            letter-spacing: 4px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #5e4b34;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .enter-btn:hover {
+            background-color: #ba9e7b;
+            color: #f5f0e8;
+            border-color: #ba9e7b;
+        }
+
+        /* 变黑过渡层 */
+        .fade-black {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.2s ease;
+        }
+
+        .fade-black.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #a39682;
+            margin-top: 100px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 800px) {
+            .gameplay-title {
+                font-size: 32px;
+                padding-left: 18px;
+            }
+            .gameplay-card h3 {
+                font-size: 18px;
+            }
+            .intro-quote {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 全屏首图：作为页面顶部区块，下滑时自然滚动，不会消失 -->
+<div id="heroScreen" class="hero-screen">
+    <img class="hero-image" src="images/封面.webp" alt="邺山彼处 · 青山古村">
+    <div class="scroll-hint">∞ 向 下 滑 动 ∞</div>
+</div>
+
+<!-- 变黑跳转过渡层 -->
+<div id="fadeOverlay" class="fade-black"></div>
+
+<!-- 以下为主内容 -->
+<div class="main-content" id="mainContent">
+    <!-- 游戏玩法区 -->
+    <div class="gameplay-section">
+        <div class="section-label">· 游 戏 玩 法 ·</div>
+        <div class="gameplay-title">网页解密<br>揭开秘密</div>
+        <div class="gameplay-grid">
+            <div class="gameplay-card">
+                <h3>⇀ 探 寻</h3>
+                <p>在各个网页，网站中搜索信息，找到线索，从碎片中拼凑出完整的真相。每一次点击都是一次靠近答案的尝试。进入游戏后右上角的图标代表游戏流程，数字越大越接近真相。</p>
+            </div>
+            <div class="gameplay-card">
+                <h3>⇀ 搜 索</h3>
+                <p>利用好搜索功能，输入关键词，在海量信息中精准定位，让搜索不止于“找到”，更接近“有用”。（02,09,24，29均具备搜索功能）</p>
+            </div>
+            <div class="gameplay-card">
+                <h3>⇀ 记 录</h3>
+                <p>保存关键信息，整理碎片线索，让思路不再混乱。记录不是终点，而是通往答案的必经之路。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏简介 -->
+    <div class="intro-section">
+        <div class="intro-quote">「 暗流之下有真相，涉水前行见风光 」</div>
+        <div class="intro-text">
+            <p>《邺山彼处》是一款网页解谜游戏。一天，你意外收到好朋友求救信息，他为了某些事情来到了邺山村，但是却离奇失踪，没了音讯。警方搜索没有结果，但是你却不认为是简简单单的失踪，因为他最后一条信息让你起了疑心，认为背后一定藏有什么秘密。。。点开“走进邺山”开始探索真相，揭开秘密</p>。
+            <p>（提醒：本游戏中含有略恐元素，音效。做好准备）</p>
+        </div>
+    </div>
+
+    <!-- 按钮：走进邺山 -->
+    <div class="button-area">
+        <button id="enterBtn" class="enter-btn">走 进 邺 山</button>
+    </div>
+    <div class="footer-note">© 邺山旧事制作组 · 窥窅者慎行</div>
+</div>
+
+<script>
+    (function() {
+        const hero = document.getElementById('heroScreen');
+        const mainContent = document.getElementById('mainContent');
+        const enterButton = document.getElementById('enterBtn');
+        const fadeOverlay = document.getElementById('fadeOverlay');
+        
+        // 主内容默认可见（因为图片已作为普通区块，无需淡入效果）
+        mainContent.style.opacity = '1';
+        mainContent.style.transform = 'translateY(0)';
+        
+        // 走进邺山按钮：屏幕逐渐变黑然后跳转
+        const targetUrl = '微信.html';
+        
+        enterButton.addEventListener('click', function(e) {
+            if (fadeOverlay.classList.contains('active')) return;
+            fadeOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 1000);
+        });
+    })();
+</script>
+</body>
+</html>

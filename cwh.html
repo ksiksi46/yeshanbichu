@@ -1,0 +1,616 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>邺山村村民委员会门户网站</title>
+    <meta name="keywords" content="邺山村,邺山乡政府,村务公开,乡村振兴,便民服务" />
+    <meta name="description" content="邺山村政务公开门户网，提供最新乡村振兴资讯、财务公开及便民服务。" />
+    
+    <style type="text/css">
+        /* ==================== 基础重置 ==================== */
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td { margin: 0; padding: 0; }
+        body { 
+            background-color: #eaf1f7; 
+            font-family: "Microsoft YaHei", "微软雅黑", "SimSun", "宋体", sans-serif; 
+            font-size: 14px; 
+            color: #333; 
+        }
+        table { border-collapse: collapse; border-spacing: 0; }
+        fieldset, img { border: 0; }
+        address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; font-weight: normal; }
+        ol, ul { list-style: none; }
+        caption, th { text-align: left; }
+        a { text-decoration: none; color: #333; }
+        a:hover { color: #c00; text-decoration: underline; }
+        .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+        .clearfix { display: inline-block; }
+        * html .clearfix { height: 1%; }
+        .clearfix { display: block; }
+        .fl { float: left; }
+        .fr { float: right; }
+
+        /* ==================== 字体变量池 ==================== */
+        .font-song { font-family: "SimSun", "宋体", serif; }
+        .font-hei { font-family: "SimHei", "黑体", sans-serif; }
+        .font-kai { font-family: "KaiTi", "楷体", "STKaiti", serif; }
+
+        /* ==================== 整体布局 ==================== */
+        .wrapper { width: 1200px; margin: 0 auto; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        .top-bar { height: 35px; line-height: 35px; background: #f7f7f7; border-bottom: 1px solid #ddd; font-size: 12px; color: #666; padding: 0 20px; }
+        .top-bar a { color: #666; margin: 0 5px; }
+        
+        .header { height: 180px; background: #c8161d url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="bg" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 10L10 0ZM-1 1L1 -1ZM9 11L11 9" stroke="%23b01319" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23bg)"/></svg>'); position: relative; }
+        .logo-text { position: absolute; top: 45px; left: 50px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .logo-text h1 { font-size: 48px; letter-spacing: 5px; font-weight: bold; font-family: "SimHei", "黑体"; }
+        .logo-text p { font-size: 20px; letter-spacing: 15px; margin-top: 5px; font-family: "KaiTi", "楷体"; }
+        .search-box { position: absolute; top: 70px; right: 50px; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; }
+        .search-box input { width: 250px; height: 40px; line-height: 30px; border: 1px solid #fff; padding: 0 10px; outline: none; }
+        .search-box button { height: 40px; padding: 0 20px; background: #fff; color: #c8161d; border: none; cursor: pointer; font-weight: bold; }
+
+        .nav { height: 50px; background: #004b97; }
+        .nav ul { width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; }
+        .nav li { float: left; position: relative; }
+        .nav li a { display: block; color: #fff; font-size: 18px; font-weight: bold; line-height: 50px; padding: 0 25px; font-family: "SimHei", "黑体"; }
+        .nav li a:hover, .nav li.active a { background: #003366; text-decoration: none; }
+
+        .marquee-wrap { height: 40px; line-height: 40px; border-bottom: 2px solid #c8161d; padding: 0 20px; display: flex; align-items: center; background: #fff; }
+        .marquee-label { font-weight: bold; color: #c8161d; width: 100px; font-family: "SimHei"; font-size: 16px; }
+        .marquee-content { flex: 1; color: #333; font-family: "SimSun"; font-size: 14px; }
+        
+        .main-container { padding: 20px; }
+        .col-left { width: 780px; float: left; }
+        
+        .focus-news { height: 320px; margin-bottom: 20px; display: flex; gap: 20px; }
+        .slider-box { width: 450px; height: 320px; background: #000; position: relative; overflow: hidden; }
+        .slider-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .slider-title { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); color: #fff; padding: 10px; box-sizing: border-box; font-family: "SimHei"; }
+        
+        .top-news-list { width: 310px; }
+        .top-news-list h2 { font-size: 22px; color: #c8161d; text-align: center; margin-bottom: 15px; font-family: "SimHei"; }
+        .top-news-list p { font-size: 14px; color: #666; line-height: 2; text-indent: 2em; font-family: "SimSun"; margin-bottom: 10px; }
+        .top-news-list ul li { line-height: 30px; border-bottom: 1px dashed #ccc; font-family: "SimSun"; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .top-news-list ul li::before { content: "■"; color: #004b97; font-size: 12px; margin-right: 8px; }
+
+        .red-doc-section { border: 1px solid #ffcccc; background: #fffcfc; padding: 20px; margin-bottom: 20px; position: relative; }
+        .red-doc-header { text-align: center; border-bottom: 2px solid red; padding-bottom: 10px; margin-bottom: 15px; }
+        .red-doc-header h3 { font-family: "SimHei"; font-size: 28px; color: red; letter-spacing: 2px; }
+        .red-doc-header span { font-family: "SimSun"; font-size: 14px; color: #333; display: block; margin-top: 5px; }
+        
+        .tab-box { border: 1px solid #ddd; margin-bottom: 20px; }
+        .tab-head { height: 40px; background: #f5f5f5; border-bottom: 1px solid #ddd; }
+        .tab-head span { display: inline-block; padding: 0 25px; line-height: 39px; font-size: 16px; font-family: "SimHei"; cursor: pointer; border-right: 1px solid #ddd; }
+        .tab-head span.active { background: #fff; color: #c8161d; border-top: 2px solid #c8161d; height: 39px; }
+        .tab-content { padding: 15px; display: none; min-height: 200px; }
+        .tab-content.active { display: block; }
+        .news-ul li { line-height: 32px; display: flex; justify-content: space-between; }
+        .news-ul li a { font-family: "SimSun"; font-size: 14px; width: 600px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .news-ul li a::before { content: "•"; color: #c8161d; margin-right: 8px; }
+        .news-ul li span { color: #888; font-family: "Arial"; }
+
+        .col-right { width: 360px; float: right; }
+        .side-box { border: 1px solid #ddd; margin-bottom: 20px; }
+        .side-title { height: 40px; line-height: 40px; background: #f4f8fb; border-bottom: 1px solid #ddd; border-top: 2px solid #004b97; padding: 0 15px; font-size: 18px; font-family: "SimHei"; color: #004b97; }
+        .side-content { padding: 15px; }
+        
+        .leader-card { display: flex;gap: 30px; align-items: flex-start;margin-bottom: 5px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
+        .leader-avatar { width: 80px; height: 100px; background: #ccc; margin-right: 15px; text-align: center; line-height: 100px; color: #fff; font-size: 12px; }
+        .leader-info h4 { font-family: "SimHei"; font-size: 16px; margin-bottom: 5px; color: #c8161d; }
+        .leader-info p { font-family: "SimSun"; font-size: 13px; line-height: 1.6; color: #555; }
+        
+        .grid-links { display: flex; flex-wrap: wrap; border-top: 1px solid #eee; border-left: 1px solid #eee; }
+        .grid-links a { width: 33.33%; box-sizing: border-box; border-right: 1px solid #eee; border-bottom: 1px solid #eee; text-align: center; padding: 15px 0; font-family: "SimHei"; font-size: 14px; background: #fafafa; transition: background 0.3s; }
+        .grid-links a:hover { background: #eaf1f7; color: #004b97; }
+        
+        .special-banner { margin-bottom: 15px; display: block; border: 1px solid #ddd; padding: 2px; }
+        .special-banner img { width: 100%; height: auto; display: block; }
+
+        .footer { background: #e5e5e5; border-top: 3px solid #c8161d; padding: 30px 0; margin-top: 20px; }
+        .footer-content { width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .footer-text { text-align: center; font-family: "SimSun"; font-size: 12px; line-height: 24px; color: #555; flex: 1; }
+        .footer-text span { margin: 0 10px; }
+        .dzjg-logo { width: 80px; cursor: pointer; }
+        .visitor-counter { margin-top: 10px; font-family: "Arial"; font-weight: bold; background: #333; color: #0f0; display: inline-block; padding: 2px 10px; letter-spacing: 2px; }
+
+        #float-ad { position: absolute; z-index: 9999; width: 220px; background: #fff; border: 2px solid #004b97; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); text-align: left; display: none; }
+        #float-ad .ad-head { background: #004b97; color: #fff; font-family: "SimHei"; padding: 5px 10px; font-size: 14px; position: relative; }
+        #float-ad p { font-family: "SimSun"; font-size: 12px; padding: 10px; color: #333; line-height: 1.6; }
+        #float-ad .close-btn { position: absolute; top: 5px; right: 5px; font-size: 14px; cursor: pointer; color: #fff; }
+
+        #secret-login { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; background: #eaf1f7; border: 2px solid #004b97; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 10000; font-family: "SimSun"; }
+        .login-head { background: #004b97; color: #fff; height: 40px; line-height: 40px; padding: 0 15px; font-weight: bold; font-family: "SimHei"; display: flex; justify-content: space-between; }
+        .login-body { padding: 30px; background: #fff; }
+        .form-line { margin-bottom: 20px; display: flex; align-items: center; }
+        .form-line label { width: 90px; text-align: right; margin-right: 15px; font-family: "SimHei"; }
+        .form-line input { flex: 1; height: 30px; border: 1px solid #ccc; padding: 0 5px; outline: none; }
+        .login-btn { width: 100%; height: 40px; background: #004b97; color: #fff; border: none; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: "SimHei"; }
+        .warning-text { color: red; font-size: 12px; margin-top: 15px; text-align: center; display: none; font-weight: bold; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/webp;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjYGAEAQAAAwABoInIQQAAAABJRU5ErkJggg=='); z-index: 9998; }
+        
+        /* 隐藏文章容器 */
+        #hidden-article { display: none; border: 1px dashed #ccc; background: #fdfdfd; padding: 15px; margin-top: 10px; font-family: "SimSun"; line-height: 1.8; color: #444; }
+        /* 便民电话列表 */
+        .tel-list li { padding: 8px 0; border-bottom: 1px dashed #eee; display: flex; align-items: center; }
+        .tel-list li span:first-child { width: 100px; font-weight: bold; color: #004b97; }
+        .tel-list li span:last-child { color: #c8161d; font-family: monospace; font-size: 16px; }
+        /* 黑白滤镜 */
+        body.grayscale {
+            filter: grayscale(100%);
+            transition: filter 1.5s ease;
+        }
+        body.grayscale-off {
+            filter: grayscale(0%);
+            transition: filter 2s ease;
+        }
+
+        /* ==================== 自定义摄像头权限弹窗样式 (来自您提供的代码) ==================== */
+        .custom-permission-modal {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            padding: 16px;
+            width: 320px;
+            z-index: 10002; /* 提高层级确保在最前 */
+            font-family: "Microsoft YaHei", sans-serif;
+            display: none; /* 默认隐藏 */
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #666;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #c00;
+        }
+        .modal-camera-icon {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            color: #666;
+            font-size: 14px;
+        }
+        .camera-icon-svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .modal-btn {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .modal-btn-allow {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .modal-btn-allow:hover {
+            background: #e0e0e0;
+        }
+        .modal-btn-deny {
+            background: #f0f0f0;
+            color: #c00;
+        }
+        .modal-btn-deny:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">09/39</div>
+<div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+    【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+</div>
+    <div id="float-ad">
+        <div class="ad-head">
+            ⚠ 安全提示
+            <span class="close-btn" onclick="document.getElementById('float-ad').style.display='none'">×</span>
+        </div>
+        <p>近期受倒春寒影响，未开发路段出现严重结冰。为配合古建二期修缮工程，夜间将实行封路管理。请游客切勿偏离指定向导的规划路线。</p>
+    </div>
+
+    <div class="wrapper">
+        <div class="top-bar">
+            <div class="fl">
+                今天是：<span id="date-str" class="font-song"></span> | 天气：阴转小雨，气温 2℃
+            </div>
+            <div class="fr">
+                <a href="#" onclick="alert('该功能只在IE6浏览器下生效。')">设为首页</a> | 
+                <a href="#" onclick="alert('快捷键 Ctrl+D 加入收藏。')">加入收藏</a> | 
+                <a href="#">领导信箱</a> | 
+                <a href="#">旧版网站(2006版)</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <div style="position: absolute; top: 30px; left: 30px;">
+                <img src="images/cwhlogo.webp" alt="邺山村logo" style="height: 120px; width: auto;filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.4));">
+            </div>
+            <div class="logo-text" style="margin-left: 120px;">
+                <h1>邺山村村民委员会</h1>
+                <p>建设富裕文明和谐的新邺山</p>
+            </div>
+            <div class="search-box">
+                <form action="搜索结果.html" method="get" onsubmit="return checkSearch();">
+                    <input type="text" name="keyword" id="search-input" placeholder="输入关键字..." />
+                    <button type="submit">搜 索</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="nav">
+            <ul class="clearfix">
+                <li class="active"><a href="#">网站首页</a></li>
+                <li><a href="#">走进邺山</a></li>
+                <li><a href="通知公告.html">通知公告</a></li>
+                <li><a href="#">党建园地</a></li>
+                <li><a href="#">招商引资</a></li>
+                <li><a href="#">邺山文旅</a></li>
+                <li><a href="#">便民服务</a></li>
+            </ul>
+        </div>
+
+        <div class="marquee-wrap">
+            <div class="marquee-label">最新通告：</div>
+            <div class="marquee-content">
+                <marquee direction="left" scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">
+                    【招标】邺山风景区及周边古建群修缮二期工程招标公示。 &nbsp;&nbsp;&nbsp;&nbsp;
+                    【提醒】春季野生菌、野生香椿采摘季到来，请注意食品安全，谨防食物中毒。 &nbsp;&nbsp;&nbsp;&nbsp;
+                    【民生】2025年度生猪养殖补贴及生态林保护补贴即将下发，请村民核对名单。
+                </marquee>
+            </div>
+        </div>
+
+        <div class="main-container clearfix">
+            
+            <div class="col-left">
+                
+                <div class="focus-news">
+                    <div class="slider-box">
+                        <img src="images/show.webp" class="slider-img" alt="邺山村全貌" />
+                        <div class="slider-title">市领导考察我村文物保护工作</div>
+                    </div>
+                    <div class="top-news-list">
+                        <h2>【头条】市领导考察我村文物保护工作</h2>
+                        <p>2月14日上午，市文化局领导一行莅临我村，重点考察了古建筑群的保护与修缮工作。村长沈建国陪同考察。</p>
+                        <ul>
+                            <li><a href="#">村党支部召开“不忘初心”专题学习会</a></li>
+                            <li><a href="#">李家面馆再次捐资用于修缮工程</a></li>
+                            <li><a href="#">春季林区防火责任状签订仪式举行</a></li>
+                            <li><a href="#">新农合医疗报销指南（2026修订版）</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="red-doc-section">
+                    <div class="red-doc-header">
+                        <h3>邺山村村民委员会文件</h3>
+                        <span>邺村委办发〔2025〕012号</span>
+                    </div>
+                    <h4 style="text-align: center; font-family: 'SimHei'; font-size: 19px; margin-bottom: 15px; color:#333;">关于夏季用水高峰期错峰用水的通知</h4>
+                    <p style="font-family: 'SimSun'; font-size: 14px; line-height: 1.8; text-indent: 2em; margin-bottom: 10px;">
+                        各位村民：<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;随着夏季来临，气温升高，全村用水量大幅增加。为确保村民正常生活用水，现倡导大家节约用水，尽量错开早晚高峰时段集中用水。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;建议农田灌溉尽量安排在夜间进行，避免与生活用水高峰重叠。如遇水压偏低情况，请广大村民予以理解和支持。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;节约用水，人人有责。感谢大家的配合！
+                    </p>
+                    <div style="text-align: right; font-family: 'SimSun'; font-size: 14px; margin-top: 30px;">
+                        <p>邺山村村民委员会</p>
+                        <p>2025年6月10日</p>
+                    </div>
+                </div>
+
+                <div class="tab-box">
+                    <div class="tab-head">
+                        <span class="active" onclick="switchTab(0)">人物风采</span>
+                        <span onclick="switchTab(1)">便民与健康</span>
+                        <span onclick="switchTab(2)">财务公开</span>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-0">
+                        <ul class="news-ul">
+                            <li><a href="javascript:void(0);" onclick="document.getElementById('hidden-article').style.display='block'">【专访】村医赵弘远：扎根乡村的健康守门人</a><span>2026-02-12</span></li>
+                            <li><a href="jibao.html">护林员季启任：古樟为证守生态</a><span>2024-02-8</span></li>
+                            <li><a href="#">李守山（已故）：邺山面馆创始人的慈善一生</a><span>2025-11-05</span></li>
+                            <li><a href="#">关于清理长期无人认领暂存物品的公示（含登山包等）</a><span>2025-10-12</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="tab-1">
+                        <ul class="news-ul">
+                            <li><a href="#">春季预防流感小常识（村卫生所提供）</a><span>2026-02-15</span></li>
+                            <li><a href="#">春季野生植物采摘与食用安全须知（慎食后山反季香椿）</a><span>2026-02-10</span></li>
+                            <li><a href="#">关于老张农家乐增设“林区向导”服务的备案公示</a><span>2025-12-25</span></li>
+                            <li><a href="#">免费量血压活动在村委广场举行</a><span>2025-10-18</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="tab-2">
+                        <table width="100%" border="1" bordercolor="#dddddd" style="font-family:'SimSun'; text-align:center; line-height:28px; font-size: 13px;">
+                            <tr style="background:#f4f8fb; font-weight:bold;">
+                                <td>摘要明细</th><th>金额(元)</th><th>经办人</th><th>备注说明</th>
+                            </tr>
+                            <tr><td>后山古建筑群定点抢修工程款</td><td>500,000</td><td>李福明</td><td>社会定向捐赠 / 已结清</td></tr>
+                            <tr><td>高敏生物检测设备及冷柜电费</td><td>12,400</td><td>赵弘远</td><td>卫生院专项课题</td></tr>
+                            <tr><td>林区防火巡逻及向导特殊津贴</td><td>4,800</td><td>沈建国</td><td>包含：老张等3名干事</td></tr>
+                            <tr><td>农业局生猪防疫补贴代发</td><td>3,500</td><td>王出纳</td><td>第一季度下放</td></tr>
+                        </table>
+                        <p style="text-align:right; margin-top:10px; font-size:11px; color:#999;">注：内部原始账目及PDF扫描件请持工号登录 OA 系统查看。</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="col-right">
+                
+                <div class="side-box">
+                    <div class="side-title">领导与代表之窗</div>
+                    <div class="side-content">
+                        <div class="leader-card">
+                            <div class="leader-avatar"><img src="images/sgh.webp" style="width: 115px; height:160px ; display: block; " /></div>
+                            <div class="leader-info">
+                                <h4>沈国客 (村党支部书记、村主任)</h4>
+                                <p>主持村委会全面工作，负责村内各项事务统筹协调、矛盾纠纷调处及上级部署工作的贯彻执行，带领村委会班子抓好乡村治理、便民服务、村务公开等各项重点工作，保障村级事务规范有序开展。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="side-box">
+                    <div class="side-title">便民服务电话</div>
+                    <div class="side-content">
+                        <ul class="tel-list">
+                            <li><span>村委会办公室</span><span>0563-8821001</span></li>
+                            <li><span>村卫生所</span><span>0563-8821002</span></li>
+                            <li><span>警务室/调解室</span><span>0563-8821003</span></li>
+                            <li><span>供水抢修</span><span>0563-8821004</span></li>
+                            <li><span>林区防火值班</span><span>0563-8821005</span></li>
+                            <li><span>便民服务中心</span><span>0563-8821006</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="side-box">
+                    <div class="side-title">政务公开</div>
+                    <div class="grid-links">
+                        <a href="#">政策法规</a><a href="#">发展规划</a><a href="#">人事任免</a>
+                        <a href="#">应急管理</a><a href="#">社会救助</a><a href="#">村务监督</a>
+                        <a href="#">档案查询</a><a href="#">户籍管理</a><a href="#">低保公示</a>
+                    </div>
+                </div>
+
+                <a href="#" class="special-banner" onclick="alert('提示：近期工程车辆出入频繁，民俗体验游暂不对外乡散客开放。')">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=350&h=120" alt="农家乐体验" />
+                    <div style="background:#c8161d; color:#fff; text-align:center; padding:5px; font-family:'SimHei';">邺山村特色民俗文化游指南</div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                <p><a href="#">关于我们</a> <span>|</span> <a href="#">网站声明</a> <span>|</span> <a href="#">联系方式</a> <span>|</span> <a href="#">隐私保护</a></p>
+                <p style="margin-top: 15px;">主办单位：邺山村村民委员会  &nbsp;&nbsp; 承办：邺山村信息中心</p>
+                <p>【解谜游戏】本页面为虚构内容，所有名称、事件、文件均为架空设定，与现实无关</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 自定义摄像头权限弹窗 (完全使用您要求的样式和位置) -->
+    <div id="customPermissionModal" class="custom-permission-modal">
+        <div class="modal-header">
+            <div class="modal-title">tw.piliapp.com 想要</div>
+            <div class="modal-close" onclick="closeCustomPermission()">&times;</div>
+        </div>
+        <div class="modal-camera-icon">
+            <svg class="camera-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="7" width="18" height="12" rx="2" />
+                <circle cx="12" cy="13" r="3" />
+                <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+            使用相机
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-allow" onclick="handleAllow()">允许</button>
+            <button class="modal-btn modal-btn-deny" onclick="handleDeny()">阻止</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+       
+ // 获取弹窗元素
+    var permissionModal = document.getElementById('customPermissionModal');
+    
+   
+    
+    // 允许按钮的处理
+    function handleAllow() {
+        // 关闭摄像头权限弹窗
+        var modal = document.getElementById('customPermissionModal');
+        if (modal) modal.style.display = 'none';
+        
+        // 创建遮罩层
+        var overlay = document.createElement('div');
+        overlay.id = 'customConfirmOverlay';
+        overlay.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:10006;';
+        
+        // 创建确认弹窗（页面顶部，浅蓝色，Edge风格）
+        var confirmBox = document.createElement('div');
+        confirmBox.id = 'customConfirmBox';
+        confirmBox.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#e8f0fe; border-radius:8px; padding:16px 24px; text-align:center; z-index:10007; font-family:"Segoe UI","Microsoft YaHei",sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15); min-width:280px; border:1px solid #cce4ff;';
+        confirmBox.innerHTML = `
+            <p style="margin:0 0 12px 0; font-size:14px; color:#1a1a1a;">✓ 已允许使用相机权限</p>
+            <button id="confirmAlertBtn" style="padding:6px 24px; background:#0078d4; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:13px; font-weight:500;">确定</button>
+        `;
+        
+        document.body.appendChild(overlay);
+        document.body.appendChild(confirmBox);
+        
+        // 确定按钮点击事件
+        document.getElementById('confirmAlertBtn').onclick = function() {
+            // 移除确认弹窗和遮罩
+            overlay.remove();
+            confirmBox.remove();
+            
+            // 延迟2秒后显示“我看见你了”
+            setTimeout(function() {
+                var msgDiv = document.createElement('div');
+                msgDiv.textContent = '我看见你了';
+               msgDiv.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10008; color:#000000; font-size:240px; font-weight:900; font-family:"Microsoft YaHei","Segoe UI",sans-serif; white-space:nowrap; text-shadow:8px 8px 20px rgba(0,0,0,0.5); opacity:1; transition:opacity 1.5s ease; pointer-events:none; letter-spacing:4px;';
+                document.body.appendChild(msgDiv);
+                
+                // 停留2秒后淡出
+                setTimeout(function() {
+                    msgDiv.style.opacity = '0';
+                    setTimeout(function() {
+                        if (msgDiv.parentNode) msgDiv.parentNode.removeChild(msgDiv);
+                    }, 1500);
+                }, 2000);
+            }, 2000);
+        };
+    }
+    
+    // 搜索函数
+    function checkSearch() {
+        var keyword = document.getElementById('search-input').value.trim();
+        if (keyword === '') {
+            alert('请输入搜索关键词');
+            return false;
+        }
+        
+        // 特殊关键词：窅
+        if (keyword.indexOf('窅') !== -1) {
+            // 1. 先在视口中心显示“你是谁”
+            var msgDiv = document.createElement('div');
+            msgDiv.textContent = '你是谁';
+            msgDiv.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10010; color:#000000; font-size:120px; font-weight:900; font-family:"Microsoft YaHei","Segoe UI",sans-serif; white-space:nowrap; text-shadow:0 0 15px rgba(0,0,0,0.3); opacity:1; transition:opacity 1s ease; pointer-events:none; letter-spacing:4px;';
+            document.body.appendChild(msgDiv);
+            
+            // 文字停留1秒后淡出
+            setTimeout(function() {
+                msgDiv.style.opacity = '0';
+                setTimeout(function() {
+                    if (msgDiv.parentNode) msgDiv.parentNode.removeChild(msgDiv);
+                }, 1000);
+            }, 1000);
+            
+            // 延迟1.5秒后显示摄像头权限弹窗
+            setTimeout(function() {
+                var modal = document.getElementById('customPermissionModal');
+                if (modal) modal.style.display = 'block';
+            }, 1500);
+            
+            return false;
+        }
+        
+        // 关键词直接跳转
+        if (keyword === '大庆典') {
+            window.open('大庆典.html', '_blank');
+            return false;
+        }
+        
+        // 其他关键词在新页面打开搜索结果页
+        var searchBtn = document.querySelector('.search-box button');
+        var originalText = searchBtn.innerHTML;
+        searchBtn.innerHTML = '搜索中...';
+        searchBtn.disabled = true;
+        searchBtn.style.opacity = '0.6';
+        
+        setTimeout(function() {
+            window.open('搜索结果.html?keyword=' + encodeURIComponent(keyword), '_blank');
+            searchBtn.innerHTML = originalText;
+            searchBtn.disabled = false;
+            searchBtn.style.opacity = '1';
+        }, 500);
+        
+        return false;
+    }
+    
+    // 页面加载时的初始化函数
+    window.onload = function() {
+        var dateObj = new Date();
+        var year = dateObj.getFullYear();
+        var month = dateObj.getMonth() + 1;
+        var date = dateObj.getDate();
+        var dayArr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        var day = dayArr[dateObj.getDay()];
+        document.getElementById("date-str").innerHTML = year + "年" + month + "月" + date + "日 " + day;
+        
+        setTimeout(function(){
+            document.getElementById("float-ad").style.display = "block";
+            moveFloatAd();
+        }, 1500);
+        
+        console.log("Failed to load resource: the server responded with a status of 403 (Forbidden) - /api/v1/archives/2006_missing_logs.bak");
+        console.log("Warning: DB connection closed by remote host 'L.FM_SERVER'.");
+    };
+    
+    // 选项卡切换函数
+    function switchTab(index) {
+        var heads = document.getElementsByClassName("tab-head")[0].getElementsByTagName("span");
+        var contents = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < heads.length; i++) {
+            heads[i].className = "";
+            contents[i].className = "tab-content";
+        }
+        heads[index].className = "active";
+        contents[index].className = "tab-content active";
+    }
+    
+    // 浮动广告相关变量和函数
+    var xPos = 0, yPos = 0;
+    var step = 1;
+    var delay = 40;
+    var height = 0, width = 0;
+    var xon = 0, yon = 0;
+    var floatAd = document.getElementById("float-ad");
+    var interval;
+    
+    function moveFloatAd() {
+        width = document.documentElement.clientWidth || document.body.clientWidth;
+        height = document.documentElement.clientHeight || document.body.clientHeight;
+        floatAd.style.left = xPos + (document.body.scrollLeft || document.documentElement.scrollLeft) + "px";
+        floatAd.style.top = yPos + (document.body.scrollTop || document.documentElement.scrollTop) + "px";
+        if (yon) { yPos = yPos + step; } else { yPos = yPos - step; }
+        if (yPos < 0) { yon = 1; yPos = 0; }
+        if (yPos >= (height - 180)) { yon = 0; yPos = (height - 180); }
+        if (xon) { xPos = xPos + step; } else { xPos = xPos - step; }
+        if (xPos < 0) { xon = 1; xPos = 0; }
+        if (xPos >= (width - 240)) { xon = 0; xPos = (width - 240); }
+        interval = setTimeout(moveFloatAd, delay);
+    }
+    
+    if (floatAd) {
+        floatAd.onmouseover = function() { clearTimeout(interval); }
+        floatAd.onmouseout = function() { interval = setTimeout(moveFloatAd, delay); }
+    }
+    </script>
+</body>
+</html>

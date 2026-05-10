@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap" rel="stylesheet">
+    <title>七闻论坛 - 综合性社区</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            display: flex;
+            background-color: #f5f5f5;
+        }
+        
+        /* 论坛标题和搜索框 */
+        .forum-header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4a5568;
+            position: relative;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
+
+        .forum-title {
+            font-family: 'Long Cang', cursive;
+            font-size: 56px;
+            font-weight: normal;
+            color: #2c1810;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            letter-spacing: 4px;
+        }
+        
+        .forum-subtitle {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            padding-right: 50px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        /* 登录区域 */
+        .login-area {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .login-btn, .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .login-btn:hover, .logout-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffd700;
+            font-size: 14px;
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #395b80;
+            font-weight: bold;
+        }
+        
+        /* 登录弹窗 */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            width: 340px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .login-box h3 {
+            margin-bottom: 20px;
+            color: #395b80;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: #395b80;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-box button:hover {
+            background: #27415c;
+        }
+        .login-error {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+        .close-modal {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* 加载弹窗 */
+        .loading-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1002;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-width: 280px;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        /* 左侧导航栏 */
+        .sidebar {
+            width: 180px;
+            background-color: #e6f0fa;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+        }
+        .sidebar h3 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar li {
+            margin-bottom: 5px;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .sidebar a:hover {
+            background-color: #d0e7ff;
+        }
+
+        /* 主内容区 */
+        .main {
+            flex: 1;
+            padding: 10px;
+        }
+        /* 顶部导航栏 */
+        .top-nav {
+            background-color: #0078d4;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+        }
+        .top-nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        .top-nav a.active {
+            font-weight: bold;
+        }
+        .top-nav .quick {
+            margin-left: auto;
+            position: relative;
+        }
+        .top-nav .quick select {
+            padding: 2px 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        /* 二级导航 */
+        .sub-nav {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            padding: 5px;
+            border: 1px solid #ddd;
+        }
+        .sub-nav button,
+        .sub-nav .tag {
+            margin-right: 5px;
+            padding: 3px 6px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .sub-nav .tag.active {
+            background-color: #0078d4;
+            color: #fff;
+            border-color: #0078d4;
+        }
+
+        /* 主题排序导航 */
+        .sort-nav {
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .sort-nav select,
+        .sort-nav a {
+            margin-right: 10px;
+            font-size: 12px;
+            text-decoration: none;
+            color: #333;
+        }
+        .sort-nav .active {
+            font-weight: bold;
+            color: #0078d4;
+        }
+
+        /* 帖子列表 */
+        .post-list {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .post-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .post-item:last-child {
+            border-bottom: none;
+        }
+        .post-item .icon {
+            width: 20px;
+            height: 20px;
+            background-color: #eee;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        .post-item .number {
+            width: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+        .post-item .title {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+        .post-item .author {
+            width: 120px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .post-item .reply-view {
+            width: 80px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .post-item .last-post {
+            width: 150px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .post-item .preview {
+            background-color: #0078d4;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+        .post-item .hot {
+            background-color: #ff6b6b;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+        .post-item .sticky {
+            background-color: #4caf50;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+        
+        /* 提示弹窗 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            z-index: 1001;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+ <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">02/39</div>
+    <!-- 登录弹窗 -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <span class="close-modal" onclick="closeLoginModal()">×</span>
+            <h3>七闻论坛 · 登录</h3>
+            <input type="text" id="loginUsername" placeholder="账号" autocomplete="off">
+            <input type="password" id="loginPassword" placeholder="密码">
+            <button onclick="doLogin()">登 录</button>
+            <div class="login-error" id="loginError">账号或密码错误</div>
+        </div>
+    </div>
+    
+    
+    <!-- 加载弹窗 -->
+    <div class="loading-modal" id="loadingModal">
+        <div class="loading-box">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在搜索相关结果...</div>
+        </div>
+    </div>
+    
+    <!-- 提示弹窗 -->
+    <div class="toast" id="toastMsg"></div>
+
+    <!-- 左侧导航栏 -->
+    <aside class="sidebar">
+        <h3>版块导航</h3>
+        <ul>
+            <li><a href="#">天涯杂谈</a> ▾</li>
+            <li><a href="#">国际观察</a></li>
+            <li><a href="#">经济论坛</a></li>
+            <li><a href="#">莲蓬鬼话</a></li>
+            <li><a href="#">情感天地</a></li>
+            <li><a href="#">旅游休闲</a></li>
+            <li><a href="#">美食厨房</a></li>
+            <li><a href="#">房产观澜</a></li>
+            <li><a href="#">体育聚焦</a></li>
+            <li><a href="#">娱乐八卦</a></li>
+            <li><a href="#">时尚资讯</a></li>
+            <li><a href="#">职场人生</a> ▾</li>
+            <li><a href="#">股市论谈</a></li>
+            <li><a href="#">车行天下</a></li>
+            <li><a href="#">亲子中心</a></li>
+            <li><a href="#">健康生活</a> ▾</li>
+            <li><a href="#">意见建议</a></li>
+            <li><a href="#">站务管理</a></li>
+        </ul>
+    </aside>
+
+    <!-- 主内容区 -->
+    <div class="main">
+        <!-- 论坛标题和搜索框 -->
+        <div class="forum-header">
+            <div class="login-area" id="loginArea">
+                <div class="login-btn" id="showLoginBtn" onclick="showLoginModal()">登录</div>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <div class="user-avatar">陈</div>
+                    <span id="usernameDisplay"></span>
+                    <div class="logout-btn" onclick="logout()">退出</div>
+                </div>
+            </div>
+            <h1 class="forum-title">七闻论坛</h1>
+            <p class="forum-subtitle">汇聚八方声音，纵论天下大事</p>
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchInput" placeholder="搜索帖子、用户、关键词...">
+                <button class="search-button" id="searchBtn">搜索</button>
+            </div>
+        </div>
+
+        <!-- 顶部导航栏 -->
+        <nav class="top-nav">
+            <a href="#" class="active">首页</a>
+            <a href="#">天涯杂谈</a>
+            <a href="#">国际观察</a>
+            <a href="#">情感天地</a>
+            <a href="#">莲蓬鬼话</a>
+            <a href="#">体育聚焦</a>
+            <a href="#">经济论坛</a>
+            <div class="quick">
+                <select name="quickv">
+                    <option>快捷导航</option>
+                    <option>我的帖子</option>
+                    <option>我的回复</option>
+                    <option>我的收藏</option>
+                    <option>个人中心</option>
+                </select>
+            </div>
+        </nav>
+
+        <!-- 二级导航 -->
+        <div class="sub-nav">
+            <button>全部</button>
+            <span class="tag">热门 <sup>256</sup></span>
+            <span class="tag active">精华 <sup>189</sup></span>
+            <span class="tag">最新 <sup>345</sup></span>
+            <span class="tag">置顶 <sup>45</sup></span>
+            <span class="tag">情感 <sup>123</sup></span>
+            <span class="tag">社会 <sup>98</sup></span>
+            <span class="tag">娱乐 <sup>176</sup></span>
+            <span class="tag active">体育 <sup>87</sup></span>
+            <span class="tag">美食 <sup>65</sup></span>
+        </div>
+
+        <!-- 主题排序导航 -->
+        <div class="sort-nav">
+            <select name="topic-sort">
+                <option>全部主题</option>
+                <option>24小时内</option>
+                <option>一周内</option>
+                <option>一月内</option>
+            </select>
+            <a href="#" class="active">最新回复</a>
+            <a href="#">最新发表</a>
+            <a href="#">热门回复</a>
+            <a href="#">精华帖</a>
+            <a href="#">更多 ▾</a>
+            <div style="margin-left: auto;">
+                <input type="checkbox" id="new-only" checked> <label for="new-only">新窗</label>
+            </div>
+        </div>
+
+        <!-- 帖子列表 -->
+        <div class="post-list">
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">1</div>
+                <div class="title">
+                    【置顶】七闻论坛版规（2025新版）
+                    <span class="sticky">置顶</span>
+                </div>
+                <div class="author">管理员<br>2025-10-21 10:00</div>
+                <div class="reply-view">256 / 8920</div>
+                <div class="last-post">管理员<br>2025-10-21 10:00</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">2</div>
+                <div class="title">
+                    【天涯杂谈】大家最近在追什么剧？推荐一下
+                    <span class="hot">热帖</span>
+                </div>
+                <div class="author">剧迷小明<br>2025-10-20 15:30</div>
+                <div class="reply-view">128 / 4567</div>
+                <div class="last-post">小李<br>2025-10-21 09:15</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">3</div>
+                <div class="title">
+                    【莲蓬鬼话】深夜故事分享：我亲身经历的诡异事件
+                    <span class="hot">热门</span>
+                </div>
+                <div class="author">灵异爱好者<br>2025-10-20 11:10</div>
+                <div class="reply-view">245 / 5678</div>
+                <div class="last-post">夜行者<br>2025-10-21 08:30</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">4</div>
+                <div class="title">
+                    【情感天地】结婚三年，发现和妻子越来越没话说怎么办？
+                </div>
+                <div class="author">迷茫的丈夫<br>2025-10-20 09:45</div>
+                <div class="reply-view">167 / 2890</div>
+                <div class="last-post">情感导师<br>2025-10-20 16:20</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">5</div>
+                <div class="title">
+                    【经济论坛】明年房价走势预测，你会现在买房吗？
+                </div>
+                <div class="author">经济分析师<br>2025-10-19 16:30</div>
+                <div class="reply-view">154 / 3234</div>
+                <div class="last-post">房市观察员<br>2025-10-20 10:15</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">6</div>
+                <div class="title">
+                    【体育聚焦】国足最新比赛复盘，我们离世界杯还有多远？
+                </div>
+                <div class="author">足球迷<br>2025-10-19 10:15</div>
+                <div class="reply-view">145 / 2987</div>
+                <div class="last-post">体育评论员<br>2025-10-19 15:40</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">7</div>
+                <div class="title">
+                    【美食厨房】家常菜教学：红烧肉的秘诀分享
+                </div>
+                <div class="author">吃货小厨<br>2025-10-18 16:45</div>
+                <div class="reply-view">78 / 2100</div>
+                <div class="last-post">美食爱好者<br>2025-10-19 11:20</div>
+            </div>
+
+            <div class="post-item">
+                <div class="icon"></div>
+                <div class="number">8</div>
+                <div class="title">
+                    【旅游休闲】国庆旅游避坑指南，这些地方千万别去！
+                </div>
+                <div class="author">旅行达人<br>2025-10-18 14:30</div>
+                <div class="reply-view">234 / 3876</div>
+                <div class="last-post">背包客<br>2025-10-19 09:10</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 登录状态
+        let isLoggedIn = false;
+        let currentUser = '';
+        
+        // 显示提示
+        function showToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+        
+        // 显示加载弹窗
+        function showLoading() {
+            document.getElementById('loadingModal').style.display = 'flex';
+        }
+        
+        // 关闭加载弹窗
+        function closeLoading() {
+            document.getElementById('loadingModal').style.display = 'none';
+        }
+        
+        // 检查登录状态
+        function checkLoginAndAlert() {
+            if (!isLoggedIn) {
+                showToast('您尚未登录，查看内容需先登录账号');
+                showLoginModal();
+                return false;
+            }
+            showToast('功能开发中，敬请期待');
+            return true;
+        }
+        
+        // 检查登录后查看帖子
+        function checkLoginAndViewPost(element) {
+            if (!isLoggedIn) {
+                showToast('您尚未登录，查看帖子内容需先登录账号');
+                showLoginModal();
+                return false;
+            }
+            const titleElem = element.querySelector('.title');
+            let title = titleElem ? titleElem.innerText.split('[')[0].trim() : '帖子';
+            showToast(`正在打开「${title}」...\n登录后可参与评论、点赞、收藏等操作`);
+            return true;
+        }
+        
+        // 搜索功能
+        function checkLoginAndSearch() {
+            const keyword = document.getElementById('searchInput').value.trim();
+            
+            if (!isLoggedIn) {
+                showToast('您尚未登录，搜索功能需先登录账号');
+                showLoginModal();
+                return false;
+            }
+            
+            if (keyword === '') {
+                showToast('请输入搜索关键词');
+                return false;
+            }
+            
+            if (keyword === '邺山村') {
+                // 先显示找到结果的提示
+                showToast('找到相关结果，正在跳转...');
+                // 显示加载弹窗
+                showLoading();
+                // 模拟加载1.5秒后跳转
+                setTimeout(() => {
+                    closeLoading();
+                    window.open('luntan1.html', '_blank');
+                }, 1500);
+            } else {
+                showToast(`搜索“${keyword}”结果：暂无相关内容`);
+            }
+            return true;
+        }
+        
+        // 下拉菜单检查登录
+        function checkLoginAndSelect(select) {
+            const value = select.options[select.selectedIndex].text;
+            if (!isLoggedIn) {
+                showToast('您尚未登录，该功能需先登录账号');
+                showLoginModal();
+                select.selectedIndex = 0;
+                return false;
+            }
+            showToast(`「${value}」功能开发中`);
+            select.selectedIndex = 0;
+            return true;
+        }
+        
+        // 显示登录弹窗
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').style.display = 'none';
+        }
+        
+        // 关闭登录弹窗
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        
+        // 执行登录
+        function doLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            if (username === 'chenyu0912' && password === 'jgjssl') {
+                isLoggedIn = true;
+                currentUser = username;
+                updateUI();
+                closeLoginModal();
+                showToast('登录成功！欢迎回来，陈宇。');
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        
+        // 退出登录
+        function logout() {
+            isLoggedIn = false;
+            currentUser = '';
+            updateUI();
+            showToast('已退出登录');
+        }
+        
+        // 更新界面UI
+        function updateUI() {
+            const loginBtn = document.getElementById('showLoginBtn');
+            const userInfoDiv = document.getElementById('userInfo');
+            const usernameSpan = document.getElementById('usernameDisplay');
+            
+            if (isLoggedIn) {
+                loginBtn.style.display = 'none';
+                userInfoDiv.style.display = 'flex';
+                usernameSpan.textContent = currentUser;
+            } else {
+                loginBtn.style.display = 'block';
+                userInfoDiv.style.display = 'none';
+            }
+        }
+        
+        // 给所有可点击元素绑定事件
+        function bindEvents() {
+            // 帖子点击
+            document.querySelectorAll('.post-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    checkLoginAndViewPost(this);
+                });
+            });
+            
+            // 左侧导航
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    checkLoginAndAlert();
+                });
+            });
+            
+            // 顶部导航
+            document.querySelectorAll('.top-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    checkLoginAndAlert();
+                });
+            });
+            
+            // 二级导航标签
+            document.querySelectorAll('.sub-nav .tag, .sub-nav button').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    checkLoginAndAlert();
+                });
+            });
+            
+            // 排序导航链接
+            document.querySelectorAll('.sort-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    checkLoginAndAlert();
+                });
+            });
+            
+            // 快捷导航下拉
+            const quickSelect = document.querySelector('.quick select');
+            if (quickSelect) {
+                quickSelect.addEventListener('change', function() {
+                    checkLoginAndSelect(this);
+                });
+            }
+            
+            // 搜索按钮
+            const searchBtn = document.getElementById('searchBtn');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', checkLoginAndSearch);
+            }
+            
+            // 搜索框回车
+            const searchBox = document.getElementById('searchInput');
+            if (searchBox) {
+                searchBox.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkLoginAndSearch();
+                    }
+                });
+            }
+        }
+        
+        // 点击弹窗外关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target === modal) {
+                closeLoginModal();
+            }
+            const loadingModal = document.getElementById('loadingModal');
+            if (event.target === loadingModal) {
+                closeLoading();
+            }
+        }
+        
+        // 初始化
+        updateUI();
+        bindEvents();
+    </script>
+</body>
+</html>

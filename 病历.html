@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赵弘远 - 病历详情 | 汀州市人民医院</title>
+    
+    <!-- 引入毛笔字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #005bac;
+            --secondary-color: #f8f9fa;
+            --accent-color: #e63946;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+            margin: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 顶部通栏 */
+        .top-bar {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 10%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 头部 */
+        header {
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: normal;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            font-family: 'Ma Shan Zheng', 'ZCOOL KuaiLe', 'KaiTi', '楷体', cursive;
+        }
+
+        .logo-img {
+            height: 100px;
+            width: auto;
+            margin-right: 12px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 中间内容区 - 大图 */
+        .content-area {
+            padding: 40px 10%;
+            background: #f0f5f9;
+            text-align: center;
+        }
+
+        .medical-image {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        /* 页脚 */
+        footer {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 50px 10% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-grid h4 {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer-grid p {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #b2bec3;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #636e72;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        /* 返回按钮 */
+        .back-btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #004080;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">18/39</div>
+  
+    <div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+    【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+</div>
+
+    <!-- 顶部通栏（与主页一致） -->
+    <div class="top-bar">
+        <span>咨询电话：0597-XXXXXXX (总机)</span>
+        <span>急诊时刻：24小时全天候命</span>
+    </div>
+
+    <!-- 头部导航（与主页一致） -->
+    <header>
+        <div class="logo">
+            <img src="../images/人民医院.webp" alt="医院logo" class="logo-img" onerror="this.src='https://placehold.co/55x55/005bac/white?text=医'">
+            汀州市人民医院
+        </div>
+        <nav>
+            <ul>
+                <li><a href="汀州市人民医院.html">首页</a></li>
+                <li><a href="#">医院概况</a></li>
+                <li><a href="#">科室导航</a></li>
+                <li><a href="#">专家介绍</a></li>
+                <li><a href="#">就医指南</a></li>
+                <li><a href="#">科研教学</a></li>
+            </ul>
+        </nav>
+    </header>
+<div class="pdf-viewer">
+        <embed src="骨髓.pdf" type="application/pdf" width="100%" height="600px">
+    </div>
+    <div class="content-area">
+    <div class="back-btn-container">
+        <a href="汀州市人民医院.html" class="back-btn">← 返回首页</a>
+    </div>
+    
+</div>
+
+    <!-- 页脚（与主页一致） -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h4>联系我们</h4>
+                <p>地址：汀州市中心大道108号</p>
+                <p>电话：0597-1234567</p>
+            </div>
+            <div>
+                <h4>友情链接</h4>
+                <p>国家卫健委</p>
+                <p>福建省人民医院</p>
+            </div>
+            <div>
+                <h4>常用下载</h4>
+                <p>健康医疗APP</p>
+                <p>门诊手册PDF</p>
+            </div>
+            <div>
+                <h4>关注我们</h4>
+                <p>官方微信公众号</p>
+                <p>官方微博</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 汀州市人民医院 版权所有 | 闽ICP备XXXXXXXX号 | 技术支持：医疗信息中心
+        </div>
+    </footer>
+
+</body>
+</html>
