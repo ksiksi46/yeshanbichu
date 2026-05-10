@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>于承安 · 个人人事档案</title>
+    <style>
+        /* 纯白底黑字，无任何特效，完全真实档案风格 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: white;
+            font-family: '宋体', 'SimSun', 'Times New Roman', '楷体', serif;
+            color: black;
+            line-height: 1.45;
+            padding: 40px 24px;
+        }
+        /* 档案主容器 - 模拟纸质档案 */
+        .archive-paper {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid #2c2c2c;
+            box-shadow: none;
+            padding: 32px 36px 48px 36px;
+        }
+        /* 档案头部大标题 */
+        .archive-main-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+        .archive-main-title small {
+            font-size: 14px;
+            font-weight: normal;
+            display: block;
+            margin-top: 6px;
+            color: #2e2e2e;
+        }
+        /* 内部模块标题 */
+        .section-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: black;
+            border-bottom: 1px solid #8b8b8b;
+            padding-bottom: 5px;
+            margin: 20px 0 14px 0;
+            font-family: inherit;
+        }
+        /* 字段行 - 类似档案卡片中的信息行 */
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            border-bottom: none;
+        }
+        .info-label {
+            width: 130px;
+            font-weight: 700;
+            color: black;
+            flex-shrink: 0;
+        }
+        .info-value {
+            flex: 1;
+            color: black;
+        }
+        /* 照片和关键信息两栏布局 */
+        .photo-basic-area {
+            display: flex;
+            gap: 32px;
+            margin: 16px 0 20px 0;
+            flex-wrap: wrap;
+        }
+        .photo-box {
+            flex-shrink: 0;
+            text-align: center;
+            border: 1.5px solid #333;
+            background: #fefefe;
+            width: 180px;
+            padding: 8px 0;
+        }
+        .photo-placeholder {
+            width: 160px;
+            height: 200px;
+            margin: 0 auto;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 13px;
+            border: 1px solid #aaa;
+        }
+        .photo-caption {
+            margin-top: 6px;
+            font-size: 12px;
+            color: black;
+        }
+        .basic-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 24px;
+        }
+        /* 普通档案字段样式（用于长文本） */
+        .archive-text-block {
+            margin: 14px 0;
+        }
+        .archive-text-block strong {
+            font-weight: 700;
+        }
+        .note-box {
+            margin-top: 28px;
+            padding: 14px 16px;
+            background: #f9f9f9;
+            border-left: 3px solid #5a5a5a;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #1e1e1e;
+        }
+        hr {
+            margin: 16px 0;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+        /* 表格样式的辅助 */
+        .inline-highlight {
+            font-weight: 600;
+        }
+        /* 完全无浮动、无动画、无圆角过度装饰 */
+        .archive-paper, .photo-box, .photo-placeholder {
+            border-radius: 0px;
+        }
+        /* 打印样式保留传统 */
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            .archive-paper {
+                border: none;
+                padding: 20px;
+            }
+            .note-box {
+                background: none;
+                border-left: 2px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">26/39</div>
+     <div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+        【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+    </div>
+<div class="archive-paper">
+    <!-- 档案主标题 -->
+    <div class="archive-main-title">
+        汀州市公安局邺山分局 · 人事档案
+        <small>Police Personnel Dossier | 内部材料  严禁外传</small>
+    </div>
+
+    <!-- 一、基本身份信息栏 -->
+    <div class="section-title">一、基本身份信息栏</div>
+    
+    <div class="photo-basic-area">
+        <div class="photo-box">
+    <div class="photo-image">
+        <img src="images/于承安.webp" alt="于承安证件照" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; width:100%; height:100%; flex-direction:column; align-items:center; justify-content:center; background:#f5f5f5;">
+            <div style="font-size:32px; margin-bottom:6px;">📷</div>
+            <div>证件照</div>
+            <div style="font-size:11px; margin-top:5px;">编号：YCA-1998</div>
+        </div>
+    </div>
+    <div class="photo-caption"></div>
+</div>
+        <!-- 右侧基本信息网格 -->
+        <div class="basic-grid">
+            <div><span class="info-label" style="display: inline-block; width: 85px;">姓名：</span>于承安</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">性别：</span>男</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">出生日期：</span>2000年11月</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">身份证号码：</span>381699200011176789</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">警察编号：</span>3315110</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">民族：</span>汉族</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">婚姻状况：</span>未婚</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">籍贯：</span>浙西省汀州市</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">户籍所在地：</span>浙西省汀州市华和区</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">现任职务：</span>汀州市公安局邺山分局邺山派出所见习警员</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">学历背景：</span>2018年考入浙西警察学院治安管理专业，2022年毕业</div>
+            <div><span class="info-label" style="display: inline-block; width: 85px;">招录情况：</span>通过2024年下半年招警考试，2024年12月入职</div>
+        </div>
+    </div>
+
+    <!-- 工作表现简述 -->
+    <div class="info-row">
+        <div class="info-label">工作表现简述：</div>
+        <div class="info-value"><strong>入职以来基本完成本职工作，但存在思想不够灵活、缺乏团队协作意识等问题，需进一步培养和引导。</strong></div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">证件材料：</div>
+        <div class="info-value">身份证（381699200011176789）、户口本复印件、学历证书及学位证书（浙西警察学院）、计算机二级证书（MS Office）、普通话二级甲等证书，证件齐全、真实有效。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">身体状况：</div>
+        <div class="info-value">2024年11月入职体检报告：无传染病、无重大疾病，视力5.0，符合人民警察体检标准；暂无年度健康体检记录，身体状况良好，能适应基层执勤工作。</div>
+    </div>
+
+    <!-- 二、工作履历与岗位信息 -->
+    <div class="section-title">二、工作履历与岗位信息</div>
+    <div class="info-row">
+        <div class="info-label">入职审批材料：</div>
+        <div class="info-value">2024年招警考试报名表、政审表（合格）、录用审批表、汀州市公安局录用通知书（汀公录2024XXXX号），审批流程合规、材料齐全。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">岗位变动：</div>
+        <div class="info-value">2024年12月入职后分配至汀州市公安局邺山分局邺山派出所，任见习警员，岗位未变动。主要负责辖区日常治安巡逻、便民服务、矛盾纠纷调解、案件线索摸排及辅助办理行政案件等工作。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">警衔变动：</div>
+        <div class="info-value">暂无警衔授予记录，待见习期满考核合格后按规定授予相应警衔。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">工作实绩：</div>
+        <div class="info-value">2024年12月入职至今，累计参与日常治安巡逻40余次，巡逻里程超200公里；协助办理行政案件5起，无错案、漏案；参与重大安保任务1次（元旦安保）；接待群众咨询、求助20余人次，调解邻里纠纷4起。<strong>工作态度尚可，但主动意识不足，对部分工作安排配合度不高，未能积极融入团队，工作成效未达预期</strong>。</div>
+    </div>
+
+    <!-- 三、考核、奖惩与政治面貌 -->
+    <div class="section-title">三、考核、奖惩与政治面貌</div>
+    <div class="info-row">
+        <div class="info-label">日常考核：</div>
+        <div class="info-value">2024年度（入职不足1个月，无年度考核）；见习期内考勤记录完整，无迟到、早退、旷工情况，出勤率100%。综合评定为“基本合格”，主要问题为：<strong>工作思路僵化，不善于听取同事意见，团队协作能力较弱，对单位工作部署的理解和执行不够到位，需加强引导教育</strong>。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">奖惩情况：</div>
+        <div class="info-value">入职以来无立功受奖、通报表扬记录，无突出工作事迹；无纪律处分、违法违纪记录。因工作中多次出现“配合度不高”“执行不到位”等情况，被所领导约谈提醒2次，要求其限期整改，规范工作态度。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">政治面貌详情：</div>
+        <div class="info-value">共邺团员，2017年5月加入中国共产主义邺年团，入团志愿书1份，历年民主评议团员登记表均为合格。入职后能够参与单位组织的共邺团相关学习活动，但学习积极性不高，思想觉悟有待提升，主动向党组织靠拢的意识不足。</div>
+    </div>
+
+    <!-- 四、培训与专业资质 -->
+    <div class="section-title">四、培训与专业资质</div>
+    <div class="info-row">
+        <div class="info-label">培训记录：</div>
+        <div class="info-value">2024年12月入职后，参加汀州市公安局新警初任培训（培训周期2024年12月-2025年1月），目前培训进行中，培训期间表现一般，课堂纪律良好，但互动参与度不高，考核成绩暂未公布。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">专业资质：</div>
+        <div class="info-value">暂未领取人民警察证（待新警培训合格后办理）、执法资格等级考试（初级）待考、无持枪证（见习警员暂不具备持枪资格），相关资质按流程办理中。</div>
+    </div>
+
+    <!-- 五、薪资、福利与任免 -->
+    <div class="section-title">五、薪资、福利与任免</div>
+    <div class="info-row">
+        <div class="info-label">薪资待遇：</div>
+        <div class="info-value">2024年12月起按见习警员工资标准发放，暂无工资变动记录；公积金、社保缴纳记录完整（2024年12月起缴纳，缴纳单位为汀州市公安局邺山分局），待遇按规定执行。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">任免离职：</div>
+        <div class="info-value">无晋升、降职、免职记录；无辞职、辞退、退休相关审批材料，目前正常在职，后续将根据其见习期表现，决定是否转正及岗位调整。</div>
+    </div>
+
+    <!-- 六、法律与其他材料 -->
+    <div class="section-title">六、法律与其他材料</div>
+    <div class="info-row">
+        <div class="info-label">政审材料：</div>
+        <div class="info-value">2024年招警政审时提供的无犯罪记录证明1份、户籍所在地社区及学校现实表现鉴定表各1份，政审结论为合格。</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">法律文书：</div>
+        <div class="info-value">无涉及行政复议、诉讼、赔偿等相关法律文书副本及记录；无任何违法违纪、违规执法相关记录。</div>
+    </div>
+
+    <!-- 特别说明 -->
+    <div class="note-box">
+        <strong>特别说明</strong><br>
+        本档案严格按照《中华人民共和国人民警察法》及公安人事档案管理规定整理，由汀州市公安局邺山分局人事部门专人负责管理，内容真实、完整、保密，仅用于公安人事管理、考核晋升等工作。见习期内，该同志需加强思想教育和业务培训，提升团队协作能力和工作执行力，确保更好地履行人民警察职责。
+    </div>
+
+    <!-- 档案尾部盖章及日期 -->
+    <hr>
+    <div style="margin-top: 16px; display: flex; justify-content: space-between; font-size: 13px;">
+        <div>建档单位：汀州市公安局邺山分局政治处</div>
+        <div>建档日期：2025年1月</div>
+    </div>
+    <div style="margin-top: 8px; font-size: 12px; color: #3e3e3e;">电子档案同步于人事系统 | 第1页 共1页</div>
+</div>
+</body>
+</html>

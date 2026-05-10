@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山面馆 - 管理后台</title>
+    <style type="text/css">
+        body {
+            background-color: #CCCC99;
+            background-image: url('data:image/gif;base64,R0lGODlhCAAIAIABAAAAAP///yH5BAEKAAEALAAAAAAIAAgAAAINjAOgFJwHyrGiGmpVAQA7');
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        
+        .main-table {
+            width: 780px;
+            margin: 15px auto;
+            background-color: #FFFFDD;
+            border: 3px solid #996633;
+            border-collapse: collapse;
+            box-shadow: 5px 5px 10px #666633;
+        }
+        
+        .banner {
+            background-color: #8B4513;
+            background-image: linear-gradient(45deg, #A0522D, #8B4513);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 4px solid #FFD700;
+        }
+        
+        .banner-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #5C3317;
+            font-family: "黑体", "SimHei", sans-serif;
+            letter-spacing: 8px;
+        }
+        
+        .banner-sub {
+            font-size: 14px;
+            color: #FFE4B5;
+            margin-top: 5px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .nav-bar {
+            background-color: #DEB887;
+            padding: 8px;
+            text-align: center;
+            border-bottom: 2px solid #8B4513;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .nav-bar a:link, .nav-bar a:visited {
+            color: #4A2F1D;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 4px 8px;
+            background-color: #F5DEB3;
+            border: 1px outset #CD853F;
+            font-family: "宋体", "SimSun", serif;
+            cursor: pointer;
+        }
+        
+        .nav-bar a:hover {
+            background-color: #FFD700;
+            border: 1px inset #D2691E;
+            color: #8B0000;
+        }
+        
+        .nav-bar a.active {
+            background-color: #FFD700;
+            border: 1px inset #D2691E;
+            color: #8B0000;
+        }
+        
+        .main-content {
+            padding: 20px 25px;
+            background-color: #FFFFF0;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8B0000;
+            background: url('data:image/gif;base64,R0lGODlhCgAKAIABAI6Ojv///yH5BAEAAAEALAAAAAAKAAoAAAIRjANgQwHJ3uBwGFjC6wwFAAA7') repeat-x bottom;
+            padding-bottom: 8px;
+            margin: 20px 0 15px;
+            border-bottom: 2px solid #CD853F;
+            font-family: "黑体", "SimHei", sans-serif;
+        }
+        
+        .welcome-banner {
+            background-color: #FFF8DC;
+            border: 2px solid #DAA520;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .welcome-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8B4513;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .admin-info {
+            background-color: #E8F0E8;
+            border: 1px solid #2E8B57;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .guestbook-item {
+            border-bottom: 1px dashed #BC8F8F;
+            padding: 10px 0;
+        }
+        
+        .guestbook-name {
+            font-weight: bold;
+            color: #8B4513;
+        }
+        
+        .guestbook-time {
+            color: #666;
+            font-size: 11px;
+        }
+        
+        .owner-reply {
+            background-color: #FFF8E7;
+            border-left: 3px solid #D2691E;
+            margin-top: 8px;
+            padding: 8px 10px;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            color: #8B4513;
+            text-indent: 0em;
+            line-height: 1.6;
+        }
+        
+        .owner-reply .reply-name {
+            font-weight: bold;
+            color: #D2691E;
+        }
+        
+        .reply-form {
+            background-color: #F5F5DC;
+            border: 1px solid #BC8F8F;
+            padding: 10px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        .reply-input {
+            width: 100%;
+            height: 50px;
+            border: 2px inset #C0C0C0;
+            background-color: #FFFFF0;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            padding: 3px;
+        }
+        
+        .old-button {
+            background-color: #C0C0C0;
+            border: 2px outset #FFFFFF;
+            padding: 4px 10px;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            margin: 0 3px;
+        }
+        
+        .old-button:active {
+            border: 2px inset #808080;
+        }
+        
+        .old-button.delete-btn {
+            color: #FF0000;
+        }
+        
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FAFAD2;
+            border: 2px solid #8FBC8F;
+            font-family: "宋体", "SimSun", serif;
+            margin: 15px 0;
+        }
+        
+        .menu-table th {
+            background-color: #BC8F8F;
+            color: #FFFFFF;
+            padding: 6px;
+            font-size: 14px;
+            border: 1px solid #6B8E23;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .menu-table td {
+            border: 1px solid #6B8E23;
+            padding: 6px 8px;
+            font-size: 13px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .footer {
+            background-color: #D2B48C;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 3px solid #8B4513;
+            color: #2F1B0C;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .footer .email {
+            color: #0000FF;
+            text-decoration: underline;
+        }
+        
+        .update-time {
+            font-family: "Courier New", monospace;
+            background-color: #333;
+            color: #0F0;
+            padding: 2px 8px;
+            display: inline-block;
+        }
+        
+        .page {
+            display: block;
+        }
+        
+        .page.hidden {
+            display: none;
+        }
+        
+        .stats-box {
+            background-color: #F0F0F0;
+            border: 2px groove #999;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .stat-item {
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8B0000;
+            font-family: "Courier New", monospace;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* 密码弹窗样式 */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .password-box {
+            width: 380px;
+            background-color: #FFFFDD;
+            border: 5px solid #996633;
+            box-shadow: 8px 8px 15px #333;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .password-header {
+            background-color: #8B4513;
+            padding: 10px 15px;
+            color: #FFD700;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: "黑体", "SimHei", sans-serif;
+            border-bottom: 2px solid #FFD700;
+        }
+        
+        .password-body {
+            padding: 25px;
+            background-color: #FFFFF0;
+        }
+        
+        .password-input-area {
+            margin: 15px 0;
+        }
+        
+        .password-input-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4A2F1D;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 2px inset #C0C0C0;
+            background-color: #FFFFFF;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+        }
+        
+        .password-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .error-msg {
+            color: #FF0000;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        .success-msg {
+            color: #00ff04;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">12/39</div>
+
+<!-- 日志密码验证弹窗 -->
+<div id="logPasswordModal" class="password-modal">
+    <div class="password-box">
+        <div class="password-header">
+             日志管理系统
+        </div>
+        <div class="password-body">
+            <div class="password-input-area">
+                <label>请输入访问密码：</label>
+                <input type="password" id="logPassword" class="password-input" placeholder="************">
+                <div id="passwordError" class="error-msg">密码错误，请重试！（Morse code）</div>
+                <div id="passwordSuccess" class="success-msg" style="display:none;">密码正确，正在加载日志系统...</div>
+            </div>
+            <div class="password-buttons">
+                <button class="old-button" onclick="closePasswordModal()">取 消</button>
+                <button class="old-button" onclick="checkPassword()">确 定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 访问信息 -->
+<div style="text-align: center; margin: 5px 0; font-family: '宋体', 'SimSun', serif;">
+    管理员 <span style="background:#000; color:#0F0; padding:2px 5px; font-family:'Courier New';">yeshan0578</span> 已登录管理后台
+</div>
+
+<table class="main-table" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="banner">
+            <div class="banner-text">邺山面馆</div>
+            <div class="banner-sub">—— 管理后台 ——</div>
+         </td>
+     '</tr>
+    
+    <tr>
+        <td class="nav-bar">
+            <a onclick="switchPage('dashboard')" id="nav-dashboard">管理首页</a> |
+            <a onclick="switchPage('guestbook-mgr')" id="nav-guestbook-mgr">留言管理</a> |
+            <a onclick="switchPage('menu-mgr')" id="nav-menu-mgr">菜单管理</a> |
+            <a onclick="switchPage('settings')" id="nav-settings">系统设置</a> |
+            <a href="邺山面馆.html">返回面馆首页</a> |
+            <a href="#" onclick="logout()">退出登录</a>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="main-content">
+            
+            <!-- 管理首页 -->
+            <div id="page-dashboard" class="page">
+                <div class="welcome-banner">
+                    <div class="welcome-text">欢迎回来！</div>
+                    <div style="margin-top:5px; font-size:13px; color:#666;">管理员ID：yeshan0578 </div>
+                </div>
+                
+                <div class="section-title">数据概览</div>
+                
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">待回复留言</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">128</div>
+                        <div class="stat-label">本站总访问量</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">在售面品</div>
+                    </div>
+                </div>
+                
+                <div class="admin-info">
+                    <span style="color:#2E8B57; font-weight:bold;">【系统通知】</span><br>
+                    1. 有5条新留言等待回复处理<br>
+                    2. 本月特推：土鸡炖蘑菇面已上架<br>
+                    3. 会员"翠花"积分已满50分，可兑换面品<br>
+                    4. 网站最后备份时间：2003年10月15日
+                </div>
+                
+                <div style="margin-top:20px; text-align:center;">
+                    <button class="old-button" onclick="switchPage('guestbook-mgr')">处理留言</button>
+                    <button class="old-button" onclick="switchPage('menu-mgr')">管理菜单</button>
+                </div>
+            </div>
+            
+            <!-- 留言管理页面 -->
+            <div id="page-guestbook-mgr" class="page hidden">
+                <div class="section-title">留言管理</div>
+                
+                <p style="margin:10px 0; color:#666;">共 <strong>5</strong> 条留言 | 已回复 <strong>5</strong> 条</p>
+                
+                <div id="adminGuestbookList">
+                    <div class="guestbook-item" id="msg-1">
+                        <div style="float:right;">
+                            <button class="old-button" onclick="toggleReplyForm('reply-form-1')">回复</button>
+                            <button class="old-button delete-btn" onclick="deleteMessage('msg-1')">删除</button>
+                        </div>
+                        <span class="guestbook-name">老张</span> 
+                        <span class="guestbook-time">2003-10-15 14:20</span><br>
+                        面真筋道！从县城骑了四十分钟摩托车来的，值了！
+                        <div class="owner-reply">
+                            <span class="reply-name">店家回复[ID:yeshan0578]：</span>谢谢老张！下次来给您多加两块牛肉，骑摩托注意安全！
+                        </div>
+                        <div class="reply-form" id="reply-form-1">
+                            <textarea class="reply-input" id="reply-text-1" placeholder="输入回复内容...">谢谢老张！下次来给您多加两块牛肉，骑摩托注意安全！</textarea>
+                            <div style="text-align:right; margin-top:5px;">
+                                <button class="old-button" onclick="saveReply('msg-1', 'reply-text-1')">保存修改</button>
+                                <button class="old-button" onclick="toggleReplyForm('reply-form-1')">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guestbook-item" id="msg-2">
+                        <div style="float:right;">
+                            <button class="old-button" onclick="toggleReplyForm('reply-form-2')">回复</button>
+                            <button class="old-button delete-btn" onclick="deleteMessage('msg-2')">删除</button>
+                        </div>
+                        <span class="guestbook-name">过路人</span> 
+                        <span class="guestbook-time">2003-10-12 11:05</span><br>
+                        路过邺山村，闻到香味进来的。牛肉面量足味美，下次还来。
+                        <div class="owner-reply">
+                            <span class="reply-name">店家回复[ID:yeshan0578]：</span>欢迎路过就来坐坐！我们家的牛肉都是每天早上现炖的，您喜欢就好！
+                        </div>
+                        <div class="reply-form" id="reply-form-2">
+                            <textarea class="reply-input" id="reply-text-2" placeholder="输入回复内容...">欢迎路过就来坐坐！我们家的牛肉都是每天早上现炖的，您喜欢就好！</textarea>
+                            <div style="text-align:right; margin-top:5px;">
+                                <button class="old-button" onclick="saveReply('msg-2', 'reply-text-2')">保存修改</button>
+                                <button class="old-button" onclick="toggleReplyForm('reply-form-2')">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guestbook-item" id="msg-3">
+                        <div style="float:right;">
+                            <button class="old-button" onclick="toggleReplyForm('reply-form-3')">回复</button>
+                            <button class="old-button delete-btn" onclick="deleteMessage('msg-3')">删除</button>
+                        </div>
+                        <span class="guestbook-name">翠花</span> 
+                        <span class="guestbook-time">2003-10-08 09:30</span><br>
+                        酸辣鸡杂面太好吃了！酸豆角是自家腌的吧？跟外面卖的不一样。
+                        <div class="owner-reply">
+                            <span class="reply-name">店家回复[ID:yeshan0578]：</span>翠花姐好眼力！酸豆角确实是我妈自己腌的，用的是村里种的豆角，外面买不到这个味道。
+                        </div>
+                        <div class="reply-form" id="reply-form-3">
+                            <textarea class="reply-input" id="reply-text-3" placeholder="输入回复内容...">翠花姐好眼力！酸豆角确实是我妈自己腌的，用的是村里种的豆角，外面买不到这个味道。</textarea>
+                            <div style="text-align:right; margin-top:5px;">
+                                <button class="old-button" onclick="saveReply('msg-3', 'reply-text-3')">保存修改</button>
+                                <button class="old-button" onclick="toggleReplyForm('reply-form-3')">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guestbook-item" id="msg-4">
+                        <div style="float:right;">
+                            <button class="old-button" onclick="toggleReplyForm('reply-form-4')">回复</button>
+                            <button class="old-button delete-btn" onclick="deleteMessage('msg-4')">删除</button>
+                        </div>
+                        <span class="guestbook-name">邺山村小李</span> 
+                        <span class="guestbook-time">2003-10-05 18:15</span><br>
+                        从小吃到大的面馆，现在在外地工作，每次回来第一件事就是来吃碗面。
+                        <div class="owner-reply">
+                            <span class="reply-name">店家回复[ID:yeshan0578]：</span>小李啊，在外地好好照顾自己！过年回来叔给你留着你最爱吃的葱油拌面。
+                        </div>
+                        <div class="reply-form" id="reply-form-4">
+                            <textarea class="reply-input" id="reply-text-4" placeholder="输入回复内容...">小李啊，在外地好好照顾自己！过年回来叔给你留着你最爱吃的葱油拌面。</textarea>
+                            <div style="text-align:right; margin-top:5px;">
+                                <button class="old-button" onclick="saveReply('msg-4', 'reply-text-4')">保存修改</button>
+                                <button class="old-button" onclick="toggleReplyForm('reply-form-4')">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guestbook-item" id="msg-5">
+                        <div style="float:right;">
+                            <button class="old-button" onclick="toggleReplyForm('reply-form-5')">回复</button>
+                            <button class="old-button delete-btn" onclick="deleteMessage('msg-5')">删除</button>
+                        </div>
+                        <span class="guestbook-name">杭州老陈</span> 
+                        <span class="guestbook-time">2003-09-28 12:40</span><br>
+                        朋友推荐来的，果然名不虚传。山泉水和面就是不一样，面条特别筋道。
+                        <div class="owner-reply">
+                            <span class="reply-name">店家回复[ID:yeshan0578]：</span>老陈您好！我们用的就是后山那口老井的水，夏天冰凉冬天温乎，和面最好了。欢迎常来！
+                        </div>
+                        <div class="reply-form" id="reply-form-5">
+                            <textarea class="reply-input" id="reply-text-5" placeholder="输入回复内容...">老陈您好！我们用的就是后山那口老井的水，夏天冰凉冬天温乎，和面最好了。欢迎常来！</textarea>
+                            <div style="text-align:right; margin-top:5px;">
+                                <button class="old-button" onclick="saveReply('msg-5', 'reply-text-5')">保存修改</button>
+                                <button class="old-button" onclick="toggleReplyForm('reply-form-5')">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 菜单管理页面 -->
+            <div id="page-menu-mgr" class="page hidden">
+                <div class="section-title">菜单管理</div>
+                
+                <table class="menu-table" id="adminMenuTable">
+                    <tr>
+                        <th width="35%">面品名称</th>
+                        <th width="15%">原价(元)</th>
+                        <th width="15%">会员价(元)</th>
+                        <th width="15%">状态</th>
+                        <th width="20%">操作</th>
+                     '</tr>
+                    <tr>
+                        <td>邺山牛肉面</td>
+                        <td style="text-align:center;">28.00</td>
+                        <td style="text-align:center; color:#B22222;">25.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>菌菇素面</td>
+                        <td style="text-align:center;">22.00</td>
+                        <td style="text-align:center; color:#B22222;">20.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>葱油拌面</td>
+                        <td style="text-align:center;">16.00</td>
+                        <td style="text-align:center; color:#B22222;">14.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>酸辣鸡杂面</td>
+                        <td style="text-align:center;">26.00</td>
+                        <td style="text-align:center; color:#B22222;">23.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>番茄鸡蛋面</td>
+                        <td style="text-align:center;">18.00</td>
+                        <td style="text-align:center; color:#B22222;">16.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>腊肉拌面</td>
+                        <td style="text-align:center;">35.00</td>
+                        <td style="text-align:center; color:#B22222;">32.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>邺山大排面</td>
+                        <td style="text-align:center;">30.00</td>
+                        <td style="text-align:center; color:#B22222;">27.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td>雪菜肉丝面</td>
+                        <td style="text-align:center;">15.00</td>
+                        <td style="text-align:center; color:#B22222;">13.00</td>
+                        <td style="text-align:center; color:#2E8B57;">在售</td>
+                        <td style="text-align:center;">
+                            <button class="old-button" onclick="alert('编辑功能开发中')">编辑</button>
+                            <button class="old-button delete-btn" onclick="alert('下架功能开发中')">下架</button>
+                        </td>
+                     </tr>
+                 </table>
+                
+                <div style="text-align:center; margin-top:15px;">
+                    <button class="old-button" onclick="alert('添加新面品功能开发中')">添加新面品</button>
+                </div>
+            </div>
+            
+            <!-- 系统设置页面 -->
+            <div id="page-settings" class="page hidden">
+                <div class="section-title">系统设置</div>
+                
+                <div class="admin-info">
+                    <strong>当前管理员信息：</strong><br>
+                    用户名：yeshan0578<br>
+                    身份：面馆管理<br>
+                    注册时间：2003年9月1日<br>
+                    本站程序：FrontPage 2000 + 记事本手写
+                </div>
+                
+                <div style="margin:15px 0;">
+                    <button class="old-button" onclick="alert('修改密码功能开发中')">修改密码</button>
+                    <button class="old-button" onclick="alert('网站备份功能开发中')">备份网站数据</button>
+                    <a class="old-button" style="background-color:#C0C0C0; text-decoration:none; display:inline-block; cursor:pointer;" onclick="showPasswordModal()">日志管理</a>
+                </div>
+                
+                <p style="color:#666; font-size:12px;">
+                    免责声明：本管理后台仅限面馆内部使用，请勿泄露账号密码。
+                </p>
+            </div>
+            
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="footer">
+            <div>
+                邺山面馆 管理后台 版权所有 (C) 2003-2004
+            </div>
+            <div style="margin:5px 0;">
+                地址：浙江省·邺山村·溪边路3号（大槐树对面） | 电话：0571-6789 234<br>
+                管理员：阿良 | 账号：yeshan0578
+            </div>
+          
+            <div style="margin-top:10px; font-size:10px; color:#555;">
+                建议使用IE5.0以上浏览器，分辨率800x600获得最佳浏览效果
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div style="width:780px; margin:5px auto; text-align:center;">
+    <marquee scrollamount="4" behavior="alternate" width="100%" bgcolor="#FFFFCC" style="border:1px solid #B8860B; padding:3px; font-family:'宋体','SimSun',serif;">
+        管理员 yeshan0578 已登录 | 有5条留言待处理 | 系统运行正常
+    </marquee>
+</div>
+
+<script type="text/javascript">
+    // 页面切换
+    function switchPage(pageId) {
+        var pages = ['dashboard', 'guestbook-mgr', 'menu-mgr', 'settings'];
+        for(var i = 0; i < pages.length; i++) {
+            var page = document.getElementById('page-' + pages[i]);
+            if(page) {
+                page.classList.add('hidden');
+            }
+            var navLink = document.getElementById('nav-' + pages[i]);
+            if(navLink) {
+                navLink.classList.remove('active');
+            }
+        }
+        
+        var targetPage = document.getElementById('page-' + pageId);
+        if(targetPage) {
+            targetPage.classList.remove('hidden');
+        }
+        
+        var activeNav = document.getElementById('nav-' + pageId);
+        if(activeNav) {
+            activeNav.classList.add('active');
+        }
+    }
+    
+    // 回复表单切换
+    function toggleReplyForm(formId) {
+        var form = document.getElementById(formId);
+        if(form) {
+            if(form.style.display === 'block') {
+                form.style.display = 'none';
+            } else {
+                form.style.display = 'block';
+            }
+        }
+    }
+    
+    // 保存回复
+    function saveReply(msgId, textId) {
+        var textarea = document.getElementById(textId);
+        var replyText = textarea.value;
+        if(replyText == '') {
+            alert('回复内容不能为空！');
+            return;
+        }
+        
+        // 找到对应留言的回复区域
+        var msgDiv = document.getElementById(msgId);
+        var replyDiv = msgDiv.querySelector('.owner-reply');
+        if(replyDiv) {
+            replyDiv.innerHTML = '<span class="reply-name">店家回复[ID:yeshan0578]：</span>' + replyText;
+        }
+        
+        // 隐藏回复表单
+        var formId = textId.replace('reply-text-', 'reply-form-');
+        toggleReplyForm(formId);
+        
+        alert('回复已保存！');
+    }
+    
+    // 删除留言
+    function deleteMessage(msgId) {
+        if(confirm('确定要删除这条留言吗？此操作不可恢复！')) {
+            var msgDiv = document.getElementById(msgId);
+            if(msgDiv) {
+                msgDiv.parentNode.removeChild(msgDiv);
+                alert('留言已删除！');
+            }
+        }
+    }
+    
+    // 退出登录
+    function logout() {
+        if(confirm('确定要退出管理后台吗？')) {
+            alert('已退出登录，返回面馆首页');
+            window.location.href = '邺山面馆.html';
+        }
+    }
+    
+    // 显示密码弹窗
+    function showPasswordModal() {
+        document.getElementById('logPasswordModal').style.display = 'flex';
+        document.getElementById('logPassword').value = '';
+        document.getElementById('passwordError').style.display = 'none';
+    }
+    
+    // 关闭密码弹窗
+    function closePasswordModal() {
+        document.getElementById('logPasswordModal').style.display = 'none';
+    }
+    
+    // 校验密码
+  function checkPassword() {
+    var pwd = document.getElementById('logPassword').value;
+    if(pwd.toLowerCase() === 'sacrifice') {
+        // 正确：在原来显示错误的地方显示成功信息
+        document.getElementById('passwordError').style.display = 'none';
+        var successDiv = document.getElementById('passwordSuccess');
+        successDiv.style.display = 'block';
+        // 1.5秒后跳转
+        setTimeout(function() {
+            window.location.href = '日志.html';
+        }, 1500);
+    } else {
+        document.getElementById('passwordError').style.display = 'block';
+        document.getElementById('passwordSuccess').style.display = 'none';
+    }
+}
+    
+    // 回车键提交
+    document.onkeydown = function(e) {
+        var modal = document.getElementById('logPasswordModal');
+        if(modal && modal.style.display === 'flex') {
+            if(e.keyCode === 13) {
+                checkPassword();
+            }
+        }
+    };
+    
+    // 页面加载
+    window.onload = function() {
+        window.status = "邺山面馆管理后台 - 管理员 yeshan0578";
+        
+        document.oncontextmenu = function(e) {
+            alert("邺山面馆管理后台，未经授权禁止操作！");
+            return false;
+        };
+        
+        // 默认显示管理首页
+        switchPage('dashboard');
+    };
+    
+    window.onbeforeunload = function() {
+        return "确定要离开管理后台吗？请保存好您的修改！";
+    };
+</script>
+
+<div style="text-align:center; margin:10px 0; font-family:'宋体','SimSun',serif; font-size:10px; color:#666;">
+    邺山面馆管理后台 | 推荐使用IE浏览器 800x600分辨率
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1225 @@
+ty website · HTML
+收到
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>浙西大学 - 首页</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      
+      --red: #1a5d9c;
+      --red-dark: #0e3d6b;
+      --red-light: #eef3fc;
+      --gold: #2c7da0;
+      --gold-light: #61a5c2;
+      --navy: #1e293b;
+      --gray-100: #f8fafc;
+      --gray-200: #e9eef3;
+      --gray-400: #94a3b8;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+      --white: #ffffff;
+      --font-serif: 'Noto Serif SC', serif;
+      --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    };
+    
+    
+ 
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--gray-800);
+      background: var(--white);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+ 
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+ 
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.75);
+      font-size: 12px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .topbar-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .topbar a { color: rgba(255,255,255,0.7); margin-left: 16px; transition: color 0.2s; }
+    .topbar a:hover { color: var(--gold-light); }
+    .topbar-left { display: flex; gap: 14px; }
+ 
+   header {
+  background: var(--red);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.header-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 110px;  /* 稍微增加高度，容纳logo */
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* logo图片容器（推荐保留一个圆形父容器） */
+.logo-img {
+  width: 99px;
+  height: 99px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* 优化图片渲染清晰度 */
+  image-rendering: crisp-edges;      /* 适用于图标类 */
+  image-rendering: -webkit-optimize-contrast;  /* Webkit优化 */
+}
+
+.logo-img:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.logo-text-cn {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gray-800);
+  letter-spacing: 2px;
+  line-height: 1.2;
+  white-space: nowrap;  /* 防止文字换行 */
+}
+
+.logo-text-en {
+  font-size: 10px;
+  color: var(--gray-400);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 400;
+  white-space: nowrap;
+}
+    .header-right { display: flex; align-items: center; gap: 20px; }
+    .header-search {
+      display: flex; align-items: center;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .header-search input {
+      border: none; outline: none; background: transparent;
+      color: white; font-size: 13px; padding: 6px 12px;
+      width: 180px; font-family: var(--font-sans);
+    }
+    .header-search input::placeholder { color: rgba(255,255,255,0.5); }
+    .header-search button {
+      background: var(--gold); border: none; cursor: pointer;
+      padding: 6px 12px; color: white; font-size: 15px;
+      transition: background 0.2s;
+    }
+    .header-search button:hover { background: var(--gold-light); }
+ 
+    /* ─── NAV ─── */
+    nav {
+      background: #ffffff;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 20px;
+      display: flex; align-items: center;
+    }
+    .nav-item {
+      position: relative;
+    }
+    .nav-link {
+      display: block;
+      padding: 12px 18px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover, .nav-item.active .nav-link {
+      background: rgba(255,255,255,0.12);
+      color: var(--gold-light);
+    }
+    .nav-item.active .nav-link {
+      border-bottom: 2px solid var(--gold);
+    }
+    .dropdown {
+      position: absolute; top: 100%; left: 0;
+      background: var(--white);
+      min-width: 160px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      border-top: 2px solid var(--red);
+      display: none; z-index: 500;
+    }
+    .nav-item:hover .dropdown { display: block; }
+    .dropdown a {
+      display: block; padding: 10px 16px;
+      color: var(--gray-600); font-size: 13px;
+      border-bottom: 1px solid var(--gray-200);
+      transition: background 0.15s, color 0.15s;
+    }
+    .dropdown a:hover { background: #fdf0f0; color: var(--red); }
+ 
+
+/* ─── HERO CAROUSEL 16:9 比例 ─── */
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #1a2744;
+  border-radius: 0;
+}
+
+/* 16:9 容器：宽度100%，高度根据宽度的9/16自动计算 */
+.slides {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s ease;
+}
+
+.slide {
+  min-width: 100%;
+  width: 100%;
+  position: relative;
+  flex-shrink: 0;
+  /* 16:9 核心：padding-bottom = 9/16 = 56.25% */
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.slide-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  color: white;
+  max-width: 500px;
+  z-index: 2;
+}
+
+/* 响应式：小屏幕下文字缩小 */
+@media (max-width: 768px) {
+  .slide-title {
+    font-size: 20px;
+  }
+  .slide-content {
+    bottom: 8%;
+    left: 20px;
+    right: 20px;
+  }
+  .slide-desc {
+    font-size: 12px;
+  }
+}
+.slide-tag {
+  background: var(--red);
+  color: white;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.slide-desc {
+  font-size: 14px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+.hero-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 5;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.dot.active {
+  background: var(--gold);
+  transform: scale(1.2);
+}
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  z-index: 5;
+}
+.hero-arrow:hover { background: var(--red); }
+.hero-prev { left: 20px; }
+.hero-next { right: 20px; }
+ 
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 40px 0; }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 20px; font-weight: 600;
+      color: var(--red-dark);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--red);
+      margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .section-title .more {
+      font-family: var(--font-sans);
+      font-size: 12px; color: var(--gray-400);
+      font-weight: 400; letter-spacing: 0;
+      transition: color 0.2s;
+    }
+    .section-title .more:hover { color: var(--red); }
+ 
+    /* ─── QUICK LINKS ─── */
+    .quick-links { background: var(--gray-100); border-bottom: 1px solid var(--gray-200); }
+    .quick-links .container { display: flex; flex-wrap: wrap; gap: 0; }
+    .quick-link-item {
+      flex: 1; min-width: 100px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 16px 10px;
+      border-right: 1px solid var(--gray-200);
+      cursor: pointer; transition: background 0.2s;
+    }
+    .quick-link-item:last-child { border-right: none; }
+    .quick-link-item:hover { background: rgba(155,28,28,0.06); }
+    .quick-link-icon {
+      width: 38px; height: 38px;
+      background: var(--red);
+      border-radius: 4px;
+      margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px;
+    }
+    .quick-link-label { font-size: 12px; color: var(--gray-600); text-align: center; }
+ 
+    /* ─── MAIN CONTENT GRID ─── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 30px;
+    }
+ 
+    /* ─── NEWS LIST ─── */
+    .news-item {
+      display: flex; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--gray-200);
+      align-items: flex-start;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-date {
+      flex-shrink: 0;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      text-align: center;
+      padding: 6px 10px;
+      min-width: 52px;
+    }
+    .news-date-day { font-size: 20px; font-weight: 700; color: var(--red); line-height: 1; }
+    .news-date-ym { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+    .news-tag {
+      display: inline-block; font-size: 10px;
+      background: var(--red); color: white;
+      padding: 1px 6px; margin-right: 6px;
+      border-radius: 2px; vertical-align: middle;
+    }
+    .news-title {
+      font-size: 13px; color: var(--gray-800);
+      line-height: 1.5;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .news-title:hover { color: var(--red); }
+ 
+    /* ─── NOTICE LIST ─── */
+    .notice-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px dashed var(--gray-200);
+    }
+    .notice-item:last-child { border-bottom: none; }
+    .notice-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0; margin-right: 10px;
+    }
+    .notice-text {
+      flex: 1; font-size: 13px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      cursor: pointer; transition: color 0.2s;
+    }
+    .notice-text:hover { color: var(--red); }
+    .notice-date { font-size: 11px; color: var(--gray-400); flex-shrink: 0; margin-left: 8px; }
+ 
+    /* ─── SIDEBAR ─── */
+    .sidebar-card { margin-bottom: 24px; }
+ 
+    /* ─── STATS ─── */
+    .stats-row {
+      background: var(--navy);
+      padding: 28px 0;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 10px 0;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-size: 32px; font-weight: 700;
+      color: var(--gold); font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .stat-num sup { font-size: 14px; }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 6px; }
+ 
+    /* ─── ACADEMIC UNITS ─── */
+    .college-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .college-card {
+      border: 1px solid var(--gray-200);
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .college-card:hover {
+      border-color: var(--red);
+      box-shadow: 0 4px 16px rgba(155,28,28,0.1);
+    }
+    .college-icon {
+      width: 48px; height: 48px; margin: 0 auto 10px;
+      background: linear-gradient(135deg, #fdf0f0, #f5d5d5);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .college-name { font-size: 13px; font-weight: 500; }
+ 
+    /* ─── MEDIA TABS ─── */
+    .tab-bar { display: flex; border-bottom: 2px solid var(--red); margin-bottom: 16px; }
+    .tab {
+      padding: 8px 18px; font-size: 13px; cursor: pointer;
+      color: var(--gray-600); transition: color 0.2s;
+    }
+    .tab.active {
+      background: var(--red); color: white;
+    }
+    .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .media-thumb {
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .media-thumb-img {
+      width: 100%; height: 110px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #e8d5d5, #c9a0a0);
+      transition: transform 0.4s;
+    }
+    .media-thumb:hover .media-thumb-img { transform: scale(1.05); }
+    .media-thumb-cap {
+      padding: 6px 0;
+      font-size: 12px; color: var(--gray-600);
+      line-height: 1.4;
+    }
+ 
+    /* ─── ACADEMICS IMAGE PLACEHOLDER ─── */
+    .img-placeholder {
+      width: 100%; background: linear-gradient(135deg, #e8d5d5 0%, #c9a0a0 50%, #8b4040 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.5); font-size: 28px;
+    }
+ 
+    /* ─── LINKS GRID ─── */
+    .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .link-btn {
+      display: flex; align-items: center;
+      padding: 9px 12px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      font-size: 12px; color: var(--gray-600);
+      gap: 8px; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .link-btn:hover { background: #fdf0f0; color: var(--red); border-color: #f0cece; }
+    .link-arrow { color: var(--red); font-size: 10px; margin-left: auto; }
+ 
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--gray-800); color: rgba(255,255,255,0.7);
+      margin-top: 0;
+    }
+    .footer-top {
+      max-width: 1200px; margin: 0 auto;
+      padding: 40px 20px 30px;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    }
+    .footer-logo-cn {
+      font-family: var(--font-serif);
+      font-size: 20px; color: white; font-weight: 600;
+      letter-spacing: 2px; margin-bottom: 6px;
+    }
+    .footer-logo-en { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 1.5px; margin-bottom: 14px; }
+    .footer-info { font-size: 12px; line-height: 2; color: rgba(255,255,255,0.5); }
+    .footer-col-title {
+      font-size: 14px; color: white; font-weight: 500;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      background: rgba(0,0,0,0.3);
+      padding: 14px 20px; text-align: center;
+      font-size: 11px; color: rgba(255,255,255,0.35);
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.4); margin: 0 6px; }
+    .footer-bottom a:hover { color: var(--gold-light); }
+ 
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb-bar {
+      background: var(--gray-100);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 8px 0;
+      font-size: 12px; color: var(--gray-400);
+    }
+    .breadcrumb-bar a { color: var(--gray-400); }
+    .breadcrumb-bar a:hover { color: var(--red); }
+    .breadcrumb-bar span { margin: 0 6px; }
+ 
+    /* ─── ANNOUNCE TICKER ─── */
+    .ticker {
+      background: #fff8e7;
+      border-bottom: 1px solid #ffe4a0;
+      padding: 7px 0;
+      overflow: hidden;
+    }
+    .ticker-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .ticker-label {
+      background: var(--gold); color: white;
+      font-size: 11px; padding: 2px 8px; white-space: nowrap; border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .ticker-track { overflow: hidden; flex: 1; }
+    .ticker-text {
+      white-space: nowrap;
+      font-size: 12px; color: #775500;
+      animation: ticker 30s linear infinite;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body>
+   <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">29/39</div>
+ 
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span>欢迎访问浙西大学官方网站</span>
+    </div>
+    <div>
+      <a href="#">邮件系统</a>
+      <a href="#">教务系统</a>
+      <a href="#">OA办公</a>
+      <a href="#">图书馆</a>
+      <a href="#">English</a>
+    </div>
+  </div>
+</div>
+ 
+<!-- HEADER -->
+<header>
+  <div class="header-main">
+   <div class="logo-area">
+  <div class="logo-emblem">
+    <!-- logo图片 -->
+    <img src="images/校徽.webp" alt="浙西大学logo" class="logo-img" >
+  </div>
+  <div>
+   <div class="logo-text-cn" style="font-family: 'Liu Jian Mao Cao', cursive; font-size: 38px; font-weight: 900; letter-spacing: 8px; color: #000; text-shadow: 0.5px 0 0 #000;">浙西大学</div>
+<div class="logo-text-en" style="font-size: 16px; letter-spacing: 2px;">Zhexi University</div>
+  </div>
+</div>
+    <div class="header-right">
+      <div class="header-search">
+        <input type="text" placeholder="请输入关键词..." />
+        <button><i class="fas fa-search"></i> 搜索</button>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-item active">
+        <a class="nav-link" href="#">首 页</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">学校概况</a>
+        <div class="dropdown">
+          <a href="#">学校简介</a>
+          <a href="#">现任领导</a>
+          <a href="#">历史沿革</a>
+          <a href="#">校训校徽</a>
+          <a href="#">校园风光</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">机构设置</a>
+        <div class="dropdown">
+          <a href="#">行政机构</a>
+          <a href="#">教学单位</a>
+          <a href="#">科研机构</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">教育教学</a>
+        <div class="dropdown">
+          <a href="#">本科生教育</a>
+          <a href="#">研究生教育</a>
+          <a href="#">继续教育</a>
+          <a href="#">国际教育</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">科学研究</a>
+        <div class="dropdown">
+          <a href="#">科研动态</a>
+          <a href="#">重点实验室</a>
+          <a href="#">科研成果</a>
+          <a href="#">学术交流</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">师资队伍</a>
+        <div class="dropdown">
+          <a href="#">院士专家</a>
+          <a href="#">教授风采</a>
+          <a href="#">人才引进</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">招生就业</a>
+        <div class="dropdown">
+          <a href="#">本科招生</a>
+          <a href="#">研究生招生</a>
+          <a href="#">就业指导</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#">国际合作</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="学生风采.html">学生风采</a>
+      </div>
+    </div>
+  </nav>
+</header>
+ 
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    
+    <span class="ticker-label"> <i class="fas fa-bullhorn"></i>  公告</span>
+    <div class="ticker-track">
+      <div class="ticker-text">
+        【重要通知】关于2025—2026学年第二学期期末考试安排的通知 &nbsp;&nbsp;&nbsp;
+        【招聘公告】浙西大学2026年公开招聘高层次人才公告 &nbsp;&nbsp;&nbsp;
+        【学术讲座】诺贝尔奖得主Prof. John A. Smith受邀来校作题为"材料科学前沿"的学术报告 &nbsp;&nbsp;&nbsp;
+        【喜报】我校在第十八届中国大学生计算机设计大赛中荣获全国一等奖 &nbsp;&nbsp;&nbsp;
+        【通知】关于暑期校园施工期间相关区域临时管制的通知
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- HERO CAROUSEL -->
+<div class="hero">
+  <div class="slides" id="slides">
+ 
+    <div class="slide active">
+      <div class="slide-bg">
+        <img src="images/esi.webp" alt="科研实验" class="slide-img">
+      <div class="slide-overlay"></div>
+      </div>
+      <div class="slide-content">
+        <div class="slide-tag">重大成果</div>
+        <div class="slide-title">我校在《Nature》发表重磅研究成果<br/>新型钙钛矿太阳能电池效率突破30%</div>
+        <div class="slide-desc">材料科学与工程学院王明远教授团队历时五年攻关，相关成果受到国际学术界广泛关注</div>
+      </div>
+    </div>
+ 
+    <div class="slide">
+      <div class="slide-bg">
+        <img src="images/学科.webp" alt="科研实验" class="slide-img">
+      <div class="slide-overlay"></div>
+      </div>
+      <div class="slide-content">
+         <div class="slide-tag">学科实力</div>
+    <div class="slide-title">浙西大学6个学科进入ESI全球排名前1%<br/>材料科学首次进入前1‰</div>
+    <div class="slide-desc">标志着我校材料学科已经跻身国际高水平学科行列，学科建设实现历史性突破</div>
+      </div>
+    </div>
+ 
+    <div class="slide">
+      <div class="slide-bg">
+      <img src="images/大米.webp" alt="科研实验" class="slide-img">
+      <div class="slide-overlay"></div>
+      </div>
+      <div class="slide-content">
+        <div class="slide-tag">战略合作</div>
+        <div class="slide-title">学校与大米技术有限公司签署全面战略合作协议</div>
+        <div class="slide-desc">双方将在人工智能、云计算及人才培养等领域开展深度合作</div>
+      </div>
+    </div>
+ 
+    <div class="slide">
+      <div class="slide-bg">
+      <img src="images/建模.webp" alt="科研实验" class="slide-img">
+      <div class="slide-overlay"></div>
+      </div>
+       <div class="slide-content">
+        <div class="slide-tag">人才培育</div>
+        <div class="slide-title">我校学子在全国大学生数学建模竞赛中荣获一等奖</div>
+        <div class="slide-desc">理学院三支参赛团队共斩获国家级奖项5项，创历史最佳成绩</div>
+      </div>
+    </div>
+ 
+  </div>
+ 
+  <button class="hero-arrow hero-prev" onclick="changeSlide(-1)">&#10094;</button>
+  <button class="hero-arrow hero-next" onclick="changeSlide(1)">&#10095;</button>
+ 
+  <div class="hero-dots" id="dots">
+    <div class="dot active" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+    <div class="dot" onclick="goSlide(3)"></div>
+  </div>
+</div>
+ 
+<!-- QUICK LINKS -->
+<div class="quick-links">
+  <div class="container">
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-clipboard"></i> </div>
+      <div class="quick-link-label">信息公开</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="quick-link-label">招生信息</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-book"></i></div>
+      <div class="quick-link-label">图书馆</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-hospital"></i></div>
+      <div class="quick-link-label">校医院</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-home"></i></div>
+      <div class="quick-link-label">后勤服务</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-briefcase"></i></div>
+      <div class="quick-link-label">就业指导</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-globe"></i></div>
+      <div class="quick-link-label">国际交流</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-landmark"></i></div>
+      <div class="quick-link-label">校友会</div>
+    </div>
+    <div class="quick-link-item">
+      <div class="quick-link-icon"><i class="fas fa-newspaper"></i></div>
+      <div class="quick-link-label">校报校刊</div>
+    </div>
+    <div class="quick-link-item" style="border-right:none">
+      <div class="quick-link-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="quick-link-label">廉政建设</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- STATS -->
+<div class="stats-row">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">87<sup>年</sup></div>
+        <div class="stat-label">办学历史</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">38,600</div>
+        <div class="stat-label">在校学生</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3,200<sup>+</sup></div>
+        <div class="stat-label">专任教师</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">156</div>
+        <div class="stat-label">本科专业</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">68</div>
+        <div class="stat-label">博士点</div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- MAIN SECTION -->
+<div class="section">
+  <div class="container">
+    <div class="main-grid">
+ 
+      <!-- LEFT COLUMN -->
+      <div>
+ 
+        <!-- NEWS TABS -->
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchTab(this,'news')">校园新闻</div>
+          <div class="tab" onclick="switchTab(this,'media')">媒体报道</div>
+          <div class="tab" onclick="switchTab(this,'focus')">专题聚焦</div>
+          <div style="margin-left:auto;display:flex;align-items:center;font-size:12px;color:#999;cursor:pointer;">更多 ›</div>
+        </div>
+ 
+        <div id="tab-news">
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">12</div><div class="news-date-ym">02/2026</div></div>
+            <div>
+              <div class="news-title">
+                <span class="news-tag">头条</span>
+                校长张建国出席中国工程院第十七届学术年会并作主题报告
+              </div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">21</div><div class="news-date-ym">01/2026</div></div>
+            <div>
+              <div class="news-title">
+                <span class="news-tag">科研</span>
+                我校材料学院王明远教授团队最新研究成果在《Nature Materials》发表
+              </div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">20</div><div class="news-date-ym">12/2025</div></div>
+            <div>
+              <div class="news-title">学校召开2026年党委全委会暨落实中央部署推进会</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">19</div><div class="news-date-ym">11/2025</div></div>
+            <div>
+              <div class="news-title">
+                <span class="news-tag">合作</span>
+                我校与中国科学院计算技术研究所共建"智能计算联合实验室"
+              </div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">18</div><div class="news-date-ym">11/2025</div></div>
+            <div>
+              <div class="news-title">2026年全国优秀博士学位论文评选结果揭晓 我校两篇论文入选</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">17</div><div class="news-date-ym">10/2025</div></div>
+            <div>
+              <div class="news-title">我校举办第十二届大学生科技文化节暨创新创业成果展</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-date"><div class="news-date-day">16</div><div class="news-date-ym">9/2025</div></div>
+            <div>
+              <div class="news-title">
+                <span class="news-tag">国际</span>
+                德国亚琛工业大学代表团访问我校 双方签署合作备忘录
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- NOTICES -->
+        <div style="margin-top: 32px;">
+          <div class="section-title">
+            通知公告
+            <a href="#" class="more">更多 ›</a>
+          </div>
+         <div class="notice-item">
+    <div class="notice-dot"></div>
+    <div class="notice-text">关于做好2026年寒假校园安全工作的通知</div>
+    <div class="notice-date">2026-01-22</div>
+  </div>
+  <div class="notice-item">
+    <div class="notice-dot"></div>
+    <div class="notice-text">2025—2026学年第二学期研究生选课通知</div>
+    <div class="notice-date">2026-01-21</div>
+  </div>
+  <div class="notice-item">
+    <div class="notice-dot"></div>
+    <div class="notice-text">关于开展2026年教职工春节慰问工作的通知</div>
+    <div class="notice-date">2026-01-20</div>
+  </div>
+  <div class="notice-item">
+    <div class="notice-dot"></div>
+    <div class="notice-text">浙西大学2026年寒假留校学生管理安排</div>
+    <div class="notice-date">2026-01-18</div>
+  </div>
+  <div class="notice-item">
+    <div class="notice-dot"></div>
+    <div class="notice-text">关于寒假图书馆开放时间调整的通知</div>
+    <div class="notice-date">2026-01-15</div>
+  </div>
+  <div class="notice-item">
+    <div class="notice-dot"></div>
+    <div class="notice-text">2026年春节假期后勤服务保障工作通知</div>
+    <div class="notice-date">2026-01-10</div>
+  </div>
+ 
+        <!-- MEDIA -->
+        <div style="margin-top: 32px;">
+          <div class="section-title">
+            图片新闻
+            <a href="#" class="more">更多 ›</a>
+          </div>
+          <div class="media-grid">
+            <div class="media-thumb">
+              <div class="img-placeholder" style="height:110px; background: linear-gradient(135deg,#9b1c1c,#c0392b);">🏛️</div>
+              <div class="media-thumb-cap">学校举行建校87周年庆典暨校友回归日活动</div>
+            </div>
+            <div class="media-thumb">
+              <div class="img-placeholder" style="height:110px; background: linear-gradient(135deg,#1a2744,#2d4a8a);">🎓</div>
+              <div class="media-thumb-cap">2026届本科生毕业典礼隆重举行</div>
+            </div>
+            <div class="media-thumb">
+              <div class="img-placeholder" style="height:110px; background: linear-gradient(135deg,#1a4a1a,#2d8a2d);">🔬</div>
+              <div class="media-thumb-cap">新型超算中心正式投入运行 算力跻身全国前十</div>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+ 
+      <!-- SIDEBAR -->
+      <div>
+ 
+        <!-- NOTICE BOX -->
+        <div class="sidebar-card">
+          <div class="section-title">
+            学术活动
+            <a href="#" class="more">更多 ›</a>
+          </div>
+          <div class="notice-item">
+            <div class="notice-dot" style="background:#c9a84c"></div>
+            <div class="notice-text">【讲座】量子信息与量子计算的最新进展</div>
+            <div class="notice-date">02-15</div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-dot" style="background:#c9a84c"></div>
+            <div class="notice-text">【论坛】第五届智能制造与工业互联网高峰论坛</div>
+            <div class="notice-date">01-26</div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-dot" style="background:#c9a84c"></div>
+            <div class="notice-text">【报告】面向碳中和的新型储能技术研究进展</div>
+            <div class="notice-date">01-05</div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-dot" style="background:#c9a84c"></div>
+            <div class="notice-text">【研讨】数字经济下企业管理创新与实践</div>
+            <div class="notice-date">12-28</div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-dot" style="background:#c9a84c"></div>
+            <div class="notice-text">【沙龙】青年学者创新研究分享会（第十一期）</div>
+            <div class="notice-date">12-14</div>
+          </div>
+        </div>
+ 
+        <!-- QUICK LINKS -->
+        <div class="sidebar-card">
+          <div class="section-title">常用链接</div>
+          <div class="links-grid">
+           <div class="link-btn"><i class="fas fa-envelope"></i> 邮件系统 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-book"></i> 教务系统 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-laptop-code"></i> OA系统 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-book"></i> 图书馆 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-flask"></i> 科研系统 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-users"></i> 人事系统 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-building"></i> 后勤系统 <span class="link-arrow">›</span></div>
+<div class="link-btn"><i class="fas fa-graduation-cap"></i> 研究生系统 <span class="link-arrow">›</span></div>
+          </div>
+        </div>
+ 
+        <!-- WECHAT -->
+        <div class="sidebar-card" style="border: 1px solid var(--gray-200); padding: 16px; text-align: center;">
+          <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 10px; font-weight: 500;">关注我们</div>
+          <div style="display: flex; gap: 10px; justify-content: center;">
+            <div style="text-align:center">
+              <div style="width:70px;height:70px;background:linear-gradient(135deg,#e0e0e0,#c0c0c0);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:28px;"><i class="fab fa-weixin"></i></div>
+              <div style="font-size:11px;color:#999">官方威信</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:70px;height:70px;background:linear-gradient(135deg,#e0e0e0,#c0c0c0);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:28px;"><i class="fab fa-tiktok"></i></div>
+              <div style="font-size:11px;color:#999">官方抖乐</div>
+            </div>
+            <div style="text-align:center">
+              <div style="width:70px;height:70px;background:linear-gradient(135deg,#e0e0e0,#c0c0c0);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:28px;"><i class="fab fa-weibo"></i></div>
+              <div style="font-size:11px;color:#999">官方weboi</div>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- COLLEGES -->
+<div style="background: var(--gray-100); padding: 40px 0; border-top: 1px solid var(--gray-200);">
+  <div class="container">
+    <div class="section-title">
+      院系设置
+      <a href="#" class="more">全部院系 ›</a>
+    </div>
+    <div class="college-grid">
+     <div class="college-card"><div class="college-icon"><i class="fas fa-flask"></i></div><div class="college-name">材料科学与工程学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-laptop-code"></i></div><div class="college-name">计算机科学与技术学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-bolt"></i></div><div class="college-name">电气与信息工程学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-building"></i></div><div class="college-name">土木与建筑工程学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-cogs"></i></div><div class="college-name">机械工程学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-vial"></i></div><div class="college-name">化学与化工学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-chart-line"></i></div><div class="college-name">经济与管理学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-ruler"></i></div><div class="college-name">理学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-gavel"></i></div><div class="college-name">文法学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-globe"></i></div><div class="college-name">外国语学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-palette"></i></div><div class="college-name">艺术与设计学院</div></div>
+<div class="college-card"><div class="college-icon"><i class="fas fa-running"></i></div><div class="college-name">体育学院</div></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo-cn">浙西大学</div>
+      <div class="footer-logo-en">ZHEXI UNIVERSITY </div>
+      <div class="footer-info">
+        地址：浙西省竹津市镜湖大道66号<br/>
+        邮编：063210<br/>
+        电话：0315-8805678<br/>
+        招生热线：0315-8805000<br/>
+        传真：0315-8805001
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">学校概况</div>
+      <ul class="footer-links">
+        <li><a href="#">学校简介</a></li>
+        <li><a href="#">现任领导</a></li>
+        <li><a href="#">历史沿革</a></li>
+        <li><a href="#">校园风光</a></li>
+        <li><a href="#">校训校徽</a></li>
+        <li><a href="#">大事记</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">教育教学</div>
+      <ul class="footer-links">
+        <li><a href="#">本科生教育</a></li>
+        <li><a href="#">研究生教育</a></li>
+        <li><a href="#">留学生教育</a></li>
+        <li><a href="#">继续教育</a></li>
+        <li><a href="#">专业介绍</a></li>
+        <li><a href="#">精品课程</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">服务与支持</div>
+      <ul class="footer-links">
+        <li><a href="#">教务系统</a></li>
+        <li><a href="#">邮件系统</a></li>
+        <li><a href="#">图书馆</a></li>
+        <li><a href="#">信息公开</a></li>
+        <li><a href="#">意见反馈</a></li>
+        <li><a href="#">网站地图</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    Copyright © 2026 浙西大学 版权所有 &nbsp;|&nbsp;
+    <a href="#">冀ICP备14003456号</a> &nbsp;|&nbsp;
+    <a href="#">冀公网安备 13020302001234号</a> &nbsp;|&nbsp;
+    <a href="#">网站管理</a> &nbsp;|&nbsp;
+    <a href="#">隐私政策</a>
+  </div>
+</footer>
+ 
+<script>
+  (function() {
+    // 需要匹配的关键词（只要搜索内容包含即可）
+    const keyword = "浙西民俗文化生态与乡村振兴 —— 邺山村民俗研究";
+    // 跳转目标URL（请替换为实际地址）
+    const targetUrl = "学校搜索.html";
+    
+    // 获取搜索框和搜索按钮
+    const searchInput = document.querySelector('.header-search input');
+    const searchBtn = document.querySelector('.header-search button');
+    
+    function checkAndJump() {
+        if (searchInput) {
+            const inputValue = searchInput.value.trim();
+            // 只要输入的内容包含关键词，就跳转
+            if (inputValue.includes(keyword)) {
+                window.open(targetUrl, '_blank');
+                // 可选：跳转后清空搜索框
+                // searchInput.value = '';
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // 点击搜索按钮时检测
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function(e) {
+            checkAndJump();
+        });
+    }
+    
+    // 按回车键时检测
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();  // 阻止默认提交行为
+                checkAndJump();
+            }
+        });
+    }
+})();
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+ 
+  function goSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    document.getElementById('slides').style.transform = `translateX(-${current * 100}%)`;
+  }
+ 
+  function changeSlide(dir) { goSlide(current + dir); }
+ 
+  // Auto-play
+  setInterval(() => changeSlide(1), 5000);
+ 
+  function switchTab(el, tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
+ 
+</body>
+</html>

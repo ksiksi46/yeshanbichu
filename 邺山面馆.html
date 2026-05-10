@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="邺山面馆,邺山村,手擀面,农家面,土鸡面">
+    <meta name="description" content="邺山村老面馆，三代人手工擀面，山泉水和面，土鸡汤底。">
+  
+    <title>邺山面馆 - 村里人的面馆</title>
+    <style type="text/css">
+        /* 2003年风格——纯宋体 */
+        body {
+            background-color: #CCCC99;
+            background-image: url('data:image/gif;base64,R0lGODlhCAAIAIABAAAAAP///yH5BAEKAAEALAAAAAAIAAgAAAINjAOgFJwHyrGiGmpVAQA7');
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        
+        .main-table {
+            width: 760px;
+            margin: 15px auto;
+            background-color: #FFFFDD;
+            border: 3px solid #996633;
+            border-collapse: collapse;
+            box-shadow: 5px 5px 10px #666633;
+        }
+        
+        .banner {
+            background-color: #8B4513;
+            background-image: linear-gradient(45deg, #A0522D, #8B4513);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 4px solid #FFD700;
+        }
+        
+        .blink-text {
+            font-size: 36px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #5C3317;
+            font-family: "黑体", "SimHei", sans-serif;
+            letter-spacing: 8px;
+            animation: blink 1s step-start infinite;
+        }
+        
+        @keyframes blink {
+            50% { color: #FF6347; text-shadow: 3px 3px 0 #8B0000; }
+        }
+        
+        .banner-sub {
+            font-size: 14px;
+            color: #FFE4B5;
+            margin-top: 5px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .nav-bar {
+            background-color: #DEB887;
+            padding: 8px;
+            text-align: center;
+            border-bottom: 2px solid #8B4513;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .nav-bar a:link, .nav-bar a:visited {
+            color: #4A2F1D;
+            text-decoration: none;
+            margin: 0 12px;
+            padding: 4px 8px;
+            background-color: #F5DEB3;
+            border: 1px outset #CD853F;
+            font-family: "宋体", "SimSun", serif;
+            cursor: pointer;
+        }
+        
+        .nav-bar a:hover {
+            background-color: #FFD700;
+            border: 1px inset #D2691E;
+            color: #8B0000;
+        }
+        
+        .nav-bar a.active {
+            background-color: #FFD700;
+            border: 1px inset #D2691E;
+            color: #8B0000;
+        }
+        
+        .sidebar {
+            width: 200px;
+            background-color: #F5F5DC;
+            border-right: 2px dashed #BC8F8F;
+            padding: 12px;
+            vertical-align: top;
+        }
+        
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #8B4513;
+            background-color: #FFE4B5;
+            padding: 5px;
+            border-left: 8px solid #B8860B;
+            border-bottom: 1px solid #D2B48C;
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .login-box {
+            background-color: #E6E6FA;
+            border: 2px groove #9370DB;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .login-input {
+            width: 150px;
+            border: 2px inset #C0C0C0;
+            background-color: #FFFFF0;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            padding: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .login-btn {
+            background-color: #C0C0C0;
+            border: 2px outset #FFFFFF;
+            padding: 3px 12px;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .login-btn:active {
+            border: 2px inset #808080;
+        }
+        
+        .marquee-news {
+            background-color: #FFFACD;
+            border: 1px solid #BDB76B;
+            padding: 5px;
+            margin-bottom: 15px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .counter-box {
+            background-color: #000000;
+            color: #00FF00;
+            font-family: "Courier New", monospace;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 2px inset #808080;
+            margin: 15px 0;
+        }
+        
+        .guestbook {
+            background-color: #E6E6FA;
+            border: 2px groove #9370DB;
+            padding: 8px;
+            font-size: 12px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .main-content {
+            padding: 15px 20px;
+            background-color: #FFFFF0;
+            vertical-align: top;
+        }
+        
+        .welcome-box {
+            background-color: #FFF8DC;
+            border: 2px solid #DAA520;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .welcome-box .red {
+            color: #FF0000;
+            font-weight: bold;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8B0000;
+            background: url('data:image/gif;base64,R0lGODlhCgAKAIABAI6Ojv///yH5BAEAAAEALAAAAAAKAAoAAAIRjANgQwHJ3uBwGFjC6wwFAAA7') repeat-x bottom;
+            padding-bottom: 8px;
+            margin: 20px 0 15px;
+            border-bottom: 2px solid #CD853F;
+            font-family: "黑体", "SimHei", sans-serif;
+        }
+        
+        .login-status {
+            background-color: #F0F0F0;
+            border: 1px solid #999;
+            padding: 5px 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            font-family: "宋体", "SimSun", serif;
+            text-align: right;
+        }
+        
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FAFAD2;
+            border: 2px solid #8FBC8F;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .menu-table th {
+            background-color: #BC8F8F;
+            color: #FFFFFF;
+            padding: 6px;
+            font-size: 14px;
+            border: 1px solid #6B8E23;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .menu-table td {
+            border: 1px solid #6B8E23;
+            padding: 6px 8px;
+            font-size: 13px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .menu-table .price {
+            text-align: right;
+            font-weight: bold;
+            color: #B22222;
+        }
+        
+        .menu-note {
+            background-color: #FFE4E1;
+            border: 1px dotted #FF6347;
+            padding: 8px;
+            margin-top: 12px;
+            font-size: 12px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        /* 留言板样式 */
+        .guestbook-form {
+            background-color: #F0F0F0;
+            border: 2px groove #999;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .guestbook-input {
+            width: 200px;
+            border: 2px inset #C0C0C0;
+            background-color: #FFFFF0;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            padding: 3px;
+        }
+        
+        .guestbook-textarea {
+            width: 100%;
+            height: 80px;
+            border: 2px inset #C0C0C0;
+            background-color: #FFFFF0;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            padding: 3px;
+        }
+        
+        .guestbook-item {
+            border-bottom: 1px dashed #BC8F8F;
+            padding: 10px 0;
+        }
+        
+        .guestbook-name {
+            font-weight: bold;
+            color: #8B4513;
+        }
+        
+        .guestbook-time {
+            color: #666;
+            font-size: 11px;
+        }
+        
+        /* 故事页面样式 */
+        .story-text {
+            text-indent: 2em;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .story-quote {
+            background-color: #F5F5DC;
+            border-left: 4px solid #8B4513;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        /* 联系页面样式 */
+        .contact-info {
+            background-color: #FFF8DC;
+            border: 1px solid #DAA520;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .contact-row {
+            margin-bottom: 10px;
+        }
+        
+        .contact-label {
+            font-weight: bold;
+            color: #8B4513;
+            width: 80px;
+            display: inline-block;
+        }
+        
+        .friend-links {
+            margin-top: 25px;
+            padding: 10px;
+            background-color: #F0E68C;
+            border: 1px dashed #B8860B;
+            text-align: center;
+            font-size: 12px;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .friend-links a:link {
+            color: #0000EE;
+            text-decoration: underline;
+            margin: 0 5px;
+        }
+        
+        .friend-links a:visited {
+            color: #551A8B;
+        }
+        
+        .footer {
+            background-color: #D2B48C;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 3px solid #8B4513;
+            color: #2F1B0C;
+            font-family: "宋体", "SimSun", serif;
+        }
+        
+        .footer .email {
+            color: #0000FF;
+            text-decoration: underline;
+        }
+        
+        .update-time {
+            font-family: "Courier New", monospace;
+            background-color: #333;
+            color: #0F0;
+            padding: 2px 8px;
+            display: inline-block;
+        }
+        
+        .old-button {
+            background-color: #C0C0C0;
+            border: 2px outset #FFFFFF;
+            padding: 4px 12px;
+            font-family: "宋体", "SimSun", serif;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+        }
+        
+        .old-button:active {
+            border: 2px inset #808080;
+        }
+        
+        /* 页面切换 */
+        .page {
+            display: block;
+        }
+        
+        .page.hidden {
+            display: none;
+        }
+        /* 店家回复样式 */
+.owner-reply {
+    background-color: #FFF8E7;
+    border-left: 3px solid #D2691E;
+    margin-top: 8px;
+    padding: 8px 10px;
+    font-family: "宋体", "SimSun", serif;
+    font-size: 12px;
+    color: #8B4513;
+    text-indent: 0em;
+    line-height: 1.6;
+}
+
+.owner-reply .reply-name {
+    font-weight: bold;
+    color: #D2691E;
+}
+
+/* 留言内容保持原样 */
+.guestbook-item {
+    border-bottom: 1px dashed #BC8F8F;
+    padding: 10px 0;
+}
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">11/39</div>
+
+
+
+<!-- 主表格 -->
+<table class="main-table" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="2" class="banner">
+            <div class="blink-text">邺山面馆</div>
+            <div class="banner-sub">—— 邺山村 · 三代人手擀面 · 山泉水和面 ——</div>
+            <div style="color:#FFDAB9; margin-top:8px; font-size:13px; font-family:'宋体','SimSun',serif;">
+                地址：邺山村溪边路3号（大槐树对面）
+            </div>
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" class="nav-bar">
+            <a onclick="switchPage('home')" id="nav-home">首页</a> |
+            <a onclick="switchPage('menu')" id="nav-menu">招牌面</a> |
+            <a onclick="switchPage('story')" id="nav-story">面馆故事</a> |
+            <a onclick="switchPage('guestbook')" id="nav-guestbook">留言板</a> |
+            <a onclick="switchPage('contact')" id="nav-contact">联系我们</a>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="sidebar">
+            <div class="sidebar-title">管理登录</div>
+            <div class="login-box">
+                <form onsubmit="handleLogin(event)">
+                    <div style="margin-bottom:5px;">
+                        用户名：<br>
+                        <input type="text" id="username" class="login-input" value="">
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        密码：<br>
+                        <input type="password" id="password" class="login-input" value="">
+                    </div>
+                    <div style="text-align:center;">
+                        <input type="submit" value="登录" class="login-btn">
+                        <input type="button" value="注册" class="login-btn" onclick="alert('注册功能开发中，请发邮件申请！')">
+                    </div>
+                    <div style="font-size:11px; margin-top:8px; text-align:center;">
+                        <a href="#" onclick="alert('老店开业')" style="color:#0000EE;">忘记密码？</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="sidebar-title">村里广播站</div>
+            <div class="marquee-news">
+                <marquee direction="up" scrollamount="2" height="80" onmouseover="this.stop()" onmouseout="this.start()">
+                    * 今日特供：土鸡炖蘑菇面！<br><br>
+                    * 周二店休，去镇上进货<br><br>
+                    * 新到邺山竹笋，欢迎品尝<br><br>
+                    * 凭学生证送卤蛋一个<br><br>
+                    * 转发本网站到论坛，免费加面！
+                </marquee>
+            </div>
+            
+            <div class="sidebar-title">营业时间</div>
+            <div style="background:#FFF8DC; padding:8px; border:1px solid #DAA520; text-align:center; font-family:'宋体','SimSun',serif;">
+                <strong>早上 6:30</strong><br>
+                至<br>
+                <strong>晚上 8:00</strong><br>
+                <span style="color:#FF0000;">（周二休息）</span>
+            </div>
+            
+           
+            
+            
+            
+            <div style="margin-top:15px; text-align:center;">
+                <span style="font-size:10px; font-family:'宋体','SimSun',serif;">最佳浏览 800x600<br>IE 5.0 以上</span>
+            </div>
+        </td>
+        
+        <td class="main-content">
+            <div class="login-status" id="loginStatusBar">
+                当前状态：<span id="loginStatusText">未登录</span> | <a href="#" onclick="showLoginPrompt()">点此登录</a>
+            </div>
+            
+            <div id="memberArea" style="display:none; background:#E8F0E8; border:1px solid #2E8B57; padding:10px; margin:10px 0;">
+                <span style="color:#2E8B57; font-weight:bold;">* 会员专属 *</span><br>
+                尊敬的 <span id="memberName"></span>，您可享受会员价9折优惠！<br>
+                本月会员特供：邺山大排面立减3元。
+            </div>
+            
+            <!-- 首页内容 -->
+            <div id="page-home" class="page">
+                <div class="welcome-box">
+                    <span class="red">* 欢迎光临邺山面馆！*</span> 如有建议请发邮件至 
+                    <a href="mailto:qingshanmian@163.com" style="color:#0000FF;">qingshanmian@369.com</a>
+                </div>
+                
+                <div style="text-align:center; margin:5px 0 15px; font-family:'楷体','KaiTi',serif;">
+                    <span style="font-size:20px; color:#8B4513;"><i>“揉的是面，也是日子”</i></span>
+                </div>
+                <!-- 面馆图片展示区 -->
+<div style="text-align:center; margin:15px 0;">
+    <table border="0" cellpadding="4" cellspacing="4" align="center">
+        <tr>
+            <td align="center">
+                <div style="border:3px ridge #CD853F; background:#FDF5E6; padding:5px; width:200px; height:150px; display:inline-block;">
+                   <a href="images/馆.webp" target="_blank">
+    <img src="images/馆.webp" width="190" height="140" alt="面馆门头照片" style="border:1px solid #996633;">
+</a>
+                </div>
+                <br>
+                <span style="font-size:11px; color:#666;">面馆门头（老店店铺开业）</span>
+            </td>
+            <td align="center">
+                <div style="border:3px ridge #CD853F; background:#FDF5E6; padding:5px; width:200px; height:150px; display:inline-block;">
+                    <img src="images/面.webp"width='190' height='140'%3E%3Crect width='190' height='140' fill='%23f5e6d0'/%3E%3Cellipse cx='95' cy='70' rx='75' ry='55' fill='%23e8d5b0'/%3E%3Cellipse cx='95' cy='70' rx='60' ry='42' fill='%23f0e0c0'/%3E%3Cline x1='40' y1='70' x2='150' y2='70' stroke='%23d4a060' stroke-width='3'/%3E%3Cline x1='55' y1='45' x2='55' y2='95' stroke='%23d4a060' stroke-width='3'/%3E%3Cline x1='135' y1='45' x2='135' y2='95' stroke='%23d4a060' stroke-width='3'/%3E%3Ctext x='95' y='125' text-anchor='middle' fill='%238b6914' font-size='12' font-family='SimSun'%3E一碗牛肉面%3C/text%3E%3C/svg%3E" width="190" height="140" alt="牛肉面照片" style="border:1px solid #996633;">
+                </div>
+                <br>
+                <span style="font-size:11px; color:#666;">招牌邺山牛肉面</span>
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top:5px; font-size:11px; color:#666;">
+        [ 点击图片查看大图 ]
+    </div>
+</div>
+                
+                <p style="text-indent:2em; margin:15px 0 10px; font-family:'宋体','SimSun',serif;">
+                    <strong>邺山面馆</strong>位于风景秀丽的邺山村，从1987年就开始卖面了。我们坚持用山泉水和面，手工擀制，汤底是土鸡和山菌熬的，没有味精。很多城里人开车几十里路就为吃这一碗面。
+                </p>
+                
+                <p style="text-indent:2em; margin:10px 0; font-family:'宋体','SimSun',serif;">
+                    面馆由李寿单创立，如今已是第三代。店面不大，就开在村口大槐树对面，每天清晨四点就开始揉面，老面发酵，手工刀切。汤头是山里菌菇和土鸡熬的，没有科技，只有村里人吃的味道。
+                </p>
+                
+                <div style="margin:20px 0; background:#FFEFD5; border:1px solid #DEB887; padding:10px; font-family:'宋体','SimSun',serif;">
+                    <span style="background:#FF4500; color:#FFF; padding:2px 8px; margin-right:8px;">推荐</span>
+                    <strong>本月特推：</strong>土鸡炖蘑菇面，用的是山里采的野蘑菇，数量有限！
+                    <span style="color:#FF0000; margin-left:5px;">NEW</span>
+                </div>
+            </div>
+            
+            <!-- 招牌面页面 -->
+            <div id="page-menu" class="page hidden">
+                <div class="section-title">招牌面单</div>
+                
+                <table class="menu-table">
+                    <tr>
+                        <th width="55%">面品名称</th>
+                        <th width="25%">价格(元)</th>
+                        <th width="20%">会员价</th>
+                    </tr>
+                    <tr>
+                        <td>邺山牛肉面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">18.00</td>
+                        <td class="price">15.00</td>
+                    </tr>
+                    <tr>
+                        <td>菌菇素面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">12.00</td>
+                        <td class="price">10.00</td>
+                    </tr>
+                    <tr>
+                        <td>葱油拌面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">10.00</td>
+                        <td class="price">8.00</td>
+                    </tr>
+                    <tr>
+                        <td>酸辣鸡杂面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">16.00</td>
+                        <td class="price">13.00</td>
+                    </tr>
+                    <tr>
+                        <td>番茄鸡蛋面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">10.00</td>
+                        <td class="price">8.00</td>
+                    </tr>
+                    <tr>
+                        <td>腊肉拌面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">20.00</td>
+                        <td class="price">18.00</td>
+                    </tr>
+                    <tr>
+                        <td>邺山大排面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">20.00</td>
+                        <td class="price">18.00</td>
+                    </tr>
+                    <tr>
+                        <td>雪菜肉丝面 <span style="color:#666; font-size:11px;"></span></td>
+                        <td class="price">15.00</td>
+                        <td class="price">13.00</td>
+                    </tr>
+                </table>
+                
+               
+                
+                <div style="margin-top:20px; text-align:center;">
+                    <button class="old-button" onclick="window.print()">打印菜单</button>
+                </div>
+            </div>
+            
+            <!-- 面馆故事页面 -->
+            <div id="page-story" class="page hidden">
+                <div class="section-title">面馆故事</div>
+                
+                <p class="story-text">
+1987年春天，邺山村的<strong>李寿单</strong>老人在村口支起了一个面摊。那时候去镇上要走八里山路，村里人赶集回来都爱来吃碗热汤面。他用山泉水和面，手工揉制，汤底是用自家养的土鸡熬的，香气能飘出半条村。
+</p>
+<p class="story-text">
+后来吃面的人越来越多，<strong>李寿单</strong>就用自家堂屋开了面馆，取名"邺山面馆"。没有大招牌，但村里人都知道——找那棵大槐树，闻到骨头汤的香味就到了。
+</p>
+<div class="story-quote">
+“爷爷说，揉面跟做人一样，急不得。面要醒足三个钟头，汤要熬足五个钟头，这样出来的面才有人情味。”
+</div>
+<p class="story-text">
+1998年，<strong>李寿单</strong>年纪大了，把手艺传给了儿子<strong>李福明</strong>。<strong>李福明</strong>在传统基础上增加了酸辣鸡杂面和菌菇素面，用的都是山里现摘的菌子和自家腌的酸豆角。
+</p>
+<p class="story-text">
+如今是第三代——<strong>阿仔</strong>在打理。<strong>阿仔</strong>在大城市里读过书，但最终还是回到村里接手帮忙面馆。他说："城里什么都有，就是没有这碗面的味道。"
+</p>
+<div class="story-quote">
+“揉的是面，也是日子。三代人，就寿着这一碗面的温度。”
+</div>
+                </div>
+                
+              
+            </div>
+            
+            <!-- 留言板页面 -->
+            <div id="page-guestbook" class="page hidden">
+                <div class="section-title">留言板</div>
+                
+                <div class="guestbook-form">
+                    <form onsubmit="submitGuestbook(event)">
+                        <div style="margin-bottom:8px;">
+                            <strong>姓名：</strong> 
+                            <input type="text" id="guestName" class="guestbook-input" value="">
+                        </div>
+                        <div style="margin-bottom:8px;">
+                            <strong>留言：</strong><br>
+                            <textarea id="guestMessage" class="guestbook-textarea"></textarea>
+                        </div>
+                        <div style="text-align:right;">
+                            <input type="submit" value="提交留言" class="old-button">
+                            <input type="reset" value="重写" class="old-button">
+                        </div>
+                    </form>
+                </div>
+               <div id="guestbookList">
+    <div class="guestbook-item">
+        <span class="guestbook-name">老张</span> 
+        <span class="guestbook-time">2003-10-15 14:20</span><br>
+        面真筋道！从县城骑了四十分钟摩托车来的，值了！
+        <div class="owner-reply">
+            <span class="reply-name">店家回复[ID:yeshan0578]：</span>谢谢老张！下次来给您多加两块牛肉，骑摩托注意安全！
+        </div>
+    </div>
+    <div class="guestbook-item">
+        <span class="guestbook-name">过路人</span> 
+        <span class="guestbook-time">2003-10-12 11:05</span><br>
+        路过青山村，闻到香味进来的。牛肉面量足味美，下次还来。
+        <div class="owner-reply">
+            <span class="reply-name">店家回复[ID:yeshan0578]：</span>欢迎路过就来坐坐！我们家的牛肉都是每天早上现炖的，您喜欢就好！
+        </div>
+    </div>
+    <div class="guestbook-item">
+        <span class="guestbook-name">翠花</span> 
+        <span class="guestbook-time">2003-10-08 09:30</span><br>
+        酸辣鸡杂面太好吃了！酸豆角是自家腌的吧？跟外面卖的不一样。
+        <div class="owner-reply">
+            <span class="reply-name">店家回复[ID:yeshan0578]：</span>翠花姐好眼力！酸豆角确实是我妈自己腌的，用的是村里种的豆角，外面买不到这个味道。
+        </div>
+    </div>
+    <div class="guestbook-item">
+        <span class="guestbook-name">青山村小李</span> 
+        <span class="guestbook-time">2003-10-05 18:15</span><br>
+        从小吃到大的面馆，现在在外地工作，每次回来第一件事就是来吃碗面。
+        <div class="owner-reply">
+            <span class="reply-name">    店家回复[ID:yeshan0578]：</span>小李啊，在外地好好照顾自己！过年回来叔给你留着你最爱吃的葱油拌面。
+        </div>
+    </div>
+    <div class="guestbook-item">
+        <span class="guestbook-name">杭州老陈</span> 
+        <span class="guestbook-time">2003-09-28 12:40</span><br>
+        朋友推荐来的，果然名不虚传。山泉水和面就是不一样，面条特别筋道。
+        <div class="owner-reply">
+            <span class="reply-name">店家回复[ID:yeshan0578]：</span>老陈您好！我们用的就是后山那口老井的水，夏天冰凉冬天温乎，和面最好了。欢迎常来！
+        </div>
+    </div>
+</div>
+</div>          
+            <!-- 联系我们页面 -->
+            <div id="page-contact" class="page hidden">
+                <div class="section-title">联系我们</div>
+                
+                <div class="contact-info">
+                    <div class="contact-row">
+                        <span class="contact-label">地址：</span>浙西省邺山村溪边路3号（大槐树对面）
+                    </div>
+                    <div class="contact-row">
+                        <span class="contact-label">电话：</span>0571-6789 234
+                    </div>
+                
+                    <div class="contact-row">
+                        <span class="contact-label">营业时间：</span>早上6:30 - 晚上8:00（周二休息）
+                    </div>
+                </div>
+                
+                <p style="margin:15px 0;">
+                    <strong>怎么找到我们：</strong>
+                </p>
+                
+                <p style="margin:10px 0; font-family:'宋体','SimSun',serif;">
+                    从县城坐2路公交车到邺山村站下车，沿着溪边路往里走约200米，看到一棵大槐树就到了。面馆就在槐树对面，门口有个老木牌写着"邺山面馆"。
+                </p>
+                
+                <p style="margin:10px 0; font-family:'宋体','SimSun',serif;">
+                    开车来的朋友可以导航"邺山村村委会"，面馆就在村委会往东100米。门口可以停车，但位置不多，建议错开饭点。
+                </p>
+                
+               
+                </div>
+            </div>
+        
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" class="friend-links">
+            <strong>友情链接：</strong>
+            邺山村论坛| 
+            农家菜谱网| 
+            手擀面联盟| 
+            山泉美食站| 
+            村里广播站| 
+            土鸡养殖技术</a><br>
+            <span style="color:#666; font-size:11px;">（欢迎交换链接，请先做好本站链接后Email通知）</span>
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" class="footer">
+            <div>
+                邺山面馆 版权所有 (C) 2003-2004
+            </div>
+            <div style="margin:5px 0;">
+                地址：浙江省·邺山村·溪边路3号（大槐树对面） | 电话：0571-6789 234<br>
+                Email：<a href="mailto:qingshanmian@163.com" class="email">qingshanmian@163.com</a> | 
+                QQ：12345678（阿良）
+            </div>
+            <div style="margin-top:10px; font-size:10px; color:#555;">
+                建议使用IE5.0以上浏览器，分辨率800x600获得最佳浏览效果<br>
+                本站由 FrontPage 2000 制作 | 
+                <a href="#" style="color:#0000EE;" onclick="switchPage('home')">返回首页</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<!-- 底部跑马灯 -->
+<div style="width:760px; margin:5px auto; text-align:center;">
+    <marquee scrollamount="4" behavior="alternate" width="100%" bgcolor="#FFFFCC" style="border:1px solid #B8860B; padding:3px; font-family:'宋体','SimSun',serif;">
+        邺山面馆欢迎您！ 手工擀面·山泉和面·土鸡汤底   周二休息，不要跑空哦！
+    </marquee>
+</div>
+
+<script type="text/javascript">
+
+    // 页面加载2秒后播放音频
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const audio = document.getElementById('bgMusic');
+            // 现代浏览器需要用户交互才能自动播放，这里尝试播放
+            audio.play().catch(function(error) {
+                console.log('自动播放被浏览器阻止，点击页面任意位置后播放');
+                // 如果被阻止，点击页面任意位置后播放
+                document.body.addEventListener('click', function playOnce() {
+                    audio.play();
+                    document.body.removeEventListener('click', playOnce);
+                });
+            });
+        }, 2000); // 2000毫秒 = 2秒
+    });
+    // 登录状态
+    var isLoggedIn = false;
+    var currentUser = '';
+    
+    // 页面切换功能
+function switchPage(pageId) {
+    // 隐藏所有页面
+    var pages = ['home', 'menu', 'story', 'guestbook', 'contact', 'member-welcome'];
+    for(var i = 0; i < pages.length; i++) {
+        var page = document.getElementById('page-' + pages[i]);
+        if(page) {
+            page.classList.add('hidden');
+        }
+    }
+    
+    // 显示选中页面
+    var targetPage = document.getElementById('page-' + pageId);
+    if(targetPage) {
+        targetPage.classList.remove('hidden');
+    }
+    
+    // 更新导航栏激活状态
+    for(var i = 0; i < pages.length; i++) {
+        var navLink = document.getElementById('nav-' + pages[i]);
+        if(navLink) {
+            if(pages[i] === pageId) {
+                navLink.classList.add('active');
+            } else {
+                navLink.classList.remove('active');
+            }
+        }
+    }
+}
+    
+    // 登录功能
+function handleLogin(e) {
+    e.preventDefault();
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    
+    if(username == '') {
+        alert('请输入用户名！');
+        return false;
+    }
+    
+    if(password == '') {
+        alert('请输入密码！');
+        return false;
+    }
+    
+    // 验证账号密码
+    if(username == 'yeshan0578' && password == '19980516') {
+        alert('登录成功！欢迎回来');
+        // 跳转到新页面
+        window.location.href = '用户.html';
+    } else {
+        alert('用户名或密码错误，请重试！');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+    }
+    
+    return false;
+}
+
+function showLoginPrompt() {
+    if(!isLoggedIn) {
+        alert('请在左侧登录框输入用户名和密码');
+        document.getElementById('username').focus();
+    } else {
+        if(confirm('确定要退出登录吗？')) {
+            isLoggedIn = false;
+            currentUser = '';
+            document.getElementById('loginStatusText').innerText = '未登录';
+            document.getElementById('memberArea').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            alert('已退出登录');
+            // 退出后返回首页
+            switchPage('home');
+        }
+    }
+}
+    
+    // 留言板提交
+    function submitGuestbook(e) {
+        e.preventDefault();
+        var name = document.getElementById('guestName').value;
+        var message = document.getElementById('guestMessage').value;
+        
+        if(name == '' || message == '') {
+            alert('请填写姓名和留言内容！');
+            return false;
+        }
+        
+        // 获取当前时间字符串
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = String(now.getMonth() + 1).padStart(2, '0');
+        var day = String(now.getDate()).padStart(2, '0');
+        var hours = String(now.getHours()).padStart(2, '0');
+        var minutes = String(now.getMinutes()).padStart(2, '0');
+        var timeStr = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+        
+        // 创建新留言
+        var guestbookList = document.getElementById('guestbookList');
+        var newItem = document.createElement('div');
+        newItem.className = 'guestbook-item';
+        newItem.innerHTML = '<span class="guestbook-name">' + name + '</span> ' +
+                           '<span class="guestbook-time">' + timeStr + '</span><br>' +
+                           message;
+        
+        guestbookList.insertBefore(newItem, guestbookList.firstChild);
+        
+        // 同时更新侧边栏留言（显示最新三条）
+        updateSidebarGuestbook(name, message, timeStr);
+        
+        // 清空表单
+        document.getElementById('guestName').value = '';
+        document.getElementById('guestMessage').value = '';
+        
+        alert('留言提交成功！感谢您的支持！');
+        
+        return false;
+    }
+    
+    function updateSidebarGuestbook(name, message, timeStr) {
+        var sidebarDiv = document.getElementById('sidebarGuestbook');
+        var items = sidebarDiv.querySelectorAll('div, strong');
+        
+        // 简单处理：直接添加新留言到侧边栏顶部
+        var newEntry = document.createElement('div');
+        newEntry.innerHTML = '<strong>' + name + '</strong>：' + message.substring(0, 15) + (message.length > 15 ? '...' : '') + '<br>' +
+                            '<span style="color:#666; font-size:11px;">' + timeStr.substring(0, 10) + '</span><br><br>';
+        
+        // 插入到最前面
+        var firstChild = sidebarDiv.firstChild;
+        while(firstChild && firstChild.nodeType !== 1) {
+            firstChild = firstChild.nextSibling;
+        }
+        sidebarDiv.insertBefore(newEntry, firstChild);
+        
+        // 保留最多5条留言
+        var children = sidebarDiv.children;
+        while(children.length > 5) {
+            sidebarDiv.removeChild(children[children.length - 1]);
+        }
+    }
+    
+    // 页面加载
+    window.onload = function() {
+        // 计数器
+        var counterSpan = document.getElementById('fake-counter');
+        if(counterSpan) {
+            var num = parseInt(counterSpan.innerText) + Math.floor(Math.random() * 10);
+            counterSpan.innerText = String(num).padStart(6, '0');
+        }
+        
+        window.status = "欢迎来到邺山面馆！手工擀面，山泉和面！";
+        
+        document.oncontextmenu = function(e) {
+            alert("邺山面馆版权所有，欢迎联系转载！");
+            return false;
+        };
+        
+        // 设置首页为激活状态
+        switchPage('home');
+    };
+    
+    window.onbeforeunload = function() {
+        return "欢迎下次再来吃面！";
+    };
+</script>
+
+<div style="text-align:center; margin:10px 0; font-family:'宋体','SimSun',serif; font-size:10px; color:#666;">
+    推荐使用IE浏览器 800x600分辨率
+</div>
+
+</body>
+</html>
