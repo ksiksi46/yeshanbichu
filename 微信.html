@@ -1,0 +1,1881 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>iPhone · 主屏幕</title>
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* 手机容器 - 加大尺寸 */
+        .phone-container {
+            width: 420px;
+            height: 800px;
+            background: #fff;
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 0 8px #ddd;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 听筒区域 */
+        .dynamic-island {
+            background: #f5f5f5;
+            height: 40px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .speaker {
+            width: 120px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .speaker-dot {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+        }
+        
+        .camera {
+            width: 12px;
+            height: 12px;
+            background: #b0b0b0;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        
+        /* 顶部状态栏 */
+        .status-bar {
+            background: #f5f5f5;
+            color: #333;
+            padding: 8px 24px 4px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* 主屏幕壁纸 - 明亮清新的壁纸 */
+        .home-screen {
+            flex: 1;
+            background: linear-gradient(145deg, #a8d8ff, #d4f0ff);
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+        }
+        
+        /* 时间日期 */
+        .home-date {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            padding-left: 8px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        /* 应用网格 */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px 10px;
+            margin-bottom: 30px;
+        }
+        
+        /* 应用图标 - 全新设计，更精致 */
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .app-icon:hover {
+            transform: translateY(-2px);
+        }
+        
+        .app-icon:active {
+            transform: scale(0.95);
+        }
+        
+        .icon-bg {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        /* 顶部光泽效果 */
+        .icon-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 18px 18px 0 0;
+            pointer-events: none;
+        }
+        
+        .app-icon:hover .icon-bg {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+        
+        .app-name {
+            color: #2c3e50;
+            font-size: 11px;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        /* 底部导航栏 */
+        .home-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 40px;
+            margin-top: auto;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .dock-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.4);
+            transition: transform 0.2s;
+            font-size: 24px;
+        }
+        
+        .dock-icon:active {
+            transform: scale(0.9);
+        }
+        
+        /* 加载动画层 */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #f5f5f5;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-top-color: #07C160;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #333;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+        
+        /* 威信界面 - 初始隐藏 */
+        .wechat-interface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #EDEDED;
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        /* 威信头部 */
+        .wechat-header {
+            background: #F6F6F6;
+            padding: 45px 16px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #D9D9D9;
+        }
+        
+        .wechat-title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .wechat-actions {
+            display: flex;
+            gap: 20px;
+            font-size: 22px;
+        }
+        
+        /* 威信底部导航 - 威信 通讯录 发现 我 */
+        .wechat-tabbar {
+            background: #F6F6F6;
+            border-top: 1px solid #D9D9D9;
+            padding: 6px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 4px 0;
+            flex: 1;
+        }
+        
+        .tab-item.active {
+            color: #07C160;
+        }
+        
+        .tab-label {
+            font-size: 10px;
+        }
+        
+        /* 聊天列表 */
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+            background: #EDEDED;
+            padding: 8px 12px;
+        }
+        
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #E0E0E0;
+            cursor: pointer;
+        }
+        
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 12px;
+            object-fit: cover;
+            background: #ffffff;
+        }
+        
+        .chat-info {
+            flex: 1;
+        }
+        
+        .chat-name {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .chat-preview {
+            font-size: 14px;
+            color: #999;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        
+        .chat-time {
+            font-size: 12px;
+            color: #999;
+            align-self: flex-start;
+        }
+        
+        /* 聊天详情界面 */
+        .chat-detail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #EDEDED;
+            z-index: 2100;
+            display: none;
+            flex-direction: column;
+            animation: slideRight 0.3s ease-out;
+        }
+        
+        @keyframes slideRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .detail-header {
+            background: #F6F6F6;
+            padding: 45px 16px 10px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid #D9D9D9;
+        }
+        
+        .back-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: #07C160;
+        }
+        
+        .detail-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .detail-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23EDEDED" /><path d="M10 10 L90 10 L90 90 L10 90 Z" fill="none" stroke="%23E0E0E0" stroke-width="0.3"/></svg>');
+        }
+        
+        /* 聊天消息头像样式 */
+        .msg-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 8px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .message-right .msg-avatar {
+            margin-right: 0;
+            margin-left: 8px;
+        }
+        
+        .detail-time {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .message-row {
+            display: flex;
+            margin-bottom: 4px;
+            align-items: flex-end;
+            max-width: 100%;
+        }
+        
+        .message-left {
+            align-items: flex-end;
+        }
+        
+        .message-left .msg-bubble {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 8px 8px 8px 4px;
+            max-width: 70%;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        
+        .message-right {
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        
+        .message-right .msg-bubble {
+            background: #95EC69;
+            padding: 10px 14px;
+            border-radius: 8px 8px 4px 8px;
+            max-width: 70%;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        
+        .msg-time {
+            font-size: 10px;
+            color: #999;
+            margin-bottom: 2px;
+        }
+        .message-left .msg-time {
+            margin-left: 44px;
+        }
+        .message-right .msg-time {
+            margin-right: 44px;
+            text-align: right;
+        }
+        
+        .detail-input {
+            background: #F6F6F6;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid #D9D9D9;
+        }
+        
+        .detail-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 24px;
+            border: 1px solid #E0E0E0;
+            outline: none;
+            background: white;
+            cursor: not-allowed;
+            color: #999;
+        }
+        
+        .close-wechat {
+            position: absolute;
+            top: 50px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 2500;
+        }
+        
+        /* 威信原生资料卡弹窗 */
+        .wechat-card {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 2200;
+            display: none;
+            overflow: hidden;
+            animation: fadeIn 0.2s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        /* 资料卡遮罩层 */
+        .card-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2150;
+            display: none;
+            animation: maskFade 0.2s ease-out;
+        }
+        @keyframes maskFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* 资料卡头部（大头像） */
+        .card-header {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .card-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .card-nickname {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .card-wechatid {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+        .card-tag {
+            font-size: 12px;
+            color: #07C160;
+            border: 1px solid #07C160;
+            border-radius: 12px;
+            padding: 2px 8px;
+        }
+        /* 资料卡信息栏 */
+        .card-info {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .card-info span:last-child {
+            color: #999;
+        }
+        /* 资料卡功能按钮 */
+        .card-btns {
+            padding: 10px 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .card-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 0;
+            font-size: 12px;
+            color: #333;
+            cursor: pointer;
+        }
+        .card-btn i {
+            font-size: 20px;
+        }
+        /* 资料卡底部操作按钮 */
+        .card-actions {
+            padding: 16px 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .card-action-btn {
+            flex: 1;
+            padding: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #D9D9D9;
+        }
+        .card-action-btn.primary {
+            background: #07C160;
+            color: #fff;
+            border: none;
+        }
+        /* 朋友圈页面 - 真实微信排版 */
+        .moments-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #EDEDED;
+            z-index: 2300;
+            display: none;
+            flex-direction: column;
+            animation: slideRight 0.3s ease-out;
+            overflow: hidden;
+        }
+        .moments-header {
+            background: #F6F6F6;
+            padding: 45px 16px 10px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid #D9D9D9;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .moments-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .moments-name {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        /* 朋友圈内容容器 */
+        .moments-content {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            background: #EDEDED;
+        }
+        /* 单条朋友圈样式 */
+        .moment-item {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        /* 朋友圈时间 */
+        .moment-time {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        /* 朋友圈文字内容 */
+        .moment-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+        /* 朋友圈链接样式 */
+        .moment-link {
+            font-size: 15px;
+            color: #07C160;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+        /* 朋友圈配图 */
+        .moment-img {
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+        }
+        /* 朋友圈表情/小图标 */
+        .moment-emoji {
+            font-size: 18px;
+            margin-right: 4px;
+        }
+        /* 微信通话浮层 */
+.call-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 10000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    animation: fadeIn 0.3s ease;
+}
+
+.call-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #07C160;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.call-name {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.call-status {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 48px;
+}
+
+.call-buttons {
+    display: flex;
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.call-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.call-btn:active {
+    transform: scale(0.95);
+}
+
+.call-btn-hangup {
+    background: #FF3B30;
+    color: white;
+}
+
+.call-btn-mute {
+    background: #3a3a3a;
+    color: white;
+}
+
+.call-timer {
+    font-size: 32px;
+    font-weight: 300;
+    margin-top: 20px;
+    font-variant-numeric: tabular-nums;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+/* 灰框按钮样式 */
+.gray-dot-btn {
+    width: 28px;
+    height: 28px;
+    background: #e9e9ef;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-self: flex-end;
+}
+.gray-dot {
+    width: 5px;
+    height: 5px;
+    background: #8e8e93;
+    border-radius: 50%;
+}
+
+/* 操作弹窗 */
+.action-popup {
+    position: absolute;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    gap: 8px;
+    padding: 6px 16px;
+    z-index: 250;
+}
+.action-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #007aff;
+    cursor: pointer;
+}
+.divider {
+    width: 1px;
+    background: #c6c6c8;
+    margin: 6px 0;
+}
+
+/* 点赞区域 */
+/* 点赞区域 - 微信真实风格（浅蓝） */
+.like-area {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #576b95;
+    padding: 6px 12px;
+    border-radius: 20px;
+    width: fit-content;
+}
+.like-area span:first-child {
+    font-size: 14px;
+}
+.like-text {
+    color: #576b95;
+    font-weight: 500;
+}
+
+/* 评论区域 */
+.comment-area {
+    margin-top: 10px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+.comment-item {
+    font-size: 13px;
+    color: #3a3a3c;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ececec;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-name {
+    font-weight: 600;
+    color: #576b95;
+    margin-right: 8px;
+}
+.comment-del {
+    font-size: 11px;
+    color: #8e8e93;
+    cursor: pointer;
+}
+.comment-input-wrap {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: center;
+}
+.comment-input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 18px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+.comment-submit {
+    background: #007aff;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 18px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+   <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">01/39</div>
+<div class="phone-container">
+    <!-- 听筒区域 -->
+    <div class="dynamic-island">
+        <div class="speaker">
+            <div class="speaker-dot"></div>
+            <div class="speaker-dot"></div>
+            <div class="speaker-dot"></div>
+        </div>
+        <div class="camera"></div>
+    </div>
+    
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <span>9:41</span>
+        <span>📶 5G 🔋 100%</span>
+    </div>
+    
+    <!-- 主屏幕 - 明亮壁纸 -->
+    <div class="home-screen" id="homeScreen">
+        <div class="home-date">2026年2月20日 周五</div>
+        
+        <!-- 应用网格 -->
+<div class="app-grid">
+    <div class="app-icon" id="wechatIcon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #2baf2b, #1e8a1e); display: flex; align-items: center; justify-content: center;">
+            <i class="fab fa-weixin" style="font-size: 32px; color: white;"></i>
+        </div>
+        <span class="app-name">威信</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #007AFF, #0051D5); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-address-book" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">通讯录</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #4A90E2, #2A5F9E); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-compass" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">Safari</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #FF3B30, #C41E1E); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-envelope" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">邮件</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #FF9500, #C93400); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-images" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">照片</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #34C759, #248A3D); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-map-marker-alt" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">地图</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #FFCC00, #CCA300); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-pen" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">备忘录</span>
+    </div>
+
+    <div class="app-icon">
+        <div class="icon-bg" style="background: linear-gradient(145deg, #8A8A8F, #5E5E64); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-cog" style="font-size: 28px; color: white;"></i>
+        </div>
+        <span class="app-name">设置</span>
+    </div>
+</div>
+        
+        <!-- 底部导航栏 - 美化后 -->
+        <div class="home-bar">
+    <div class="dock-icon"><i class="fas fa-phone"></i></div>
+    <div class="dock-icon"><i class="fas fa-headphones"></i></div>
+    <div class="dock-icon"><i class="fas fa-mobile-alt"></i></div>
+</div>
+    
+    <!-- 加载动画层 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">威信</div>
+    </div>
+    
+    <!-- 威信主界面 -->
+    <div class="wechat-interface" id="wechatInterface">
+        <div class="wechat-header">
+            <div class="wechat-title">威信</div>
+            <div class="wechat-actions">
+                <span>➕</span>
+                <span>🔍</span>
+            </div>
+        </div>
+        
+        <div class="chat-list">
+            <!-- 陈宇聊天 -->
+            <div class="chat-item" id="chenyuChat">
+                <img src="images/我.webp" class="chat-avatar" id="chenyuListAvatar" alt="avatar">
+                <div class="chat-info">
+                    <div class="chat-name">陈宇</div>
+                    <div class="chat-preview">陈宇？回个话啊</div>
+                </div>
+                <div class="chat-time">2.17 15:26</div>
+            </div>
+            
+            <div class="chat-item">
+                <img src="images/龙套1.webp" class="chat-avatar" alt="avatar">
+                <div class="chat-info">
+                    <div class="chat-name">明子</div>
+                    <div class="chat-preview">周末出来撸串不？</div>
+                </div>
+                <div class="chat-time">2.10</div>
+            </div>
+            
+            <div class="chat-item">
+                <img src="images/龙套2.webp" class="chat-avatar" alt="avatar">
+                <div class="chat-info">
+                    <div class="chat-name">小倩</div>
+                    <div class="chat-preview">上次借你的书啥时候还？</div>
+                </div>
+                <div class="chat-time">2.05</div>
+            </div>
+            
+            <div class="chat-item">
+                <img src="images/陈.webp" class="chat-avatar" alt="avatar">
+                <div class="chat-info">
+                    <div class="chat-name">锁室友这一块</div>
+                    <div class="chat-preview">开黑吗？我快上王者了</div>
+                </div>
+                <div class="chat-time">2.05</div>
+            </div>
+            
+            <div class="chat-item">
+                <img src="images/群.webp" class="chat-avatar" alt="avatar">
+                <div class="chat-info">
+                    <div class="chat-name">大学舍友群</div>
+                    <div class="chat-preview">老周：今年同学聚会定三月！</div>
+                </div>
+                <div class="chat-time">1.28</div>
+            </div>
+        
+         <div class="chat-item">
+                <img src="images/公众号.webp" class="chat-avatar" id="mima"alt="avatar">
+                <div class="chat-info">
+                    <div class="chat-name">公众号</div>
+                    <div class="chat-preview">[5条]与佛论禅，新奇的密码编译，佛之曰密码转...</div>
+                </div>
+                <div class="chat-time">2.02</div>
+            </div>
+        </div>
+        
+        <!-- 威信底部导航 -->
+       <div class="wechat-tabbar">
+    <div class="tab-item active">
+        <i class="fas fa-comment-dots"></i>
+        <span class="tab-label">威信</span>
+    </div>
+    <div class="tab-item">
+        <i class="fas fa-address-book"></i>
+        <span class="tab-label">通讯录</span>
+    </div>
+    <div class="tab-item">
+        <i class="fas fa-compass"></i>
+        <span class="tab-label">发现</span>
+    </div>
+    <div class="tab-item">
+        <i class="fas fa-user"></i>
+        <span class="tab-label">我</span>
+    </div>
+</div>
+        
+        <!-- 关闭威信按钮 -->
+        <div class="close-wechat" id="closeWechat">← 返回主屏幕</div>
+    </div>
+    
+    <!-- 陈宇聊天详情 -->
+    <div class="chat-detail" id="chenyuDetail">
+        <div class="detail-header">
+            <div class="back-btn" id="backFromDetail">←</div>
+            <div class="detail-title">陈宇</div>
+            <div></div>
+        </div>
+        
+        <div class="detail-content" id="detailContent">
+            <!-- ===== 新增：更早的闲聊对话 ===== -->
+    <div class="detail-time">2026年1月15日 晚上</div>
+    
+    <div class="message-row message-left">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar11">
+        <div class="msg-bubble">下周有空没？新开了家火锅店，听说特正宗</div>
+    </div>
+    <div class="msg-time">20:13</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">必须有空啊！你请客？😏</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">20:15</div>
+    
+    <div class="message-row message-left">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar12">
+        <div class="msg-bubble">切，上次撸串还是我掏的钱，这次该你了</div>
+    </div>
+    <div class="msg-time">20:17</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">行行行，我请！不过得等我发工资哈哈</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">20:18</div>
+    
+    <div class="message-row message-left">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar13">
+        <div class="msg-bubble">你那个破工资，月底就剩泡面钱了吧😂</div>
+    </div>
+    <div class="msg-time">20:20</div>
+    
+    <!-- ===== 新增：日常吐槽工作 ===== -->
+    <div class="detail-time">2026年1月20日 下午</div>
+    
+    <div class="message-row message-left">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar14">
+        <div class="msg-bubble">今天被主编骂死了，说我写的稿子没爆点</div>
+    </div>
+    <div class="msg-time">15:42</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">你们那个中年秃头主编？别理他，他自己写过啥爆款吗</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">15:45</div>
+    
+    <div class="message-row message-left" >
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar15">
+        <div class="msg-bubble">哈哈说得好，但人在屋檐下啊。不过我发现个有意思的论坛</div>
+    </div>
+    <div class="msg-time">15:48</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">啥论坛</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">15:50</div>
+ <div class="message-row message-left" >
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar15">
+        <div class="msg-bubble">我前几天发现的，七闻论坛</div>
+    </div>
+    <div class="msg-time">15:50</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">真的假的，我去看看去</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">15:50</div>
+
+<div class="message-row message-left" >
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar15">
+        <div class="msg-bubble">你用我的号吧，注册挺麻烦的，账号是我微信号，密码是咱宿舍口号拼音首字母</div>
+    </div>
+    <div class="msg-time">15:51</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">哈哈哈，ok</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">15:52</div>
+    
+    <!-- ===== 新增：聊感情生活 ===== -->
+    <div class="detail-time">2026年1月25日 凌晨</div>
+    
+    <div class="message-row message-left">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar16">
+        <div class="msg-bubble">失眠了，想前任了😔</div>
+    </div>
+    <div class="msg-time">02:34</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">卧槽，大半夜的别emo啊！都过去多久了</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">02:36</div>
+    
+    <div class="message-row message-left">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar17">
+        <div class="msg-bubble">刷到她朋友圈了，好像有对象了</div>
+    </div>
+    <div class="msg-time">02:38</div>
+    
+    <div class="message-row message-right">
+        <div class="msg-bubble">赶紧睡了！明天请你喝酒，别想了</div>
+        <img src="images/陈宇.webp" class="msg-avatar">
+    </div>
+    <div class="msg-time">02:40</div>
+            <div class="detail-time">2026年2月14日 晚上</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar">
+                <div class="msg-bubble">明天就出发去邺山村了，那起旧案有眉目了</div>
+            </div>
+            <div class="msg-time">21:08</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">可以啊兄弟，查个旧案还跑那么偏的村子，注意安全</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time">21:10</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar2">
+                <div class="msg-bubble">放心，就去待几天，找些线索就回，顺带体验下乡村生活</div>
+            </div>
+            <div class="msg-time">21:12</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">行，到了报个平安，有啥事随时喊我</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time">21:13</div>
+            
+            <div class="detail-time">2026年2月15日 中午</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar3">
+                <div class="msg-bubble">到邺山村了，找了家农家乐住下，村口面馆的面贼好吃</div>
+            </div>
+            <div class="msg-time">12:45</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">可以啊，还挺会吃，那村子偏不偏？人多不多</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time">12:48</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar4">
+                <div class="msg-bubble">贼偏，就村口一条街有点人气，村里老人多，年轻人都出去了</div>
+            </div>
+            <div class="msg-time">12:50</div>
+            
+            <div class="detail-time">2026年2月16日 晚上</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar5">
+                <div class="msg-bubble">今天去问了一圈，发现个有意思的地方，村民都对后山闭口不谈，好像是有什么秘密</div>
+            </div>
+            <div class="msg-time">19:32</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">啥秘密玩意？听着怪邪乎的</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time">19:35</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar6">
+                <div class="msg-bubble">不知道，村里老人都讳莫如深，明天上去看看，应该有线索</div>
+            </div>
+            <div class="msg-time">19:38</div>
+            
+            <div class="detail-time">2026年2月17日 下午</div>
+            
+            <div class="message-row message-left">
+                <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar7">
+                <div class="msg-bubble" >我看到了...就在前面...我过去看看...</div>
+            </div>
+            <div class="msg-time">15:26</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">？？？你在哪呢</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time">15:28</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">陈宇？回个话啊</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time">15:35</div>
+            
+            <div class="detail-time">2026年2月20日 上午</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">刚看到警方通告，你失踪了...你到底查出来啥了？</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time" style="color:#FF6B6B;">10:02 ❌未送达</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">我一定要找到你，这事绝对没那么简单</div>
+                <img src="images/陈宇.webp" class="msg-avatar">
+            </div>
+            <div class="msg-time" style="color:#FF6B6B;">10:10 ❌未送达</div>
+            
+           
+        
+        <div class="detail-input">
+            <input type="text" value="对方账号异常，无法发送消息" disabled>
+        </div>
+    </div>
+    
+    <!-- 陈宇威信资料卡遮罩层 -->
+    <div class="card-mask" id="cardMask"></div>
+    
+    <!-- 陈宇威信原生资料卡 -->
+    <div class="wechat-card" id="chenyuCard">
+        <div class="card-header">
+            <img src="images/我.webp" class="card-avatar" alt="avatar">
+            <div class="card-nickname">陈宇</div>
+            <div class="card-wechatid">威信号：chenyu0912</div>
+            <div class="card-tag">记者</div>
+        </div>
+        <div class="card-info">
+            <span>地区</span>
+            <span>浙西省</span>
+        </div>
+        <div class="card-info">
+            <span>更多资料</span>
+            <span>点击查看 ↗</span>
+        </div>
+        <div class="card-btns">
+    <div class="card-btn" >
+        <i class="fas fa-phone"></i>
+        <span>音视频</span>
+    </div>
+    <div class="card-btn">
+        <i class="fas fa-envelope"></i>
+        <span>发消息</span>
+    </div>
+    <div class="card-btn" id="momentsBtn">
+    <i class="fas fa-images"></i>
+    <span>朋友圈</span>
+</div>
+</div>
+        <div class="card-actions">
+            <div class="card-action-btn">更多</div>
+            <div class="card-action-btn primary">发消息</div>
+        </div>
+    </div>
+    
+    <!-- 陈宇朋友圈 -->
+    <div class="moments-page" id="momentsPage">
+        <div class="moments-header">
+            <div class="back-btn" id="backFromMoments">←</div>
+            <img src="images/我.webp" class="moments-avatar">
+            <div class="moments-name">陈宇的朋友圈</div>
+        </div>
+        <div class="moments-content">
+            <!-- 第一条：2026.2.15 邺山村（用户指定核心内容） -->
+            <div class="moment-item">
+                <div class="moment-time">2026年2月15日 13:00</div>
+                <div class="moment-text">
+                    <span class="moment-emoji"></span>抵达<strong>邺山村</strong>，深山里的小村落，空气清新风景是真的不错，找了家接地气的农家乐住下，接下来几天潜心查案，希望一切顺利，能找到想要的线索～
+                </div>
+                <img src="images/邺山村.webp" class="moment-img" alt="邺山村风景">
+            </div>
+            <!-- 第二条：2026.1.15 放假+论坛帖子（用户指定+链接） -->
+            <div class="moment-item">
+                <div class="moment-time">2026年1月18日 18:25</div>
+                <div class="moment-text">
+                    <span class="moment-emoji"></span>终于放假了！忙了大半年总算能好好放松几天了～最近扒到一个小众<strong>论坛</strong>，里面的内容太有料了，感觉深挖一下能整个大新闻，说不定这次加薪有望了，嘿嘿嘿！
+                </div>
+                <div class="moment-link" onclick="forumJump()">链接：七闻论坛 </div>
+            </div>
+            <!-- 第三条：2025.12.15 日常撸猫（原创日常+宠物） -->
+            <div class="moment-item">
+                <div class="moment-time">2025年12月15日 20:10</div>
+                <div class="moment-text">
+                    <span class="moment-emoji"></span>楼下便利店的小橘猫也太黏人了吧，每次去买东西都要蹭我的腿，喂了根火腿肠直接跟我走了，萌化了，好想拐回家养着～
+                </div>
+                <img src="images/小猫.webp" class="moment-img" alt="橘猫">
+            </div>
+            <!-- 第四条：2025.8.14 日常干饭+吐槽（原创日常琐事） -->
+            <div class="moment-item">
+                <div class="moment-time">2025年8月14日 12:30</div>
+                <div class="moment-text">
+                    <span class="moment-emoji"></span>三伏天的快乐就是嗦一碗冰爽的凉面，加两勺剁椒，辣到冒汗才过瘾！就是上班路上的太阳太毒了，晒得人睁不开眼，求一个带薪休假的机会～
+                </div>
+            </div>
+            <!-- 第五条：2024.7.6 毕业周年+老友相聚（原创回忆+日常） -->
+            <div class="moment-item">
+                <div class="moment-time">2024年7月6日 22:45</div>
+                <div class="moment-text">
+                    <span class="moment-emoji"></span>毕业一年了，和高中同学们聚了聚，还是熟悉的样子，看到他们就想起来了当时"<strong>及格就是胜利</strong>"的名言,依旧吹牛逼侃大山，仿佛又回到了宿舍的日子。一晃眼都工作一年了，愿我们都能在各自的路上越走越好，下次聚会不醉不归！
+                </div>
+                <img src="images/聚会.webp" class="moment-img" alt="朋友聚会">
+            </div>
+        </div>
+    </div>
+    <!-- 微信通话浮层 -->
+<div class="call-overlay" id="callOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); z-index:10000; flex-direction:column; align-items:center; justify-content:center; color:white;">
+    <img src="images/我.webp" style="width:100px; height:100px; border-radius:50%; object-fit:cover; margin-bottom:24px; border:2px solid #07C160;">
+    <div style="font-size:28px; font-weight:600; margin-bottom:8px;">陈宇</div>
+    <div id="callStatus" style="font-size:14px; color:#ccc; margin-bottom:48px;">正在连接...</div>
+    <div id="callTimer" style="font-size:32px; display:none;">00:00</div>
+    <div style="display:flex; gap:40px; margin-top:60px;">
+        <div id="callHangupBtn" style="width:70px; height:70px; border-radius:50%; background:#FF3B30; display:flex; align-items:center; justify-content:center; font-size:32px; cursor:pointer;">📞</div>
+    </div>
+</div>
+
+<!-- 音频资源 -->
+  <audio id="connectSound" src="connect.mp3" preload="auto" style="display:none;"></audio>
+</div>
+
+<script>
+    // 获取元素
+    const wechatIcon = document.getElementById('wechatIcon');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const wechatInterface = document.getElementById('wechatInterface');
+    const closeWechat = document.getElementById('closeWechat');
+    const chenyuChat = document.getElementById('chenyuChat');
+    const chenyuDetail = document.getElementById('chenyuDetail');
+    const backFromDetail = document.getElementById('backFromDetail');
+    const cardMask = document.getElementById('cardMask');
+    const chenyuCard = document.getElementById('chenyuCard');
+    const momentsBtn = document.getElementById('momentsBtn');
+    const momentsPage = document.getElementById('momentsPage');
+    const backFromMoments = document.getElementById('backFromMoments');
+     const avatarIcon = document.getElementById('mima');
+      const chatItem = document.querySelector('.chat-item:has(#mima)');
+
+      const TARGET_PAGE = '公众号.html';
+    
+    // 收集所有陈宇头像
+    const chenyuAvatars = [
+        document.getElementById('chenyuListAvatar'),
+        document.getElementById('chenyuMsgAvatar'),
+        document.getElementById('chenyuMsgAvatar2'),
+        document.getElementById('chenyuMsgAvatar3'),
+        document.getElementById('chenyuMsgAvatar4'),
+        document.getElementById('chenyuMsgAvatar5'),
+        document.getElementById('chenyuMsgAvatar6'),
+        document.getElementById('chenyuMsgAvatar7'),
+        document.getElementById('chenyuMsgAvatar11'),
+        document.getElementById('chenyuMsgAvatar12'),
+        document.getElementById('chenyuMsgAvatar13'),
+        document.getElementById('chenyuMsgAvatar14'),
+        document.getElementById('chenyuMsgAvatar15'),
+        document.getElementById('chenyuMsgAvatar16'),
+        document.getElementById('chenyuMsgAvatar17')
+       ];
+    
+    // 威信打开动画
+    wechatIcon.addEventListener('click', function() {
+        loadingOverlay.style.display = 'flex';
+        setTimeout(function() {
+            loadingOverlay.style.display = 'none';
+            wechatInterface.style.display = 'flex';
+        }, 1500);
+    });
+    
+    // 关闭威信返回主屏幕
+    closeWechat.addEventListener('click', function() {
+        wechatInterface.style.display = 'none';
+        chenyuDetail.style.display = 'none';
+        chenyuCard.style.display = 'none';
+        cardMask.style.display = 'none';
+        momentsPage.style.display = 'none';
+    });
+    
+    // 打开陈宇聊天详情
+    chenyuChat.addEventListener('click', function() {
+        chenyuDetail.style.display = 'flex';
+        const detailContent = document.getElementById('detailContent');
+        if (detailContent) {
+            detailContent.scrollTop = detailContent.scrollHeight;
+        }
+    });
+      function openOfficialAccountPage(event) {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        window.open(TARGET_PAGE, '_blank');
+    }
+
+    // 为整个聊天项（横列）添加点击跳转
+    if (chatItem && !chatItem.hasAttribute('data-jump-bound')) {
+        chatItem.style.cursor = 'pointer';
+        chatItem.addEventListener('click', openOfficialAccountPage);
+        chatItem.setAttribute('data-jump-bound', 'true');
+        // 辅助无障碍
+        chatItem.setAttribute('role', 'button');
+        chatItem.setAttribute('aria-label', '点击跳转公众号页面');
+    }
+
+    // 保留原有头像图标的点击功能（避免重复绑定）
+    if (avatarIcon && !avatarIcon.hasAttribute('data-jump-bound')) {
+        avatarIcon.style.cursor = 'pointer';
+        avatarIcon.addEventListener('click', openOfficialAccountPage);
+        avatarIcon.setAttribute('data-jump-bound', 'true');
+        avatarIcon.setAttribute('role', 'button');
+        avatarIcon.setAttribute('aria-label', '点击跳转公众号页面');
+    }
+
+    // 可选：为聊天项内的预览文字区域也屏蔽冒泡，防止重复触发（但无妨）
+    if (chatItem) {
+        const previewSpan = chatItem.querySelector('.chat-preview');
+        if (previewSpan) {
+            previewSpan.style.pointerEvents = 'none';
+        }
+    }
+
+        
+        
+    
+    
+    // 返回聊天列表
+    backFromDetail.addEventListener('click', function() {
+        chenyuDetail.style.display = 'none';
+        chenyuCard.style.display = 'none';
+        cardMask.style.display = 'none';
+    });
+    
+    // 点击陈宇任意头像弹出资料卡
+    chenyuAvatars.forEach(avatar => {
+        if (avatar) {
+            avatar.addEventListener('click', function(e) {
+                e.stopPropagation();
+                chenyuCard.style.display = 'block';
+                cardMask.style.display = 'block';
+            });
+        }
+    });
+    
+    // 点击遮罩层关闭资料卡
+    cardMask.addEventListener('click', function() {
+        chenyuCard.style.display = 'none';
+        cardMask.style.display = 'none';
+    });
+    
+    // 点击朋友圈进入陈宇朋友圈页面
+    momentsBtn.addEventListener('click', function() {
+        chenyuCard.style.display = 'none';
+        momentsPage.style.display = 'flex';
+        const momentsContent = document.querySelector('.moments-content');
+        if (momentsContent) {
+            momentsContent.scrollTop = 0;
+        }
+    });
+    
+    // 从朋友圈返回资料卡
+    backFromMoments.addEventListener('click', function() {
+        momentsPage.style.display = 'none';
+        chenyuCard.style.display = 'block';
+    });
+    
+    // 其他应用点击提示
+    document.querySelectorAll('.app-icon:not(#wechatIcon)').forEach(icon => {
+        icon.addEventListener('click', function() {
+            alert('此应用暂不可用');
+        });
+    });
+    
+    // 底部导航栏点击提示
+    document.querySelectorAll('.tab-item').forEach((tab, index) => {
+        tab.addEventListener('click', function() {
+            if (index === 0) return;
+            alert('功能暂不可用');
+        });
+    });
+
+    
+    
+    // 论坛跳转函数
+    window.forumJump = function() {
+        let tip = document.createElement('div');
+        tip.innerText = '正在跳转至论坛...';
+        tip.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 10000;
+            font-size: 16px;
+        `;
+        document.body.appendChild(tip);
+        
+        setTimeout(function() {
+            tip.remove();
+            window.open('luntan.html', '_blank');
+        }, 1500);
+    };
+    // ========== 微信通话功能 ==========
+const callOverlay = document.getElementById('callOverlay');
+const callStatus = document.getElementById('callStatus');
+const callTimer = document.getElementById('callTimer');
+const callHangupBtn = document.getElementById('callHangupBtn');
+
+let callInterval = null, callSeconds = 0;
+let bgAudio = null;  // 背景音频
+
+// 嘟嘟声（Web Audio）
+function playBeep() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        for (let i = 0; i < 3; i++) {
+            const o = ctx.createOscillator();
+            const g = ctx.createGain();
+            o.connect(g);
+            g.connect(ctx.destination);
+            o.frequency.value = 440;
+            g.gain.value = 0.3;
+            o.start(ctx.currentTime + i * 0.8);
+            g.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + i * 0.8 + 0.5);
+            o.stop(ctx.currentTime + i * 0.8 + 0.5);
+        }
+        ctx.resume();
+    } catch(e) {}
+}
+
+// 播放微信.MP3背景音频（循环）
+function startBgAudio() {
+    if (bgAudio) {
+        bgAudio.pause();
+        bgAudio.currentTime = 0;
+    }
+    bgAudio = new Audio('微信.MP3');
+    bgAudio.loop = true;
+    bgAudio.volume = 0.6;
+    bgAudio.play().catch(e => console.log('音频播放失败:', e));
+}
+
+// 停止背景音频
+function stopBgAudio() {
+    if (bgAudio) {
+        bgAudio.pause();
+        bgAudio.currentTime = 0;
+        bgAudio = null;
+    }
+}
+
+// 结束通话
+function endCall() {
+    if (callInterval) clearInterval(callInterval);
+    stopBgAudio();  // 停止背景音频
+    callOverlay.style.display = 'none';
+    const tip = document.createElement('div');
+    tip.innerText = '通话结束';
+    tip.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:white;padding:8px 16px;border-radius:20px;z-index:10001;font-size:14px;';
+    document.body.appendChild(tip);
+    setTimeout(() => tip.remove(), 1500);
+}
+
+// 开始通话
+function startCall() {
+    callOverlay.style.display = 'flex';
+    callStatus.textContent = '正在连接...';
+    callTimer.style.display = 'none';
+    
+    playBeep();      // 嘟嘟声
+    startBgAudio();  // 播放微信.MP3 循环
+    
+    // 陈宇已失联
+    setTimeout(() => {
+        if (callOverlay.style.display !== 'flex') return;
+        callStatus.textContent = '对方手机已关机';
+        setTimeout(() => endCall(), 2000);
+    }, 3000);
+}
+
+callHangupBtn.addEventListener('click', endCall);
+
+// 绑定音视频按钮
+document.querySelectorAll('.card-btn, .card-action-btn').forEach(btn => {
+    if (btn.innerHTML.includes('📞') || btn.innerText.includes('音视频')) {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => { e.stopPropagation(); startCall(); });
+    }
+});
+// 为每条朋友圈动态添加灰框、点赞评论功能 (在原有朋友圈渲染之后执行)
+function enhanceMomentsWithActions() {
+    const moments = document.querySelectorAll('.moment-item');
+    moments.forEach((moment, idx) => {
+        // 避免重复添加
+        if (moment.querySelector('.gray-dot-btn')) return;
+
+        // 创建灰框按钮
+        const btnDiv = document.createElement('div');
+        btnDiv.className = 'gray-dot-btn';
+        btnDiv.innerHTML = `<div class="gray-dot"></div><div class="gray-dot"></div>`;
+        
+        // 存储操作弹窗引用
+        let activePopup = null;
+
+        // 点击灰框: 显示点赞/评论弹窗
+        btnDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // 移除已经存在的弹窗
+            if (activePopup) activePopup.remove();
+            
+            // 创建弹窗
+            const popup = document.createElement('div');
+            popup.className = 'action-popup';
+            popup.innerHTML = `
+                <div class="action-btn like-btn">❤️ 点赞</div>
+                <div class="divider"></div>
+                <div class="action-btn comment-btn">💬 评论</div>
+            `;
+            // 定位在按钮上方
+            const rect = btnDiv.getBoundingClientRect();
+            const containerRect = moment.closest('.moments-content').getBoundingClientRect();
+            popup.style.position = 'absolute';
+            popup.style.bottom = '30px';
+            popup.style.right = '0px';
+            popup.style.left = 'auto';
+            popup.style.top = 'auto';
+            btnDiv.style.position = 'relative';
+            btnDiv.appendChild(popup);
+            activePopup = popup;
+
+            // 点赞逻辑
+            const likeBtn = popup.querySelector('.like-btn');
+            likeBtn.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+               
+                // 查找或创建点赞区域
+                let likeArea = moment.querySelector('.like-area');
+                if (!likeArea) {
+                    likeArea = document.createElement('div');
+                    likeArea.className = 'like-area';
+                    const imgDiv = moment.querySelector('.moment-img');
+                    if (imgDiv) {
+                        imgDiv.insertAdjacentElement('afterend', likeArea);
+                    } else {
+                        const textDiv = moment.querySelector('.moment-text');
+                        if (textDiv) {
+                           textDiv.insertAdjacentElement('afterend', likeArea);
+                           } else {
+                            moment.appendChild(likeArea);
+                           }
+                    }
+                }
+                // 生成爱心+固定文本
+                likeArea.innerHTML = `<span>❤️</span><span class="like-text">开心快乐每一天</span>`;
+                // 可选动画
+                likeArea.style.opacity = '0';
+                setTimeout(() => likeArea.style.opacity = '1', 10);
+                if (activePopup) activePopup.remove();
+            });
+
+            // 评论逻辑
+            const commentBtn = popup.querySelector('.comment-btn');
+            commentBtn.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+                if (activePopup) activePopup.remove();
+                
+                // 创建评论区域 (如果不存在)
+                let commentArea = moment.querySelector('.comment-area');
+                if (!commentArea) {
+                    commentArea = document.createElement('div');
+                    commentArea.className = 'comment-area';
+                    const btnParent = moment.querySelector('.gray-dot-btn');
+                    if (btnParent) {
+                        moment.insertBefore(commentArea, btnParent);
+                    } else {
+                        moment.appendChild(commentArea);
+                    }
+                }
+                // 展示评论输入框
+                const inputWrap = document.createElement('div');
+                inputWrap.className = 'comment-input-wrap';
+                inputWrap.innerHTML = `
+                    <input type="text" class="comment-input" placeholder="说点什么..." maxlength="50">
+                    <button class="comment-submit">发送</button>
+                `;
+                // 避免重复添加多个输入框
+                if (commentArea.querySelector('.comment-input-wrap')) return;
+                commentArea.appendChild(inputWrap);
+                const input = inputWrap.querySelector('.comment-input');
+                input.focus();
+                
+                const submitBtn = inputWrap.querySelector('.comment-submit');
+                const submitComment = () => {
+                    const text = input.value.trim();
+                    if (text === "") return;
+                    // 添加评论条目
+                    const commentItem = document.createElement('div');
+                    commentItem.className = 'comment-item';
+                    const currentUser = "我";   // 模拟当前用户昵称
+                    commentItem.innerHTML = `
+                        <div><span class="comment-name">${currentUser}</span>${escapeHtml(text)}</div>
+                        <span class="comment-del">删除</span>
+                    `;
+                    // 插入到评论区域顶部（最新在上）
+                    const firstChild = commentArea.querySelector('.comment-item');
+                    if (firstChild) {
+                        commentArea.insertBefore(commentItem, firstChild);
+                    } else {
+                        commentArea.appendChild(commentItem);
+                    }
+                    // 删除功能
+                    const delBtn = commentItem.querySelector('.comment-del');
+                    delBtn.addEventListener('click', () => commentItem.remove());
+                    input.value = "";
+                    inputWrap.remove();  // 发布后移除输入框，保持简洁
+                };
+                submitBtn.addEventListener('click', submitComment);
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') submitComment();
+                });
+            });
+
+            // 点击其他地方关闭弹窗
+            const closeHandler = (e) => {
+                if (!popup.contains(e.target) && e.target !== btnDiv) {
+                    if (activePopup) activePopup.remove();
+                    document.removeEventListener('click', closeHandler);
+                }
+            };
+            setTimeout(() => document.addEventListener('click', closeHandler), 10);
+        });
+
+        // 将灰框添加到朋友圈底部
+        moment.appendChild(btnDiv);
+    });
+}
+
+// 辅助函数：防止XSS
+function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+        return c;
+    });
+}
+
+// 在朋友圈页面显示时调用 (原有momentsPage展示时调用)
+// 监听朋友圈打开事件 (因为页面原有backFromMoments等逻辑)
+function initMomentsEnhance() {
+    enhanceMomentsWithActions();
+}
+// 如果朋友圈是动态加载的，使用MutationObserver简单备用
+const observer = new MutationObserver(() => {
+    if (document.getElementById('momentsPage') && getComputedStyle(document.getElementById('momentsPage')).display === 'flex') {
+        enhanceMomentsWithActions();
+    }
+});
+observer.observe(document.body, { attributes: true, subtree: false, attributeFilter: ['style'] });
+// 初次调用
+setTimeout(initMomentsEnhance, 300);
+</script>
+</body>
+</html>

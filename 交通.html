@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="邺山村内部交通指南 - 景区交通、游览路线、停车信息">
+    <title>内部交通 | 邺山村</title>
+    <!-- Google Fonts 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e2a2a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #2c6e49;
+            --primary-dark: #1f4d33;
+            --primary-light: #e9f3ed;
+            --accent: #d4a373;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #6c757d;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: all 0.25s ease;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h1, h2, h3, .serif-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-title h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1e3a2f;
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            color: var(--gray-600);
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 36px;
+            }
+        }
+
+        /* 头部导航 */
+        .site-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 150px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: #1e3a2f;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 22px;
+            color: #2c3e2f;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-btn, .user-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #2c3e2f;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2c3e2f;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: 72px;
+                left: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: calc(100vh - 72px);
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 32px 24px;
+                gap: 24px;
+                box-shadow: var(--shadow-md);
+                transition: 0.3s;
+                z-index: 999;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+        }
+
+        /* 页面内容区 - 只有文字与图片，无框无特效 */
+        .page-content {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .content-block {
+            margin-bottom: 64px;
+        }
+
+        .content-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-block h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e3a2f;
+            margin-bottom: 24px;
+        }
+
+        .content-block p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #2c3e2f;
+            margin-bottom: 20px;
+        }
+
+        .inline-image {
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .inline-image img {
+            width: 1000px;
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .two-columns {
+            display: flex;
+            gap: 48px;
+            margin: 32px 0;
+            flex-wrap: wrap;
+        }
+
+        .two-columns .col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .two-columns .col h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e3a2f;
+            margin-bottom: 16px;
+        }
+
+        .two-columns .col p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #3a4a3f;
+        }
+
+        .image-row {
+            display: flex;
+            gap: 24px;
+            margin: 32px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-row .img-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .image-row .img-item img {
+            width: 400px;
+            height:300px;
+            border-radius: 16px;
+            display: block;
+        }
+
+        .image-row .img-item p {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        @media (max-width: 768px) {
+            .page-content {
+                padding: 48px 0;
+            }
+            .content-block h3 {
+                font-size: 24px;
+            }
+            .content-block p {
+                font-size: 16px;
+            }
+            .two-columns {
+                flex-direction: column;
+                gap: 32px;
+            }
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #1c2e24;
+            color: #e0e7e3;
+            padding: 72px 0 32px;
+            margin-top: 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #bcd0c5;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .social-icons a {
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">06/39</div>
+
+<header class="site-header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="#">
+                    <img src="images/qsclogo.webp" alt="邺山村logo" class="logo-img">
+                    <span class="logo-text">邺山村</span>
+                </a>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="travel.html#home">首页</a></li>
+                <li><a href="travel.html#overview">景区概述</a></li>
+                <li><a href="traffic.html" class="active">交通</a></li>
+                <li><a href="qsc农家乐.html">景点民宿</a></li>
+                <li><a href="qsc面馆.html">美食</a></li>
+                <li><a href="cwh.html" target="_blank">村务公开</a></li>
+                <li><a href="travel.html#contact">联系</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="search-btn" aria-label="搜索"><i class="fas fa-search"></i></button>
+                <button class="user-btn" aria-label="用户"><i class="far fa-user-circle"></i></button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="菜单"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="page-content">
+        <div class="container">
+            <div class="section-title">
+                <h2>内部交通</h2>
+                <p>景区内交通指南 · 游览路线 · 停车信息</p>
+            </div>
+
+            <!-- 区块1：景区交通概况 -->
+            <div class="content-block">
+                <h3>景区交通概况</h3>
+                <p>邺山村内部交通以环保观光车、步行游览为主，核心景点之间均有便捷的交通连接。为保护古村风貌和生态环境，私家车辆统一停放在村口停车场，游客可换乘景区观光车或步行进入核心区域。</p>
+                <div class="inline-image">
+                    <img src="../images/邺山湖.webp" alt="邺山村景区交通图">
+                </div>
+                <p>从游客中心出发，主要分为三条游览路线：东线（古民居群）、西线（邺山湖-茶园）、北线（青峰云海）。每条路线均设有观光车站点，发车间隔约15-20分钟。旺季期间，景区将增开区间班次，确保游客顺畅游览。</p>
+            </div>
+
+            <!-- 区块2：观光车路线 -->
+            <div class="content-block">
+                <h3>观光车路线</h3>
+                <p>景区观光车采用纯电动车型，低碳环保，途经主要景点。票价：单程10元/人，通票25元/人（当日不限次）。运营时间：夏季7:30-18:30，冬季8:00-17:30。</p>
+                <div class="two-columns">
+                    <div class="col">
+                        <h4>东线 · 古韵寻踪</h4>
+                        <p>游客中心 → 明清古民居群 → 邺山书院 → 古樟树广场 → 返回游客中心。全程约4.5公里，车程约20分钟。途经42栋明清古建筑，是体验徽派建筑文化的精华线路。</p>
+                    </div>
+                    <div class="col">
+                        <h4>西线 · 湖光山色</h4>
+                        <p>游客中心 → 邺山湖 → 邺山茶园 → 云栖茶室 → 返回游客中心。全程约5公里，车程约25分钟。沿途湖光山色相映，茶园风光旖旎。</p>
+                    </div>
+                </div>
+                <div class="two-columns">
+                    <div class="col">
+                        <h4>北线 · 云海揽胜</h4>
+                        <p>游客中心 → 青峰云海观景台 → 望山亭 → 返回游客中心。全程约6公里，车程约30分钟。海拔较高，可俯瞰村庄全貌，云海季尤为壮观。</p>
+                    </div>
+                    <div class="col">
+                        <h4>环线 · 全景游</h4>
+                        <p>游客中心 → 古民居群 → 邺山湖 → 青峰云海 → 茶园 → 返回游客中心。全程约12公里，车程约60分钟。适合时间充裕、希望深度游览的游客。</p>
+                    </div>
+                </div>
+                <div class="image-row">
+                    <div class="img-item">
+                        <img src="../images/房.webp" alt="观光车古民居线">
+                        <p>观光车 · 古民居线</p>
+                    </div>
+                    <div class="img-item">
+                        <img src="../images/云.webp" alt="观光车云海线">
+                        <p>观光车 · 云海线</p>
+                    </div>
+                    <div class="img-item">
+                        <img src="../images/茶园.webp" alt="观光车茶园线">
+                        <p>观光车 · 茶园线</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 区块3：步行游览推荐 -->
+            <div class="content-block">
+                <h3>步行游览推荐</h3>
+                <p>对于喜欢徒步的游客，邺山村铺设了总长约8公里的生态步道，串联起村内最具代表性的自然与人文景观。步道依山就势，沿途设有休息亭和导览标识。</p>
+                <div class="two-columns">
+                    <div class="col">
+                        <h4>古巷漫步线</h4>
+                        <p>长度：2.5公里 | 耗时：约1小时<br>路线：村口 → 大夫第 → 绣楼 → 老街 → 古井 → 祠堂。穿梭于青石板巷弄之间，感受明清生活气息。</p>
+                    </div>
+                    <div class="col">
+                        <h4>湖畔亲水线</h4>
+                        <p>长度：3公里 | 耗时：约1.5小时<br>路线：邺山湖栈道 → 水杉林 → 观鸟亭 → 湖心岛。沿湖漫步，四季景致各异。</p>
+                    </div>
+                </div>
+                <div class="two-columns">
+                    <div class="col">
+                        <h4>茶园山径线</h4>
+                        <p>长度：2.8公里 | 耗时：约1.2小时<br>路线：游客中心 → 茶园小径 → 茶亭 → 望湖台。穿行于梯田茶园，可体验采茶活动。</p>
+                    </div>
+                    <div class="col">
+                        <h4>云海登山线</h4>
+                        <p>长度：3.5公里 | 耗时：约2小时<br>路线：登山步道入口 → 半山亭 → 云海观景台 → 山顶。有一定坡度，适合体力较好的游客。</p>
+                    </div>
+                </div>
+                <div class="inline-image">
+                    <img src="../images/步行.webp" alt="邺山村步行游览图">
+                </div>
+            </div>
+
+            <!-- 区块4：停车及换乘 -->
+            <div class="content-block">
+                <h3>停车及换乘</h3>
+                <p>为保护古村环境，所有外来车辆需停放于村口生态停车场。停车场总车位约300个，其中大巴车位20个，小车位280个，另设有新能源充电桩8个。</p>
+                <div class="two-columns">
+                    <div class="col">
+                        <h4>停车收费标准</h4>
+                        <p>小型车（7座及以下）：10元/次（当日不限时）<br>大型车（8座及以上）：20元/次<br>新能源车：免收停车费（截至2025年底）<br>过夜车辆：加收20元/夜</p>
+                    </div>
+                    <div class="col">
+                        <h4>换乘指引</h4>
+                        <p>停车场紧邻游客中心，步行约2分钟。游客中心设有观光车售票处、景区导览图、行李寄存处。换乘观光车或租赁自行车均可从此出发。</p>
+                    </div>
+                </div>
+                <div class="inline-image">
+                    <img src="../images/停车.webp" alt="邺山村停车场实景">
+                </div>
+            </div>
+
+            <!-- 区块5：自行车租赁 -->
+            <div class="content-block">
+                <h3>自行车租赁</h3>
+                <p>村内提供共享单车和山地自行车租赁服务，适合热爱骑行游览的游客。骑行道主要沿邺山湖和茶园区域铺设，路面平坦，风景优美。</p>
+                <div class="two-columns">
+                    <div class="col">
+                        <h4>租赁点</h4>
+                        <p>游客中心、邺山湖驿站、茶园驿站共3处。<br>提供车型：单人山地车、双人亲子车、电动助力车。</p>
+                    </div>
+                    <div class="col">
+                        <h4>租赁价格</h4>
+                        <p>单人山地车：15元/小时，40元/天<br>双人亲子车：25元/小时，60元/天<br>电动助力车：30元/小时，80元/天</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 区块6：重要提示 -->
+            <div class="content-block">
+                <h3>重要提示</h3>
+                <p>1. 观光车通票可在各站点购买，当日有效，不限次数。<br>
+                2. 旺季（4月-5月、9月-10月）及节假日期间，建议错峰出行，上午9:00-11:00为入园高峰。<br>
+                3. 村内步道部分路段有台阶，建议穿着舒适的步行鞋。<br>
+                4. 云海观景台海拔较高，温差较大，建议携带薄外套。<br>
+                5. 请勿自驾进入核心保护区，违者按村规民约处理。<br>
+                6. 如需轮椅、婴儿车服务，可至游客中心免费借用。</p>
+                <div class="image-row">
+                    <div class="img-item">
+                        <img src="images/图.webp" alt="景区导览牌">
+                        <p>景区导览牌</p>
+                    </div>
+                    <div class=" img-item">
+                        <img src="images/站.webp" alt="观光车站点">
+                        <p>观光车站点</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>邺山村村民委员会</h4>
+                <p>中国 · 浙皖交界传统古村落<br>国家森林乡村 · 省级美丽乡村示范</p>
+            </div>
+            <div class="footer-col">
+                <h4>快速导航</h4>
+                <ul class="footer-links">
+                    <li><a href="travel.html">景区概述</a></li>
+                    <li><a href="交通.html">交通指南</a></li>
+                    <li><a href="qsc农家乐.html">景点民宿</a></li>
+                    <li><a href="qsc面馆.html">特色美食</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>游客服务</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showComingSoon('民宿预定')">民宿预定</a></li>
+                    <li><a href="#" onclick="showComingSoon('旅游路线')">旅游路线</a></li>
+                    <li><a href="#" onclick="showComingSoon('常见问题')">常见问题</a></li>
+                    <li><a href="#" onclick="showComingSoon('在线留言')">在线留言</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>官方平台</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p style="margin-top: 20px;">旅游咨询：0571-8888-2365<br>邮箱：contact@qingshan.cn</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 邺山村村民委员会 版权所有 | 浙ICP备 2025123456号 | 设计支持：乡村数字文旅</p>
+            <p>本网站图片与文字仅为示意，实际以现场为准。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function showComingSoon(pageName) {
+        window.location.href = pageName + '.html';
+    }
+
+    // 移动端菜单
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // 点击导航链接关闭移动端菜单
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>

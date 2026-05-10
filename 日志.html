@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山面馆 - 日志系统</title>
+    <audio id="bgMusic" loop src="音乐.mp3"></audio>
+    <style type="text/css">
+        /* 全局样式 - 20年前怀旧风格 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            /* 纯黄色背景，高饱和度，类似老式网页底色 */
+            background-color: #FFE500;
+            /* 移除原有的斜纹装饰，纯色高饱和背景 */
+            font-family: "宋体", "SimSun", "MS Sans Serif", serif;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* 主容器 - 相对布局，用于内容居中 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 20px 30px 20px;
+        }
+        
+       /* 顶部图片区域 - 铺满左右屏幕，高度自动适应图片比例 */
+        .top-image-area {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            margin-top: 0;
+            margin-bottom: 30px;
+            background: #FFE500;  /* 背景色改为和页面一样的黄色，避免出现突兀色块 */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            /* 不设置固定高度，让高度由图片内容撑开 */
+            line-height: 0;
+        }
+        .top-image {
+            width: 100%;
+            /* 高度自动，保持比例但限制最大高度不超过220px */
+            max-height: 1000px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        /* 抖动动画 (怀旧小特效) */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        
+        /* 闪烁动画 (延续原有) */
+        @keyframes flicker {
+            0% { opacity: 1; filter: brightness(1); }
+            92% { opacity: 1; filter: brightness(1); }
+            93% { opacity: 0.6; filter: brightness(0.85); }
+            94% { opacity: 0.9; filter: brightness(0.95); }
+            95% { opacity: 0.5; filter: brightness(0.8); }
+            96% { opacity: 0.95; filter: brightness(0.98); }
+            97% { opacity: 0.7; filter: brightness(0.9); }
+            98% { opacity: 1; filter: brightness(1); }
+            100% { opacity: 1; filter: brightness(1); }
+        }
+        
+        .shake-effect {
+            animation: shake 0.15s ease-in-out 0s 2;
+        }
+        
+        .flicker-effect {
+            animation: flicker 3s infinite;
+        }
+        
+        /* 日志框 - 符纸背景保留原样，但背景色微调让整体高饱和黄色衬托 */
+        .log-box {
+            background: #FFFEF0;
+            border: 3px solid #B8860B;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,200,0.8);
+            margin: 0;
+            position: relative;
+        }
+        
+        /* 符纸纹理效果继续保留 */
+        .paper-bg {
+            background: #ffc800;
+            background-image: 
+                repeating-linear-gradient(
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(160, 120, 60, 0.08) 2px,
+                    rgba(160, 120, 60, 0.08) 4px
+                ),
+                radial-gradient(circle at 10% 20%, rgba(200, 160, 80, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(200, 160, 80, 0.1) 0%, transparent 30%);
+            border: 2px solid #C9A96E;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.3), inset 0 0 30px rgba(210, 170, 80, 0.2);
+            position: relative;
+        }
+        
+        .paper-bg::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(ellipse, rgba(200,160,80,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .paper-bg::after {
+            content: "";
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(ellipse, rgba(200,160,80,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .log-header {
+            background: #A0522D;
+            background: linear-gradient(to bottom, #B8652A, #8B4513);
+            padding: 12px 20px;
+            border-bottom: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: "黑体", "SimHei", "MS Sans Serif", sans-serif;
+            text-shadow: 1px 1px 0 #5C3317;
+            letter-spacing: 2px;
+        }
+        
+        /* 日志列表区域 - 怀旧滚动条样式 */
+        .log-list {
+            padding: 5px 0;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+        
+        /* 日志条目 - 改成20年前网站经典样式，类似论坛或后台记录风格 */
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 18px;
+            border-bottom: 1px solid #D4B87A;
+            transition: background 0.15s;
+            cursor: pointer;
+            background-color: #FFFEF5;
+        }
+        
+        .log-item:hover {
+            background-color: #FFF2CC;
+        }
+        
+        /* 日志标题字体 - 更古典，小字号，像是2003年前后后台管理字体 */
+        .log-title {
+            font-size: 14px;
+            color: #2C1A0C;
+            font-weight: normal;
+            font-family: "宋体", "SimSun", "MS Sans Serif", serif;
+            letter-spacing: 1px;
+            flex: 1;
+        }
+        
+        /* 时间样式带灰色背景，老式风格 */
+        .log-time {
+            font-size: 11px;
+            color: #6B4E1C;
+            font-family: "Courier New", "宋体", monospace;
+            background: #F0E5D2;
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid #C3A35C;
+            white-space: nowrap;
+        }
+        
+        /* 左右侧边栏: 各5个图片从上到下排列 */
+        .side-deco-column {
+            width: 95px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+        }
+        
+        .side-img-item {
+            width: 100%;
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        
+        .side-img-item img {
+            width: 100%;
+            max-width: 85px;
+            border: none;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.15s ease;
+        }
+        
+        .side-img-item img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        /* 点亮效果：增加发光和边框 */
+        .side-img-item.lit img {
+            filter: brightness(1.2) drop-shadow(0 0 8px #FFD700);
+            border-radius: 50%;
+            box-shadow: 0 0 12px 3px #FFAA00, 0 0 5px 1px #FFD700;
+            transform: scale(1.02);
+        }
+        
+        /* 中间日志区域自适应 */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        /* 返回按钮 - 保持原有古朴样式 */
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 8px 24px;
+            background: #8B4513;
+            color: #FFD700;
+            text-decoration: none;
+            border: 2px outset #CD853F;
+            font-family: "宋体", "SimSun", serif;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .back-btn:active {
+            border: 2px inset #CD853F;
+        }
+        
+        /* 滚动条样式保持怀旧 */
+        .log-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log-list::-webkit-scrollbar-track {
+            background: #F5E8C8;
+            border-radius: 4px;
+        }
+        
+        .log-list::-webkit-scrollbar-thumb {
+            background: #B8860B;
+            border-radius: 4px;
+        }
+        
+        .empty-log {
+            text-align: center;
+            padding: 50px;
+            color: #B8860B;
+            font-size: 14px;
+        }
+        
+        /* 调整容器内部边距 */
+        @media (max-width: 780px) {
+            .side-deco-column {
+                width: 70px;
+                gap: 12px;
+            }
+            .log-title {
+                font-size: 12px;
+            }
+            .log-time {
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+            .flex-row {
+                gap: 12px;
+            }
+        }
+        
+        /* 顶部图片完全铺满左右而不留白，修正body边距 */
+        body {
+            overflow-x: hidden;
+        }
+        /* 损坏日志的样式 - 红色斜体 */
+.corrupted-log {
+    background-color: #ffeeee !important;
+    border-left: 3px solid #ff0000;
+    cursor: default !important;  /* 箭头光标，不是手型 */
+    pointer-events: none;        /* 完全禁止点击 */
+}
+
+.corrupted-log .log-title,
+.corrupted-log .log-time {
+    color: #ff0000 !important;
+    font-style: italic !important;
+    font-weight: bold !important;
+}
+
+
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">23/39</div>
+
+<div class="container">
+    
+    <!-- 顶部大图片区域 - 铺满左右屏幕，高度限高220px，使用100vw突破容器 -->
+    <div class="top-image-area">
+        <img src="images/佛.webp" alt="日志顶部" class="top-image flicker-effect" id="topImage" onmouseenter="startShake()" onmouseleave="stopShake()">
+    </div>
+    
+    <!-- 左右两侧图片 (各5个) + 中间日志框 -->
+    <div class="flex-row">
+        <!-- 左侧图片：五个从上到下排列 -->
+        <div class="side-deco-column" id="leftColumn">
+            <div class="side-img-item" data-side="left" data-index="1"><img src="images/花1.webp" alt="左侧装饰1"></div>
+            <div class="side-img-item" data-side="left" data-index="2"><img src="images/花1.webp" alt="左侧装饰2"></div>
+            <div class="side-img-item" data-side="left" data-index="3"><img src="images/花1.webp" alt="左侧装饰3"></div>
+            <div class="side-img-item" data-side="left" data-index="4"><img src="images/花1.webp" alt="左侧装饰4"></div>
+            <div class="side-img-item" data-side="left" data-index="5"><img src="images/花1.webp" alt="左侧装饰5"></div>
+        </div>
+        
+        <!-- 中间日志框 (符纸背景) -->
+        <div class="main-content">
+            <div class="log-box paper-bg">
+                <div class="log-header">
+                     日志存档 
+                </div>
+                <div class="log-list" id="logList">
+                    <!-- 日志条目由JS动态生成，方便维护 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧图片：五个花2.webp从上到下排列 -->
+        <div class="side-deco-column" id="rightColumn">
+            <div class="side-img-item" data-side="right" data-index="1"><img src="images/花2.webp" alt="右侧装饰1"></div>
+            <div class="side-img-item" data-side="right" data-index="2"><img src="images/花2.webp" alt="右侧装饰2"></div>
+            <div class="side-img-item" data-side="right" data-index="3"><img src="images/花2.webp" alt="右侧装饰3"></div>
+            <div class="side-img-item" data-side="right" data-index="4"><img src="images/花2.webp" alt="右侧装饰4"></div>
+            <div class="side-img-item" data-side="right" data-index="5"><img src="images/花2.webp" alt="右侧装饰5"></div>
+        </div>
+    </div>
+
+    <div id="logModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center;">
+    <div style="width:500px; max-width:90%; padding:25px 30px; background:#FFF8DC; border:1px solid #DAA520;">
+        <div id="logModalContent" style="font-size:15px; line-height:1.8; color:#000000; font-family:'宋体';"></div>
+        <div style="text-align:center; margin-top:25px;">
+            <button onclick="closeLogModal()" style="background:#8B4513; border:none; color:#FFFFFF; padding:6px 20px; font-family:'宋体'; font-size:14px; cursor:pointer;">关 闭</button>
+        </div>
+    </div>
+</div>
+    
+    <!-- 返回按钮 -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a class="back-btn" href="用户.html">← 返回管理后台</a>
+    </div>
+</div>
+
+<script>
+
+    // 存储点亮状态的集合
+    let litItems = new Set(); // 存储唯一标识 "left-1", "right-3" 等
+    
+    // 获取所有可点亮的图片项
+    const leftItems = document.querySelectorAll('#leftColumn .side-img-item');
+    const rightItems = document.querySelectorAll('#rightColumn .side-img-item');
+    const allItems = [...leftItems, ...rightItems];
+    
+    // 为每个图片项添加点击事件
+    function initClickableImages() {
+        allItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const side = this.getAttribute('data-side');
+                const index = this.getAttribute('data-index');
+                const key = `${side}-${index}`;
+                
+                // 切换点亮/熄灭状态
+                if (litItems.has(key)) {
+                    // 熄灭
+                    litItems.delete(key);
+                    this.classList.remove('lit');
+                } else {
+                    // 点亮
+                    litItems.add(key);
+                    this.classList.add('lit');
+                }
+                
+                // 检查特定组合：左边第1,2,5 与 右边的第3,5 同时亮着
+              const left1Lit = litItems.has('left-1');
+const left2Lit = litItems.has('left-2');
+const left5Lit = litItems.has('left-5');
+const right3Lit = litItems.has('right-3');
+const right5Lit = litItems.has('right-5');
+
+// 检查是否只有这5个亮着，其他都是熄灭
+const expectedLitKeys = new Set(['left-1', 'left-2', 'left-5', 'right-3', 'right-5']);
+let onlyTheseLit = true;
+
+// 遍历所有可能的图片（左边1-5，右边1-5）
+for (let i = 1; i <= 5; i++) {
+    const leftKey = `left-${i}`;
+    const rightKey = `right-${i}`;
+    
+    // 如果这个键是预期要亮着的
+    if (expectedLitKeys.has(leftKey)) {
+        // 它必须亮着，否则条件不满足
+        if (!litItems.has(leftKey)) onlyTheseLit = false;
+    } else {
+        // 它必须熄灭，否则条件不满足
+        if (litItems.has(leftKey)) onlyTheseLit = false;
+    }
+    
+    if (expectedLitKeys.has(rightKey)) {
+        if (!litItems.has(rightKey)) onlyTheseLit = false;
+    } else {
+        if (litItems.has(rightKey)) onlyTheseLit = false;
+    }
+}
+
+// 如果五个目标都亮着，且没有其他图片亮着
+if (left1Lit && left2Lit && left5Lit && right3Lit && right5Lit && onlyTheseLit) {
+    // 闪烁提示
+    const allLitElements = document.querySelectorAll('.side-img-item.lit');
+    allLitElements.forEach(el => {
+        el.style.transition = 'all 0.1s';
+        el.style.filter = 'brightness(1.5)';
+        setTimeout(() => {
+            el.style.filter = '';
+        }, 200);
+    });
+    
+    // 跳转
+    setTimeout(() => {
+        window.location.href = "红日志.html";
+    }, 1000);
+}
+            });
+        });
+    }
+    
+    // 页面加载后立即播放音频（尝试自动播放，如被阻止则点击任意处播放）
+    window.addEventListener('load', function() {
+        const audio = document.getElementById('bgMusic');
+        if (audio) {
+            audio.play().catch(function(error) {
+                console.log('自动播放被浏览器阻止，点击页面任意位置后播放');
+                document.body.addEventListener('click', function playOnce() {
+                    audio.play();
+                    document.body.removeEventListener('click', playOnce);
+                });
+            });
+        }
+    });
+    
+   // 日志数据
+const logs = [
+    { 
+        title: "日志4", 
+        time: "2026-02-19",
+        content: "<p>村里这两天来了个记者，装成来旅游的，就是不太机灵，到处东问西问，拍照，生怕别人不知道他的小九九，但是人傻自有天福，还真让他找到一些线索，今天一大早偷偷往山里头跑，踏过禁止通行标志摸到了寺里。</p><p>没记错的话那时候老孙应该在那，老孙说他当时差点笑出声。他说小记者当时吓得连动都不敢动了，绑他比绑只鸡还容易，他的确是看到了，但是如何呢，估计是没机会说出来啦。哈哈</p>"
+    },
+    { 
+        title: "日志3", 
+        time: "2025-09-15",
+        content: "<strong>阿亮</strong>不愧是大学生，举行大庆典不仅为窅爷集了不少人气，还可以趁着热闹去寺里进行<strong>赐福</strong>，但是听老孙说新来的那个姓于的油盐不进，暗中试探他几次都不接受，我要看看他这所谓的正义感在窅爷前面有没有用。</p></p>他姓于的不吃敬酒，不过是因为还没见到窅爷，等到窅爷那压迫感顺着地皮漫上来，我就不信他的腿不发软。到时候我再让阿亮把他引到寺里“观礼”，让他在窅爷面前站一站，看他还能不能再说出“按规定办事”这种话。</p>"
+    },
+    { 
+        title: "日志2", 
+        time: "2025-05-05",
+        content: "<p>妈的，赵弘远这个狗东西，怎么有胆自杀，早知道这样20年前就不应该为他<strong>赐福</strong>，要不是看他一家做的贡献，送了不少食粮，不然就算他死我也要把他尸体当香灰。</p><p>不过他一死，的确少一个好帮手，当初选他，就是看中他胆小。胆小的人好控制，不敢乱说，不敢乱动，谁知道胆小到这种程度，连活着都不敢了。只是苦了我，还得再去找一个替他的人。下一个，我可得选个胆子大点的。</p>"
+    },
+    { 
+        title: "日志1", 
+        time: "2023-07-12",
+        content: "父亲过世之后，窅爷的胃口越来越大，原本半年一次，现在快两个月一次了，真害怕惊动上面的人，不过幸好有<strong>公安</strong>撑着没有多少麻烦。我能感受到窅爷吃完之后那种餍足的震颤越来越强了。以前它吃完，只是后山震一震，像是什么东西在地底下翻了个身，闷闷的，三两下就过去了。现在不一样了。它吃完之后，整座邺山都在抖，祠堂的瓦片哗哗作响，老槐树的枝丫像被风吹断了骨头，弯下去半天直不起来。我能感觉到那股劲儿从后山往村里漫，顺着路，顺着墙根，顺着院子里的水井口，一丝一丝往外冒。<p>父亲活着的时候，至少还能镇一镇,可现在他不在了，我站上去，窅爷根本不把我当回事,我跪下去的时候膝盖磕在石板上，它甚至都不屑于看我一眼。</p><p>它要更多的东西。</p>"
+    },
+    { title: "The file is corrupted", time: "The file is corrupted", content: null },
+    { title: "The file is corrupted", time: "The file is corrupted", content: null },
+    { title: "The file is corrupted", time: "The file is corrupted", content: null },
+    { title: "The file is corrupted", time: "The file is corrupted", content: null },
+    { title: "The file is corrupted", time: "The file is corrupted", content: null },
+    { title: "The file is corrupted", time: "The file is corrupted", content: null },
+];
+
+// 显示日志详情浮层
+function showLogModal(title, time, content) {
+    var modal = document.getElementById('logModal');
+    var contentDiv = document.getElementById('logModalContent');
+    
+    if (!modal || !contentDiv) return;
+    
+    // 给“邺山面馆”添加模糊效果
+    var blurredContent = content.replace(/窅/g, '<span style="filter:blur(2px); display:inline-block;">窅</span>');
+    
+    contentDiv.innerHTML = `
+       
+        <div><strong></strong><br><br>${blurredContent}</div>
+    `;
+    
+    modal.style.display = 'flex';
+}
+
+// 关闭日志详情浮层
+function closeLogModal() {
+    document.getElementById('logModal').style.display = 'none';
+}
+
+// 生成日志列表
+function renderLogs() {
+    const logList = document.getElementById('logList');
+    if (!logList) return;
+    
+    if (logs.length === 0) {
+        logList.innerHTML = '<div class="empty-log">暂无日志记录，请稍后再来</div>';
+        return;
+    }
+    
+    let html = '';
+    for (let i = 0; i < logs.length; i++) {
+        const log = logs[i];
+        const isCorrupted = (log.title === "The file is corrupted" || log.time === "The file is corrupted");
+        
+        if (isCorrupted) {
+            // 损坏的日志：不可点击
+            html += `
+                <div class="log-item corrupted-log">
+                    <div class="log-title">· ${log.title}</div>
+                    <div class="log-time">${log.time}</div>
+                </div>
+            `;
+        } else {
+            // 正常日志：点击弹出浮层，显示对应的标题、时间、内容
+            const safeTitle = log.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeTime = log.time.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeContent = log.content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            html += `
+                <div class="log-item" onclick="showLogModal('${safeTitle}', '${safeTime}', '${safeContent}')">
+                    <div class="log-title">· ${log.title}</div>
+                    <div class="log-time">${log.time}</div>
+                </div>
+            `;
+        }
+    }
+    logList.innerHTML = html;
+}
+    
+    // 抖动效果
+    let isShaking = false;
+    
+    function startShake() {
+        if (isShaking) return;
+        isShaking = true;
+        const img = document.getElementById('topImage');
+        if (!img) return;
+        img.classList.add('shake-effect');
+        setTimeout(() => {
+            img.classList.remove('shake-effect');
+            isShaking = false;
+        }, 300);
+        let count = 0;
+        const interval = setInterval(() => {
+            if (count >= 2) {
+                clearInterval(interval);
+                return;
+            }
+            if (img) {
+                img.classList.add('shake-effect');
+                setTimeout(() => {
+                    if (img) img.classList.remove('shake-effect');
+                }, 150);
+            }
+            count++;
+        }, 200);
+    }
+    
+    function stopShake() {
+        // 无需额外操作
+    }
+    
+    // 加载完毕后渲染
+    window.onload = function() {
+        renderLogs();
+        initClickableImages();
+        
+        if (window.status) window.status = "邺山面馆 · 日志系统 | 欢迎光临";
+        console.log("==== 邺山面馆日志系统载入 ====");
+        console.log("管理员: yeshan0578 | 当前日志条目: " + logs.length + " 条");
+        console.log("二十年前的界面风格 | 背景纯黄高饱和度");
+        console.log("图片点亮功能已启用 | 左边1,2,5 + 右边3,5 同时点亮将触发跳转");
+        
+        // 顶部图片加载失败处理
+        const topImg = document.getElementById('topImage');
+        if (topImg) {
+            topImg.onerror = function() {
+                this.style.backgroundColor = "#8B4513";
+                this.style.minHeight = "120px";
+                this.alt = "邺山面馆匾额";
+            };
+        }
+        
+        // 左右图片批量防错处理
+        const allSideImgs = document.querySelectorAll('.side-img-item img');
+        for (let i = 0; i < allSideImgs.length; i++) {
+            allSideImgs[i].onerror = function() {
+                if (!this.complete) return;
+                this.style.width = "60px";
+                this.style.height = "60px";
+                this.style.backgroundColor = "#E0B873";
+                this.style.border = "1px solid #a56b2f";
+            };
+        }
+    };
+    
+    // 右键禁止
+    document.oncontextmenu = function(e) {
+        alert("邺山面馆管理系统，版权所有 © 2003");
+        return false;
+    };
+</script>
+
+</body>
+</html>

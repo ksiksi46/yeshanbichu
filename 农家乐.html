@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山农家乐 - 邺山生态庄园农家乐官方网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: "宋体", SimSun, serif;
+            font-size: 14px;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 760px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-left: 1px solid #cccccc;
+            border-right: 1px solid #cccccc;
+        }
+
+        /* 顶部横条 */
+        .top-bar {
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
+            padding: 4px 0;
+            border-bottom: 1px solid #cccccc;
+            background-color: #f5f5f5;
+        }
+
+        .top-bar marquee {
+            color: #cc3300;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* 头部 */
+        .header {
+            padding: 12px 15px;
+            background-color: #f9fdf5;
+            border-bottom: 2px solid #336633;
+        }
+
+        .header table {
+            width: 100%;
+            border: 0;
+            border-collapse: collapse;
+        }
+
+        .header table td {
+            vertical-align: middle;
+            padding: 4px 8px;
+        }
+
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #cccccc;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            color: #336633;
+            font-weight: bold;
+            font-family: "黑体", SimHei, sans-serif;
+        }
+
+        .hotline-table {
+            border: 1px solid #cc9966;
+            background-color: #fffdf5;
+        }
+
+        .hotline-table td {
+            padding: 4px 8px;
+            font-size: 13px;
+        }
+
+        .hotline-num {
+            font-size: 18px;
+            color: #cc3300;
+            font-weight: bold;
+            font-family: "黑体", SimHei, sans-serif;
+        }
+
+        /* 导航 */
+        .nav {
+            background-color: #336633;
+            border-bottom: 2px solid #1a3d1a;
+        }
+
+        .nav table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0;
+        }
+
+        .nav table td {
+            text-align: center;
+            padding: 0;
+        }
+
+        .nav table td a {
+            display: block;
+            padding: 8px 0;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: "黑体", SimHei, sans-serif;
+            border-right: 1px solid #4d804d;
+            cursor: pointer;
+        }
+
+        .nav table td a:hover {
+            background-color: #1a3d1a;
+            text-decoration: underline;
+        }
+
+        .nav table td a.active {
+            background-color: #cc3300;
+            font-weight: bold;
+        }
+
+        /* 首页大图 */
+        .home-banner {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            margin: 0 0 15px 0;
+            border: 1px solid #cccccc;
+        }
+
+        .home-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+        }
+
+        /* 内容区域 */
+        .content-section {
+            display: block;
+            padding: 0 15px 20px 15px;
+        }
+
+        .content-section.hidden {
+            display: none;
+        }
+
+        /* 标题 */
+        .section-title {
+            margin: 20px 0 12px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #336633;
+        }
+
+        .section-title h2 {
+            font-size: 18px;
+            color: #336633;
+            font-family: "黑体", SimHei, sans-serif;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 介绍 */
+        .intro {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333333;
+            text-indent: 2em;
+        }
+
+        .intro-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0;
+            margin: 10px 0;
+        }
+
+        .intro-table td {
+            vertical-align: top;
+            padding: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .intro-table td.intro-img-cell {
+            width: 210px;
+            text-align: center;
+        }
+
+        .intro-table td.intro-img-cell img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid #999999;
+        }
+
+        /* 特色网格 - 用table */
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            border: 0;
+        }
+
+        .feature-table td {
+            width: 50%;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        .feature-item {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-left: 4px solid #336633;
+        }
+
+        .feature-item h4 {
+            color: #336633;
+            margin-bottom: 4px;
+            font-size: 15px;
+            font-family: "黑体", SimHei, sans-serif;
+        }
+
+        .feature-item p {
+            font-size: 13px;
+            color: #555555;
+        }
+
+        /* 图片画廊 */
+        .gallery-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            border: 0;
+        }
+
+        .gallery-table td {
+            text-align: center;
+            padding: 4px;
+        }
+
+        .gallery-table td img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border: 1px solid #999999;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* 菜单列表 - 用table */
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            border: 1px solid #cccccc;
+        }
+
+        .menu-table td {
+            padding: 7px 10px;
+            border-bottom: 1px dashed #cccccc;
+            font-size: 14px;
+            width: 50%;
+        }
+
+        .menu-table td .name {
+            font-weight: normal;
+        }
+
+        .menu-table td .price {
+            color: #cc3300;
+            font-weight: bold;
+        }
+
+        /* 住宿卡片 - 用table */
+        .room-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            border: 0;
+        }
+
+        .room-table td {
+            width: 33.33%;
+            padding: 6px;
+            vertical-align: top;
+        }
+
+        .room-card {
+            background: #f9f9f9;
+            border: 1px solid #cccccc;
+        }
+
+        .room-img {
+            height: 110px;
+            overflow: hidden;
+            border-bottom: 1px solid #cccccc;
+        }
+
+        .room-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .room-info {
+            padding: 8px;
+        }
+
+        .room-info h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+            font-family: "黑体", SimHei, sans-serif;
+            color: #336633;
+        }
+
+        .room-price {
+            color: #cc3300;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .room-info p {
+            font-size: 12px;
+            color: #666666;
+        }
+
+        /* 采摘 - 用table */
+        .pick-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            border: 0;
+        }
+
+        .pick-table td {
+            width: 50%;
+            padding: 6px;
+            vertical-align: top;
+        }
+
+        .pick-item {
+            background: #f5faf0;
+            padding: 12px;
+            border: 1px solid #cccccc;
+        }
+
+        .pick-item h4 {
+            color: #336633;
+            margin-bottom: 4px;
+            font-size: 15px;
+            font-family: "黑体", SimHei, sans-serif;
+        }
+
+        .pick-item p {
+            font-size: 13px;
+            color: #555555;
+        }
+
+        /* 公告板 - 简化小黑板风格 */
+        .bulletin-board {
+            background: #2d3a2d;
+            padding: 15px;
+            border: 1px solid #555555;
+            margin: 15px 0;
+        }
+
+        .chalk-title {
+            font-family: "黑体", SimHei, sans-serif;
+            color: #f5eec0;
+            font-size: 18px;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #999966;
+            font-weight: bold;
+        }
+
+        .bulletin-item {
+            background: #fdfce8;
+            border-left: 5px solid #999966;
+            margin-bottom: 10px;
+            padding: 10px 12px;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: #333333;
+        }
+
+        .bulletin-item:hover {
+            background: #fffde0;
+            border-left-color: #cc6600;
+        }
+
+        .bulletin-item:nth-child(2) {
+            border-left-color: #669966;
+        }
+
+        .bulletin-item:nth-child(3) {
+            border-left-color: #cc6666;
+        }
+
+        .bulletin-item:nth-child(4) {
+            border-left-color: #999966;
+        }
+
+        .bulletin-item:nth-child(5) {
+            border-left-color: #996666;
+        }
+
+        .bulletin-item table {
+            width: 100%;
+            border: 0;
+            border-collapse: collapse;
+        }
+
+        .bulletin-item table td {
+            vertical-align: middle;
+            padding: 4px 6px;
+        }
+
+        .bulletin-icon-cell {
+            width: 50px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #336633;
+        }
+
+        .bulletin-date {
+            font-size: 11px;
+            color: #cc3300;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .bulletin-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #2d4a1e;
+            margin-bottom: 2px;
+            font-family: "黑体", SimHei, sans-serif;
+        }
+
+        .bulletin-preview {
+            font-size: 12px;
+            color: #666666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 280px;
+        }
+
+        .bulletin-tag {
+            font-size: 11px;
+            background: #f0e5d0;
+            padding: 1px 6px;
+            color: #7b4a2c;
+            white-space: nowrap;
+            border: 1px solid #cc9966;
+            margin-left: 6px;
+        }
+
+        /* 联系信息 */
+        .contact-block {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #cccccc;
+            margin: 12px 0;
+        }
+
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0;
+        }
+
+        .contact-table td {
+            padding: 6px 8px;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        .contact-table td.label-col {
+            width: 65px;
+            color: #336633;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* 安全提示 */
+        .safety-box {
+            background: #3a3528;
+            color: #f0e5c8;
+            padding: 12px 15px;
+            border: 1px solid #666666;
+            margin: 15px 0;
+        }
+
+        .safety-box h4 {
+            color: #ffcc66;
+            font-size: 15px;
+            margin-bottom: 8px;
+            font-family: "黑体", SimHei, sans-serif;
+        }
+
+        .safety-box ul {
+            list-style: none;
+            margin-top: 6px;
+            padding-left: 0;
+        }
+
+        .safety-box li {
+            padding: 4px 0;
+            border-bottom: 1px solid #5f543b;
+            font-size: 13px;
+        }
+
+        .safety-box li.red {
+            color: #ff9999;
+            font-weight: bold;
+        }
+
+        /* 侧边栏 - 简单固定 */
+        .sidebar-left {
+            position: fixed;
+            left: 0;
+            top: 40%;
+            background-color: #336633;
+            color: #ffffff;
+            padding: 6px 3px;
+            font-size: 12px;
+            border: 1px solid #1a3d1a;
+            z-index: 500;
+            text-align: center;
+            width: 20px;
+            line-height: 1.4;
+        }
+
+        .sidebar-right {
+            position: fixed;
+            right: 0;
+            top: 40%;
+            background-color: #cc3300;
+            color: #ffffff;
+            padding: 6px 3px;
+            font-size: 12px;
+            border: 1px solid #991100;
+            z-index: 500;
+            text-align: center;
+            width: 20px;
+            line-height: 1.4;
+        }
+
+        /* 底部 */
+        .footer {
+            margin: 20px 15px 15px;
+            padding-top: 10px;
+            border-top: 2px solid #336633;
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        .footer hr {
+            width: 60%;
+            margin: 8px auto;
+            border: 0;
+            border-top: 1px dashed #cccccc;
+        }
+
+        /* 弹窗 - 简化 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: 480px;
+            max-width: 90%;
+            padding: 20px;
+            border: 2px solid #336633;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666666;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .modal-close:hover {
+            color: #cc3300;
+            text-decoration: underline;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            color: #336633;
+            margin-bottom: 8px;
+            padding-right: 25px;
+            font-family: "黑体", SimHei, sans-serif;
+            font-weight: bold;
+        }
+
+        .modal-date {
+            font-size: 13px;
+            color: #cc3300;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #cccccc;
+        }
+
+        .modal-body {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333333;
+        }
+
+        .modal-body img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+        }
+
+        /* 图片放大弹窗 */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-modal img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            border: 2px solid #ffffff;
+        }
+
+        .image-close {
+            position: absolute;
+            top: 18px;
+            right: 28px;
+            color: #ffffff;
+            font-size: 36px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .image-close:hover {
+            color: #ffcc00;
+            text-decoration: underline;
+        }
+
+        .modal-body img {
+            cursor: pointer;
+        }
+
+        .modal-body img:hover {
+            opacity: 0.85;
+        }
+
+        /* 通用图片样式 */
+        .content-full-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border: 1px solid #cccccc;
+            margin: 10px 0;
+        }
+
+        .highlight-note {
+            margin-top: 12px;
+            color: #cc3300;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .hint-text {
+            font-size: 12px;
+            color: #666666;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .room-note {
+            font-size: 13px;
+            color: #555555;
+            margin-top: 8px;
+        }
+
+        hr.section-divider {
+            border: 0;
+            border-top: 1px solid #cccccc;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">10/39</div>
+
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <span class="image-close" onclick="closeImageModal()">&times;</span>
+        <img id="enlargedImage" src="" alt="放大图片">
+    </div>
+
+    <div class="sidebar-left">在<br>线<br>咨<br>询</div>
+    <div class="sidebar-right">订<br>餐<br>电<br>话</div>
+
+    <div class="container">
+        <div class="top-bar">
+            <marquee behavior="scroll" direction="left" scrollamount="4">
+                邺山农家乐 · 真正的山村味道 · 开了18年了 · 欢迎新老顾客光临！
+            </marquee>
+        </div>
+
+        <div class="header">
+            <table>
+                <tr>
+                    <td style="width:80px;">
+                        <img src="../images/农家乐logo.webp" alt="邺山logo" class="logo-img">
+                    </td>
+                    <td>
+                        <span class="logo-text">邺山农家乐</span>
+                    </td>
+                    <td align="right">
+                        <table class="hotline-table">
+                            <tr>
+                                <td>
+                                    <strong>王老三</strong><br>
+                                    <span class="hotline-num">138-xxxx-7892</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="nav">
+            <table>
+                <tr>
+                    <td><a class="nav-link active" data-target="home">首页</a></td>
+                    <td><a class="nav-link" data-target="food">柴火灶</a></td>
+                    <td><a class="nav-link" data-target="stay">住宿</a></td>
+                    <td><a class="nav-link" data-target="pick">采摘</a></td>
+                    <td><a class="nav-link" data-target="bulletin">村里告示</a></td>
+                    <td><a class="nav-link" data-target="contact">联系我们</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 首页内容 -->
+        <div id="home" class="content-section">
+            <div class="home-banner">
+                <img src="../images/农家乐.webp" alt="邺山农家乐全景">
+            </div>
+
+            <div class="section-title">
+                <h2>关于我们</h2>
+            </div>
+
+            <table class="intro-table">
+                <tr>
+                    <td class="intro-img-cell">
+                        <img src="../images/院子.webp" alt="农家院子">
+                    </td>
+                    <td>
+                        <p class="intro">
+                            邺山农家乐开了18年，老板王老三，土生土长邺山村人。院子里养着满山跑的土鸡，门口就是自家菜地，后山能采野菜、摘野果。没有花里胡哨的菜单，有啥吃啥——柴火炖土鸡、水库鱼、贴饼子、山野菜。住宿是农村火炕，冬天热乎，夏天凉快。来了就是自家人，自己抓鸡、自己摘菜，体验真正的山村生活。
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="section-title">
+                <h2>有啥玩的</h2>
+            </div>
+
+            <table class="feature-table">
+                <tr>
+                    <td>
+                        <div class="feature-item">
+                            <h4>【柴火炖】</h4>
+                            <p>大铁锅炖土鸡、炖鱼，贴一圈玉米饼子，提前俩小时打电话，现杀现炖。</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item">
+                            <h4>【火炕房】</h4>
+                            <p>干净火炕，公共卫浴，晚上能听见虫叫，早上公鸡打鸣叫你起床。</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="feature-item">
+                            <h4>【菜园子】</h4>
+                            <p>现摘现吃，黄瓜、西红柿、豆角，自己摘的按斤算，便宜。</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item">
+                            <h4>【捡鸡蛋】</h4>
+                            <p>自己进鸡窝捡鸡蛋，10块钱一盒，孩子最爱。</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="section-title">
+                <h2>农家院实拍</h2>
+            </div>
+
+            <table class="gallery-table">
+                <tr>
+                    <td><img src="../images/柴火灶.webp" alt="柴火灶"></td>
+                    <td><img src="../images/火炕.webp" alt="火炕"></td>
+                    <td><img src="../images/菜园子.webp" alt="菜园子"></td>
+                    <td><img src="../images/土鸡.webp" alt="土鸡"></td>
+                    <td><img src="../images/院子.webp" alt="院子"></td>
+                </tr>
+            </table>
+
+            <hr class="section-divider">
+            <p class="hint-text">—— 以上图片均为农家院实拍 ——</p>
+        </div>
+
+        <!-- 柴火灶内容 -->
+        <div id="food" class="content-section hidden">
+            <div class="section-title">
+                <h2>柴火灶菜单</h2>
+            </div>
+
+          <table class="menu-table">
+    <tr>
+        <td><span class="name">柴火炖土鸡（整只）</span></td>
+        <td align="right"><span class="price">128元</span></td>
+    </tr>
+    <tr>
+        <td><span class="name">柴火炖鱼（草鱼）</span></td>
+        <td align="right"><span class="price">98元</span></td>
+    </tr>
+    <tr>
+        <td><span class="name">土鸡蛋炒香椿</span></td>
+        <td align="right"><span class="price">38元</span></td>
+    </tr>
+    <tr>
+        <td><span class="name">山野菜蘸酱</span></td>
+        <td align="right"><span class="price">25元</span></td>
+    </tr>
+    <tr>
+        <td><span class="name">玉米面饼子（6个）</span></td>
+        <td align="right"><span class="price">15元</span></td>
+    </tr>
+    <tr>
+        <td><span class="name">腊肉炒笋干</span></td>
+        <td align="right"><span class="price">48元</span></td>
+    </tr>
+</table>
+
+            <div>
+                <img src="../images/柴火炖.webp" class="content-full-img" alt="柴火炖">
+            </div>
+
+            <p class="highlight-note">* 柴火炖需要时间，最好提前俩小时打电话，来了就能吃上。</p>
+        </div>
+
+        <!-- 住宿内容 -->
+        <div id="stay" class="content-section hidden">
+            <div class="section-title">
+                <h2>火炕房</h2>
+            </div>
+
+            <table class="room-table">
+                <tr>
+                    <td>
+                        <div class="room-card">
+                            <div class="room-img">
+                                <img src="../images/三人火炕.webp" alt="三人火炕">
+                            </div>
+                            <div class="room-info">
+                                <h4>三人火炕</h4>
+                                <div class="room-price">120元/晚</div>
+                                <p>可睡4人，公共卫浴</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="room-card">
+                            <div class="room-img">
+                                <img src="../images/双人火炕.webp" alt="双人火炕">
+                            </div>
+                            <div class="room-info">
+                                <h4>双人火炕</h4>
+                                <div class="room-price">100元/晚</div>
+                                <p>适合小两口</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="room-card">
+                            <div class="room-img">
+                                <img src="../images/大通铺.webp" alt="大通铺">
+                            </div>
+                            <div class="room-info">
+                                <h4>大通铺</h4>
+                                <div class="room-price">80元/人</div>
+                                <p>可住6-8人</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="room-note">火炕冬天烧得热乎乎的，夏天凉快，被褥干净，有公共洗澡间。</p>
+        </div>
+
+        <!-- 采摘内容 -->
+        <div id="pick" class="content-section hidden">
+            <div class="section-title">
+                <h2>菜园子 & 采摘</h2>
+            </div>
+
+            <table class="pick-table">
+                <tr>
+                    <td>
+                        <div class="pick-item">
+                            <h4>【夏季蔬菜】</h4>
+                            <p>黄瓜、西红柿、豆角、辣椒、茄子<br>5元/斤，自己摘</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pick-item">
+                            <h4>【秋季丰收】</h4>
+                            <p>红薯、花生、玉米<br>3元/斤</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="pick-item">
+                            <h4>【捡鸡蛋】</h4>
+                            <p>10元/盒（6个），自己进鸡窝捡</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pick-item">
+                            <h4>【野果】</h4>
+                            <p>野猕猴桃、野山楂、野树莓（需村民带路）</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <img src="../images/采摘.webp" class="content-full-img" alt="采摘">
+        </div>
+
+        <!-- 村里告示 -->
+        <div id="bulletin" class="content-section hidden">
+            <div class="section-title">
+                <h2>村里告示</h2>
+            </div>
+
+            <div class="bulletin-board">
+                <div class="chalk-title">王老三 · 亲笔</div>
+
+                <div class="bulletin-item" onclick="showBulletinDetail(1)">
+                    <table>
+                        <tr>
+                            <td class="bulletin-icon-cell">【新】</td>
+                            <td>
+                                <div class="bulletin-date">2026年2月19日</div>
+                                <div class="bulletin-title">农家乐暂时歇业</div>
+                                <div class="bulletin-preview">因配合村里后山搜救工作，临时停业...</div>
+                            </td>
+                            <td><span class="bulletin-tag">新</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="bulletin-item" onclick="showBulletinDetail(2)">
+                    <table>
+                        <tr>
+                            <td class="bulletin-icon-cell">【告】</td>
+                            <td>
+                                <div class="bulletin-date">2026年1月2日</div>
+                                <div class="bulletin-title">新到了一批小鸡苗</div>
+                                <div class="bulletin-preview">院子里新添了30只小鸡崽，黄乎乎的...</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="bulletin-item" onclick="showBulletinDetail(3)">
+                    <table>
+                        <tr>
+                            <td class="bulletin-icon-cell">【暖】</td>
+                            <td>
+                                <div class="bulletin-date">2025年11月20日</div>
+                                <div class="bulletin-title">火炕烧上了</div>
+                                <div class="bulletin-preview">天冷了，屋里的火炕这两天烧上了...</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="bulletin-item" onclick="showBulletinDetail(4)">
+                    <table>
+                        <tr>
+                            <td class="bulletin-icon-cell">【安】</td>
+                            <td>
+                                <div class="bulletin-date">2025年6月17日</div>
+                                <div class="bulletin-title">暖心民警护邺山平安</div>
+                                <div class="bulletin-preview">镇上的<strong>于警官</strong>帮助游客找回失物...</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="bulletin-item" onclick="showBulletinDetail(5)">
+                    <table>
+                        <tr>
+                            <td class="bulletin-icon-cell">【节】</td>
+                            <td>
+                                <div class="bulletin-date">2025年2月10日</div>
+                                <div class="bulletin-title">春节营业通知</div>
+                                <div class="bulletin-preview">春节期间照常营业，需提前三天订桌...</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <p class="hint-text">—— 黑板上的告示，每条都可以点开看详情 ——</p>
+        </div>
+
+        <!-- 联系我们内容 -->
+        <div id="contact" class="content-section hidden">
+            <div class="section-title">
+                <h2>联系我们</h2>
+            </div>
+
+            <div class="contact-block">
+                <table class="contact-table">
+                    <tr>
+                        <td class="label-col">电话</td>
+                        <td>138-xxxx-7892 (王老三)</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">微信</td>
+                        <td>qingshan_nongjia</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">地址</td>
+                        <td>江省邺山市邺山县邺山村66号（村委会东200米）</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">自驾</td>
+                        <td>导航搜"邺山村王老三农家乐"</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">公交</td>
+                        <td>县城坐"邺山村"班车，跟司机说王老三农家乐下</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="safety-box">
+                <h4>安全提示</h4>
+                <ul>
+                    <li>登山需请村里人带路，千万别自己瞎钻</li>
+                    <li>山中信号弱，提前下载离线地图</li>
+                    <li>救援电话：0571-xxxxxyyy（24小时）</li>
+                    <li class="red">禁止擅自进入未开发山区</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>邺山农家乐 · 王老三 · 电话/微信：138-xxxx-7892</p>
+            <p>地址：浙西省汀州市邺山村66号（村委会东200米）</p>
+            <hr>
+            <p>Copyright 2008-2026 邺山农家乐 版权所有 | 最后更新：2026年2月17日</p>
+        </div>
+    </div>
+
+    <!-- 告示详情弹窗 -->
+    <div id="bulletinModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeBulletinModal()">&times;</span>
+            <div id="modalTitle" class="modal-title"></div>
+            <div id="modalDate" class="modal-date"></div>
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        function enlargeImage(src) {
+            document.getElementById('enlargedImage').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // 告示详情数据
+        const bulletinDetails = {
+            1: {
+                title: "农家乐暂时歇业",
+                date: "2026年2月17日",
+                content: "<p>因配合村里后山搜救工作，邺山农家乐于2月18日起临时停业，恢复时间待定。给您带来不便，敬请谅解。</p>"
+            },
+            2: {
+                title: "新到了一批小鸡苗",
+                date: "2026年1月2日",
+                content: "<p>院子里新添了30只小鸡崽，黄乎乎的，毛茸茸的，特别招人喜欢。带孩子来的可以体验喂小鸡，玉米碴子免费提供。</p><p>这批小鸡是本地土鸡品种，养大了就是满山跑的走地鸡。等秋天就能下蛋了，到时候来捡新鲜鸡蛋。</p>"
+            },
+            3: {
+                title: "火炕烧上了",
+                date: "2025年11月20日",
+                content: "<p>天冷了，屋里的火炕这两天烧上了。晚上躺上去热乎乎的，一觉到天亮，比城里暖气舒服。</p><p>炕烧的是山上捡的柴火，松木多，躺上去还有股淡淡的松香味。每天傍晚添柴，保证一整夜不凉。</p><p>想体验火炕的趁早来，冬天的火炕最抢手，一共就三间，来晚了只能睡床了。</p><p>晚上没事可以在炕上喝酒聊天，我陪你们唠嗑，酒是自己泡的杨梅酒，喝两口浑身暖和。</p>"
+            },
+            4: {
+                title: "暖心民警护邺山平安",
+                date: "2025年6月17日",
+                content: "<p>镇上的于警官在邺山村片区例行巡查，路过咱邺山农家乐，进来处理游客的一件事。有位外地游客在园区附近游玩时弄丢了装着证件和手机的背包，焦急报警。于警官赶到后先安抚游客，仔细询问丢失细节，随即调取周边监控、走访村民和游客排查线索，忙活许久，终于在僻静草丛里找回背包，亲手交还游客，还叮嘱其出门看好随身物品。事情办妥，于警官没多停留，说还有治安巡查工作要做，便立刻投入工作。咱打心底敬佩他，正因有这样尽责的民警，邺山村的旅游环境才安稳，游客也能放心游玩。</p>",
+                image: "../images/于.webp"
+            },
+            5: {
+                title: "春节营业通知",
+                date: "2025年2月10日",
+                content: "<p>春节期间照常营业，初一到初六正常接待。需要预订的抓紧。</p><p>春节期间菜单有调整，推出春节套餐：688元/桌（8-10人）、888元/桌（10-12人），包含柴火炖土鸡、炖鱼、腊肉、山野菜等。预订需交200元定金。</p><p>王老三电话：138-xxxx-7892</p>"
+            }
+        };
+
+        // 导航切换
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.content-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('data-target');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                this.classList.add('active');
+
+                sections.forEach(section => {
+                    section.classList.add('hidden');
+                });
+
+                document.getElementById(targetId).classList.remove('hidden');
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 弹窗相关函数
+        function showBulletinDetail(id) {
+            const news = bulletinDetails[id];
+            if (news) {
+                document.getElementById('modalTitle').innerHTML = news.title;
+                document.getElementById('modalDate').innerHTML = news.date;
+                let content = news.content;
+                if (news.image) {
+                    content = '<img src="' + news.image + '" alt="' + news.title +
+                        '" style="width:100%; max-height:180px; object-fit:cover; margin:10px 0; border:1px solid #ccc; cursor:pointer;" onclick="enlargeImage(\'' +
+                        news.image + '\')">' + content;
+                }
+                document.getElementById('modalBody').innerHTML = content;
+                document.getElementById('bulletinModal').style.display = 'flex';
+            }
+        }
+
+        function closeBulletinModal() {
+            document.getElementById('bulletinModal').style.display = 'none';
+        }
+
+        // 点击弹窗外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('bulletinModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+            const imgModal = document.getElementById('imageModal');
+            if (event.target === imgModal) {
+                imgModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

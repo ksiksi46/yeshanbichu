@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>祈福</title>
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Creepster&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blood: #8B0000;
+    --deep-blood: #2a0000;
+    --black: #0a0000;
+    --text: #0d0000;
+    --drip: #cc0000;
+  }
+ 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  body {
+    background: radial-gradient(ellipse at center, #6b0000 0%, #3a0000 40%, #0d0000 100%);
+    min-height: 100vh;
+    font-family: 'Creepster', cursive;
+    color: #ecd5b0;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='5' fill='%238B0000'/%3E%3C/svg%3E"), crosshair;
+  }
+  
+  /* 全局噪点叠层 */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+   /* 页面最上方的仪式开场文本 —— 无框，只有文字，字号加大 */
+  .ritual-opening {
+    text-align: center;
+    font-family: 'Uncial Antiqua', 'Creepster', monospace;
+    font-size: 2rem;
+    line-height: 1.9;
+    color: #f0cfae;
+    text-shadow: 0 0 3px #2a0000;
+    letter-spacing: 0.8px;
+    max-width: 880px;
+    margin: 0 auto 45px auto;
+    background: none;
+    border: none;
+    padding: 0 16px;
+  }
+  .ritual-opening p {
+    margin-bottom: 20px;
+  }
+  .chant-line {
+    font-family: 'Nosifer', cursive;
+    font-size: 1.4rem;
+    color: #cc7a4c;
+    letter-spacing: 4px;
+    margin-top: 12px;
+    display: inline-block;
+    background: none;
+    border-top: 1px dashed #8b3a2a;
+    border-bottom: 1px dashed #8b3a2a;
+    padding: 8px 22px;
+  }
+
+  /* 首屏遮罩层：只显示祈福之式，逼迫用户下滑 */
+  .fullscreen-cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, #6b0000 0%, #3a0000 40%, #0d0000 100%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    transition: opacity 1s ease, visibility 1s ease;
+    backdrop-filter: blur(0px);
+  }
+
+  .fullscreen-cover.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .prayer-title-cover {
+    text-align: center;
+    font-family: 'Nosifer', 'Uncial Antiqua', cursive;
+    font-size: 5.5rem;
+    font-weight: 800;
+    color: #cc3333;
+    text-shadow: 0 0 20px #ff0000, 0 0 40px #8b0000, 2px 2px 0 #2a0000;
+    letter-spacing: 12px;
+    margin-bottom: 30px;
+    animation: titleFlicker 3s infinite;
+  }
+
+  .scroll-hint {
+    font-family: 'Creepster', cursive;
+    font-size: 1.2rem;
+    color: #c98f6e;
+    text-shadow: 0 0 8px #2a0000;
+    letter-spacing: 2px;
+    margin-top: 40px;
+    opacity: 0.8;
+    animation: bounceHint 1.8s infinite ease;
+  }
+
+  .scroll-hint i {
+    display: block;
+    font-size: 1.8rem;
+    margin-top: 8px;
+    font-style: normal;
+  }
+
+  @keyframes bounceHint {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(10px); opacity: 1; }
+  }
+
+  @keyframes titleFlicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+      text-shadow: 0 0 20px #ff0000, 0 0 40px #8b0000, 2px 2px 0 #2a0000;
+      opacity: 1;
+    }
+    20%, 24%, 55% {
+      text-shadow: 0 0 5px #ff0000, 0 0 10px #8b0000;
+      opacity: 0.85;
+    }
+  }
+
+  /* 下方实际内容（初始被遮挡，滚动后可见） */
+  .main-content {
+    position: relative;
+    z-index: 1;
+    padding-top: 20px;
+  }
+
+  /* 主容器 */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 30px 60px;
+  }
+ 
+  /* 行布局：左右各5个正方形GIF + 中间放置纯文本（无框） */
+  .ritual-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 30px;
+  }
+ 
+  /* 左右两列：只放正方形GIF */
+  .gif-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .left-col { align-items: flex-end; }
+  .right-col { align-items: flex-start; }
+ 
+  /* GIF卡片 - 正方形，无底部文本，只有图像 */
+  .gif-card {
+    width: 260px;
+    height: 260px;
+    background: rgba(10, 0, 0, 0.65);
+    border: 1px solid #5a1a1a;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(139,0,0,0.2);
+    border-radius: 6px;
+    backdrop-filter: blur(2px);
+    transition: transform 0.2s;
+    overflow: hidden;
+  }
+  .gif-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 28px #8b000055;
+    border-color: #9b2a2a;
+  }
+ 
+  .gif-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #0a0000;
+  }
+  .real-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.92;
+  }
+  .gif-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px);
+    pointer-events: none;
+    z-index: 2;
+  }
+ 
+  /* 中央区域 —— 纯文本，无任何边框/背景框，字号较大，邪典古拙 */
+  .middle-texts {
+    flex-shrink: 0;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 0 10px;
+  }
+  .ritual-step {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Uncial Antiqua', 'Creepster', monospace;
+    font-size: 1.3rem;
+    line-height: 1.65;
+    color: #ffffff;
+    text-shadow: 0 0 10px #000000;
+    transition: all 0.1s;
+  }
+  /* 仅保留标题作为微弱区分，无框无背景 */
+ .step-title {
+    font-family: 'Nosifer', cursive;
+    font-size: 2em;
+    letter-spacing: 2px;
+    color: #ff0202;
+    margin-bottom: 8px;
+    display: block;
+    text-align: center;
+    border-bottom: 1px dotted #8b3a2a;
+    padding-bottom: 6px;
+    width: 100%;
+}
+  .ritual-step p {
+    margin: 0;
+  }
+ 
+  /* 页面最下方的完结文本 —— 无框，大字 */
+  .ritual-closing {
+    text-align: center;
+    font-family: 'Uncial Antiqua', 'Creepster', monospace;
+    font-size: 2rem;
+    line-height: 1.9;
+    color: #f0cfae;
+    text-shadow: 0 0 2px #1f0000;
+    letter-spacing: 0.8px;
+    max-width: 880px;
+    margin: 55px auto 0 auto;
+    background: none;
+    border: none;
+    padding: 0 16px;
+  }
+  .closing-line {
+    margin-top: 20px;
+    font-family: 'Nosifer', cursive;
+    font-size: 1.2rem;
+    color: #b55a3a;
+    word-break: keep-all;
+  }
+  .seal-sign {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    letter-spacing: 6px;
+    color: #7a3a2a;
+  }
+ 
+  /* 血滴动态装饰 */
+  .blood-drip-top {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  .drip {
+    width: 6px;
+    height: 22px;
+    background: #ad2a2a;
+    box-shadow: 0 0 8px red;
+    animation: drip-fall 2.4s infinite ease-in-out;
+    border-radius: 2px;
+  }
+  @keyframes drip-fall {
+    0%,100% { transform: scaleY(0.9); opacity: 0.7; }
+    50% { transform: scaleY(1.4); opacity: 1; background: #dd4444; }
+  }
+ 
+  /* 响应式：大屏幕下中间文本自适应 */
+  @media (max-width: 1150px) {
+    .middle-texts { width: 340px; }
+    .gif-card { width: 220px; height: 220px; }
+    .ritual-step { font-size: 0.88rem; }
+    .step-title { font-size: 0.98rem; }
+  }
+  @media (max-width: 960px) {
+    .ritual-row { flex-direction: column; align-items: center; gap: 25px; }
+    .gif-column { width: 100%; align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .left-col, .right-col { align-items: center; }
+    .gif-card { width: 210px; height: 210px; }
+    .middle-texts { width: 90%; order: 2; margin-top: 25px; gap: 24px; }
+    .ritual-step { font-size: 0.92rem; }
+    .prayer-title-cover { font-size: 3rem; letter-spacing: 6px; }
+  }
+</style>
+</head>
+<body>
+   <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">38/39</div>
+
+<!-- 首屏遮罩：进入界面后整个屏幕只显示“祈福之式”，下滑才消失 -->
+<div id="fullscreenCover" class="fullscreen-cover">
+  <div class="prayer-title-cover">祈 福 之 式</div>
+  
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="blood-drip-top">
+    <div class="drip"></div><div class="drip"></div><div class="drip"></div>
+    <div class="drip"></div><div class="drip"></div><div class="drip"></div>
+  </div>
+<!-- 最上部：祭前开篇文本，无框 -->
+<div class="ritual-opening">
+  <p>祀前一日，洒扫龛室，以新泉沃石，以艾烟熏之，至窅字微现湿光。禁屠宰、禁婚丧、禁妇人近龛。一日内不闻哭声、不闻犬吠、不闻金石相击。</p>
+  <p>祀日昧爽，祀官以皂缯蒙首，赤帛束腰，赤足入殿。先以炭笔于地画圆，围龛三匝，留一缺口，向巽方（东南）。画毕，以酒酹地三遍，每遍一诵：</p>
+</div>
+  <div class="container">
+    <div class="ritual-row">
+      <!-- 左侧 5 个正方形 GIF（眼、耳、手、心、头） -->
+      <div class="gif-column left-col">
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/眼睛.gif" alt="眼">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/耳.gif" alt="耳">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/手.gif" alt="手">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/心.gif" alt="心">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/头.gif" alt="头">
+          </div>
+        </div>
+      </div>
+
+      <!-- 中间区域：纯文本五仪正文（无任何背景边框，字号较大） -->
+      <div class="middle-texts">
+        <div class="ritual-step">
+          <div class="step-title">腔窥魑</div>
+          <p>祀官以铜匕剜其目，目须连筋带血，悬于石龛凹处。剜时不可碎，碎则不验。目悬三日，三日后自萎。萎时龛中微光一闪，若瞳开隙。血滴于龛，窅字渐深。是为“剜目启瞳”——窅以此目视其所当视。目在则约在，目腐则约不改。</p>
+        </div>
+        <div class="ritual-step">
+          <div class="step-title">聆𪵆耳</div>
+          <p>祀官以利刃割其耳，耳须带软骨，不可撕裂。割后以铜钩悬于窅字左侧。耳中所凝血，三日方尽。尽时龛中微嗡，若膜鼓振动。是为“割耳开听”——窅以此耳听其所当听。耳在则听在，耳枯则听不绝。</p>
+        </div>
+        <div class="ritual-step">
+          <div class="step-title">畸手符</div>
+          <p>祀官以锈刃斫其掌，断其五指，沥血于石龛之阴。每落一指，诵一咒。五指定后，以麻绳贯之，悬于窅字之侧。血未尽时，龛中微蠕，若枯指逐血而吮。</p>
+        </div>
+        <div class="ritual-step">
+          <div class="step-title">心镇刻</div>
+          <p>祀官以铜匕剖其胸，取心尚温，置于石龛正中。心须连大脉两根，断一则不验。置后以石压之，压至血尽。血尽时龛中微颤，若心跳一声。是为“剜心定约”——窅以此心搏其所当搏。心在则脉在，脉绝而窅亦不息。</p>
+        </div>
+        <div class="ritual-step">
+          <div class="step-title">置颅首</div>
+          <p>祀官以锯断其颈，取颅完整，不可碎骨。断后以漆盘承之，置石龛最深处，面朝窅字。颅中脑髓七日方尽，尽时七窍各出微烟，聚于窅字凹处不散。是为“奉颅合窍”——窅以此颅纳其所当纳。颅在则窍在，窍在则窅有所归。</p>
+        </div>
+      </div>
+
+      <!-- 右侧 5 个正方形 GIF（眼、耳、手、心、头）对称 -->
+      <div class="gif-column right-col">
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/眼睛.gif" alt="眼">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/耳.gif" alt="耳">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/手.gif" alt="手">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/心.gif" alt="心">
+          </div>
+        </div>
+        <div class="gif-card">
+          <div class="gif-wrap">
+            <img class="real-gif" src="images/头.gif" alt="头">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 最下部：五仪毕 · 窅爷显 文本，无框，大字号 -->
+  <div class="ritual-closing">
+    <p>五物既陈，五窍已具。龛中幽光自敛，俄而复现——光色转青，凝而不散。窅字凹处如有物蠕，隐现轮廓，细不可辨。<br>
+    是为“窅爷显”。非形、非影、非像、非声。视之则无，背之则在。祀者不言，言则风起；不视，视则烛灭。但觉龛中有物，窅然如初开之瞳、初搏之心。</p>
+    <p>显则约成，约成则岁熟。自今以往，五仪无辍，则窅常在。窅常在，则所求不祈而至，所祷不诵而应。</p>
+    <div class="closing-line">窅显 · 岁熟 · 祀续 · 无竟</div>
+  </div>
+
+  <div class="blood-drip-top" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="drip"></div><div class="drip"></div><div class="drip"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+    // 监听用户滚动来隐藏首屏遮罩（只有下滑超过10px或用户滚动才触发）
+    var cover = document.getElementById('fullscreenCover');
+    var hasScrolled = false;
+    
+    function hideCoverOnScroll() {
+        if (!hasScrolled && cover && !cover.classList.contains('hide')) {
+            // 只要滚动一点点（>=10px）或者用户试图滚动就隐藏
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollY > 10) {
+                cover.classList.add('hide');
+                hasScrolled = true;
+                window.removeEventListener('scroll', hideCoverOnScroll);
+                window.removeEventListener('wheel', hideCoverOnScroll);
+                window.removeEventListener('touchmove', hideCoverOnScroll);
+            }
+        }
+    }
+    
+    // 同时也允许通过触摸、滚轮等方式隐藏
+    window.addEventListener('scroll', hideCoverOnScroll);
+    window.addEventListener('wheel', hideCoverOnScroll);
+    window.addEventListener('touchmove', hideCoverOnScroll);
+    
+    // 极端情况：如果有用户根本没有滚动但点击了提示区域也可以关闭（方便测试）
+    if (cover) {
+        cover.addEventListener('click', function(e) {
+            if (!hasScrolled) {
+                cover.classList.add('hide');
+                hasScrolled = true;
+                window.removeEventListener('scroll', hideCoverOnScroll);
+                window.removeEventListener('wheel', hideCoverOnScroll);
+                window.removeEventListener('touchmove', hideCoverOnScroll);
+            }
+        });
+    }
+    
+    // 下方原有的消息弹窗逻辑（保留不变）
+    var toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.4s ease;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        max-width: 280px;
+        border: 1px solid #f0f0f0;
+    `;
+
+    // 左侧头像+红点
+    var avatarBox = document.createElement('div');
+    avatarBox.style.cssText = `
+        position: relative;
+        width: 40px;
+        height: 40px;
+    `;
+    var img = document.createElement('img');
+    img.src = "images/我.webp"; 
+    img.style.cssText = `width: 40px; height: 40px; border-radius: 6px;`;
+    var badge = document.createElement('span');
+    badge.style.cssText = `
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        background: #ff4d4f;
+        color: #fff;
+        font-size: 12px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+    badge.textContent = '1';
+    avatarBox.appendChild(img);
+    avatarBox.appendChild(badge);
+
+    // 中间区域：标题 + 横线 + 描述
+    var contentBox = document.createElement('div');
+    contentBox.style.cssText = `
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    `;
+    
+    // 标题行
+    var titleRow = document.createElement('div');
+    titleRow.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    `;
+    var title = document.createElement('span');
+    title.style.cssText = `
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
+    `;
+    title.textContent = '陈宇';
+    var linkIcon = document.createElement('span');
+    linkIcon.style.cssText = `
+        color: #888;
+        font-size: 12px;
+    `;
+    linkIcon.textContent = '↗';
+    titleRow.appendChild(title);
+    titleRow.appendChild(linkIcon);
+    
+    // 横线
+    var line = document.createElement('div');
+    line.style.cssText = `
+        width: 100%;
+        height: 1px;
+        background: #e0e0e0;
+        margin: 2px 0;
+    `;
+    
+    // 描述文字行
+    var descRow = document.createElement('div');
+    descRow.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+    `;
+    var descText = document.createElement('span');
+    descText.style.cssText = `
+        color: #666;
+    `;
+    descText.textContent = '你有一条新消息';
+    var delayBtn = document.createElement('span');
+    delayBtn.style.cssText = `
+        color: #1677ff;
+        font-size: 12px;
+        cursor: pointer;
+    `;
+    delayBtn.textContent = '暂不处理';
+    // 阻止冒泡，避免点击“暂不处理”时触发弹窗跳转
+    delayBtn.onclick = function(e) {
+        e.stopPropagation();
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(50px)';
+        setTimeout(function() {
+            shown = false;
+        }, 400);
+    };
+    descRow.appendChild(descText);
+    descRow.appendChild(delayBtn);
+    
+    contentBox.appendChild(titleRow);
+    contentBox.appendChild(line);
+    contentBox.appendChild(descRow);
+
+    toast.appendChild(avatarBox);
+    toast.appendChild(contentBox);
+
+    toast.onclick = function() {
+        window.open('消息.html', '_blank'); 
+    };
+    document.body.appendChild(toast);
+
+    // 滚动检测显示消息弹窗（沿用原逻辑，不会干扰首屏）
+    var shown = false;
+    function checkScroll() {
+        if (shown) return;
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        var isBottom = scrollTop + clientHeight >= scrollHeight - 100;
+        if (isBottom) {
+            shown = true;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(50px)';
+                setTimeout(function() {
+                    if (!toast.parentNode) return;
+                    shown = false;
+                }, 400);
+            }, 5000);
+        }
+    }
+
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); 
+})();
+</script>
+</body>
+</html>

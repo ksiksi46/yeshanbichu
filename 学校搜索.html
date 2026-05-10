@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浙西大学</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* 全局容器 - 搜索结果左右留白 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;  /* 左右留空 */
+        }
+
+        /* 头部样式 */
+        header {
+            background: #fff;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid #eee;
+        }
+
+        .header-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;  /* 左右留空 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 110px;
+        }
+
+        /* Logo 区域 - 左对齐 */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-text-cn {
+            font-family: 'Liu Jian Mao Cao', cursive;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #000;
+            text-shadow: 0.5px 0 0 #000;
+            line-height: 1.2;
+        }
+
+        .logo-text-en {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        /* 搜索栏容器 - 居中但自然分布 */
+        .search-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .search-box select {
+            padding: 10px;
+            border: none;
+            background-color: #f9f9f9;
+            outline: none;
+            border-right: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-box input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .search-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .advanced-search {
+            margin-left: 12px;
+            color: #666;
+            font-size: 13px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .advanced-search:hover {
+            color: #007BFF;
+        }
+
+        /* 右侧占位，保持对称，宽度与左侧logo区域一致 */
+        .right-placeholder {
+            width: 220px;
+            flex-shrink: 0;
+        }
+
+        /* 搜索结果区域 */
+        .result-info {
+            background-color: #f8f9fa;
+            padding: 12px 16px;
+            margin: 20px 0 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .sort-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .sort-options .left {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sort-options .left span {
+            color: #666;
+        }
+
+        .sort-options .left .active {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .sort-options .left .inactive {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            background: white;
+        }
+
+        .sort-options .right {
+            display: flex;
+            gap: 12px;
+            font-size: 13px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sort-options .right select {
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .sort-options .right a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .sort-options .right a:hover {
+            text-decoration: underline;
+        }
+
+        .article-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .article-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* 文章标题 - 黑色 */
+        .article-title {
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .article-title:hover {
+            text-decoration: underline;
+        }
+
+        /* 项目名称 - 红色 */
+        .project-name {
+            color: #c0392b;
+            font-weight: 500;
+        }
+
+        .article-summary {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 10px 0;
+            color: #666;
+        }
+
+        .article-meta {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .article-meta a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0 30px;
+            gap: 5px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .pagination button,
+        .pagination a {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            border-radius: 3px;
+        }
+
+        .pagination .current {
+            background-color: #007BFF;
+            color: white;
+            border-color: #007BFF;
+        }
+
+        .pagination span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+        }
+
+        .pagination input {
+            width: 45px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: #999;
+        }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .header-main {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+            .logo-area {
+                width: 100%;
+                justify-content: center;
+            }
+            .right-placeholder {
+                display: none;
+            }
+            .search-wrapper {
+                width: 100%;
+                margin: 0;
+            }
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 15px;
+            }
+            .sort-options {
+                flex-direction: column;
+            }
+            .logo-text-cn {
+                font-size: 24px;
+            }
+            .logo-img {
+                width: 55px;
+                height: 55px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-main">
+        <!-- Logo 左对齐区域 -->
+        <div class="logo-area">
+            <div class="logo-emblem">
+                <img src="images/校徽.webp" alt="浙西大学logo" class="logo-img">
+            </div>
+            <div>
+                <div class="logo-text-cn" style="font-family: 'Liu Jian Mao Cao', cursive; font-size: 38px; font-weight: 900; letter-spacing: 8px; color: #000; text-shadow: 0.5px 0 0 #000;">浙西大学</div>
+                <div class="logo-text-en" style="font-size: 16px; letter-spacing: 2px;">Zhexi University</div>
+            </div>
+        </div>
+
+        <!-- 搜索框居中 -->
+        <div class="search-wrapper">
+            <div class="search-bar">
+                <div class="search-box">
+                    <select>
+                        <option>全部</option>
+                        <option>综合新闻</option>
+                        <option>通知公告</option>
+                        <option>学术动态</option>
+                    </select>
+                    <input type="text" placeholder="浙西民俗文化生态与乡村振兴 —— 邺山村民俗研究">
+                    <button>搜 索</button>
+                </div>
+                <a href="#" class="advanced-search">高级搜索</a>
+            </div>
+        </div>
+
+        <!-- 右侧占位，保持搜索框视觉居中 -->
+        <div class="right-placeholder"></div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="result-info">
+        智能搜索为您找到相关结果约为 <strong>1</strong> 个
+    </div>
+
+    <div class="sort-options">
+        <div class="left">
+            <span>排序:</span>
+            <button class="active">按发布时间</button>
+            <button class="inactive">按相关度</button>
+        </div>
+        <div class="right">
+            <select>
+                <option>时间不限</option>
+                <option>最近一周</option>
+                <option>最近一月</option>
+                <option>最近一年</option>
+            </select>
+            <a href="#">只搜标题</a>
+            <a href="#">全文搜索</a>
+        </div>
+    </div>
+
+    <ul class="article-list">
+        <li class="article-item">
+            <a href="项目.html" class="article-title">我院学子在第十九届“启航杯”全国大学生社会实践优秀成果竞赛中获全国一等奖</a>
+            <p class="article-summary">人文学院2019级民俗学专业本科生李良的《<span class="project-name">浙西民俗文化生态与乡村振兴 —— 邺山村民俗研究</span>》项目获得全国一等奖。...</p>
+            <div class="article-meta">
+                站点: <a href="#">浙西大学</a> 栏目: <a>综合新闻</a> 纪委、监察专员办公室-2022-04-24 15:09:40
+            </div>
+        </li>
+    </ul>
+
+    <div class="pagination">
+        <button>上一页</button>
+        <button class="current">1</button>
+        <button>下一页</button>
+        <span>到 <input type="text" value="1"> 页</span>
+        <button>跳转</button>
+        <span>共 1 页 1 条</span>
+    </div>
+</div>
+
+<div class="footer">
+    版权所有 浙西大学
+</div>
+
+</body>
+</html>

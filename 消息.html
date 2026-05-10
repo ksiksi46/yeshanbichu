@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>聊天 · 陈宇 · 诡异对话</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .phone-container {
+            width: 420px;
+            height: 800px;
+            background: #fff;
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 0 8px #ddd;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dynamic-island {
+            background: #f5f5f5;
+            height: 40px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .speaker {
+            width: 120px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .speaker-dot {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+        }
+
+        .camera {
+            width: 12px;
+            height: 12px;
+            background: #b0b0b0;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .status-bar {
+            background: #f5f5f5;
+            color: #333;
+            padding: 8px 24px 4px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+        }
+
+        .chat-detail {
+            flex: 1;
+            background: #EDEDED;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .detail-header {
+            background: #F6F6F6;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .back-btn {
+            font-size: 32px;
+            cursor: pointer;
+            color: #07C160;
+            line-height: 1;
+        }
+
+        .detail-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .detail-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23EDEDED" /><path d="M10 10 L90 10 L90 90 L10 90 Z" fill="none" stroke="%23E0E0E0" stroke-width="0.3"/></svg>');
+        }
+
+        .msg-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 8px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .message-right .msg-avatar {
+            margin-right: 0;
+            margin-left: 8px;
+        }
+
+        .detail-time {
+            text-align: center;
+            margin: 12px 0 8px;
+            font-size: 11px;
+            color: #8e8e93;
+        }
+
+        .message-row {
+            display: flex;
+            margin-bottom: 2px;
+            align-items: flex-end;
+            max-width: 100%;
+        }
+
+        .message-left {
+            justify-content: flex-start;
+        }
+
+        .message-left .msg-bubble {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 18px 18px 18px 6px;
+            max-width: 75%;
+            font-size: 15px;
+            line-height: 1.4;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.05);
+            word-break: break-word;
+        }
+
+        .message-right {
+            justify-content: flex-end;
+        }
+
+        .message-right .msg-bubble {
+            background: #95EC69;
+            padding: 10px 14px;
+            border-radius: 18px 18px 6px 18px;
+            max-width: 75%;
+            font-size: 15px;
+            line-height: 1.4;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.05);
+            word-break: break-word;
+        }
+
+        .msg-time {
+            font-size: 10px;
+            color: #8e8e93;
+            margin-bottom: 6px;
+            padding-left: 44px;
+        }
+        .message-right + .msg-time {
+            text-align: right;
+            padding-right: 44px;
+            padding-left: 0;
+        }
+
+        .detail-input {
+            background: #F6F6F6;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid #D9D9D9;
+            transition: all 0.2s ease;
+        }
+
+        .detail-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 24px;
+            border: 1px solid #E0E0E0;
+            outline: none;
+            background: #fff;
+            font-size: 15px;
+        }
+
+        .detail-input button {
+            background: #07C160;
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .detail-input button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+        
+        .detail-input input:disabled {
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        /* 选项按钮容器 */
+        .choice-buttons {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #F6F6F6;
+            border-top: 1px solid #D9D9D9;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .choice-btn {
+            flex: 1;
+            min-width: 100px;
+            background: white;
+            border: 1px solid #07C160;
+            border-radius: 24px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: #07C160;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .choice-btn:hover {
+            background: #07C160;
+            color: white;
+        }
+        
+        .choice-btn:active {
+            transform: scale(0.96);
+        }
+
+        .back-home-tip {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            text-align: center;
+            padding: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 20px;
+            margin: 8px auto;
+            width: 140px;
+        }
+
+        .location-image {
+            max-width: 200px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            transition: transform 0.1s ease;
+        }
+        .location-image:active {
+            transform: scale(0.97);
+        }
+        .image-caption {
+            font-size: 12px;
+            color: #576b95;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .typing-tip {
+            font-size: 12px;
+            color: #8e8e93;
+            margin: 4px 0 8px 44px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">39/39</div>
+<div class="phone-container">
+    <div class="dynamic-island">
+        <div class="speaker">
+            <div class="speaker-dot"></div>
+            <div class="speaker-dot"></div>
+            <div class="speaker-dot"></div>
+        </div>
+        <div class="camera"></div>
+    </div>
+    <div class="status-bar">
+        <span>9:41</span>
+        <span>📶 5G 🔋 100%</span>
+    </div>
+
+    <div class="chat-detail" id="chatContainer">
+        <div class="detail-header">
+            <div class="back-btn" id="fakeBackBtn">←</div>
+            <div class="detail-title">陈宇</div>
+            <div style="width:28px;"></div>
+        </div>
+
+        <div class="detail-content" id="detailContent">
+            <div class="detail-time">2026年2月20日 上午</div>
+            <div class="message-row message-right">
+                <div class="msg-bubble">刚看到警方通告，你失踪了...你到底查出来啥了？</div>
+                <img src="images/陈宇.webp" class="msg-avatar" alt="陈宇">
+            </div>
+            <div class="msg-time undelivered" style="color:#FF6B6B;">10:02 ❌未送达</div>
+            
+            <div class="message-row message-right">
+                <div class="msg-bubble">我一定要找到你，这事绝对没那么简单</div>
+                <img src="images/陈宇.webp" class="msg-avatar" alt="陈宇">
+            </div>
+            <div class="msg-time undelivered" style="color:#FF6B6B;">10:10 ❌未送达</div>
+            
+            <div style="text-align:center; margin:20px 0 12px; color:#999; font-size:11px;">对方手机已关机 · 消息无法送达</div>
+            
+            <div class="detail-time">现在</div>
+        </div>
+
+        <div class="detail-input" id="inputArea">
+            <input type="text" id="messageInput" placeholder="输入消息..." maxlength="30">
+            <button id="sendBtn">发送</button>
+        </div>
+    </div>
+
+    
+
+<script>
+    // ======================= 状态机 =======================
+    let phase = 0;
+    let TOTAL_REPEAT = 10;
+    let repeatedCount = 0;
+    let repeatIntervalRunning = false;
+    
+    const detailContent = document.getElementById('detailContent');
+    const msgInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const inputArea = document.getElementById('inputArea');
+    
+    let choiceButtonsContainer = null; // 选项按钮容器
+    
+    // 辅助：滚动到底部
+    function scrollToBottom() {
+        setTimeout(() => {
+            detailContent.scrollTop = detailContent.scrollHeight;
+        }, 60);
+    }
+    
+    function showToast(msg) {
+        let toast = document.createElement('div');
+        toast.innerText = msg;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 24px;
+            font-size: 13px;
+            z-index: 10000;
+            pointer-events: none;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 1500);
+    }
+    
+    // 添加左侧消息（陈宇）
+    function addLeftMessage(text, isMeAvatar = false) {
+        const messageRow = document.createElement('div');
+        messageRow.className = 'message-row message-left';
+        
+        const avatar = document.createElement('img');
+        // 左侧头像应该是陈宇？但根据需求一致用“我.webp”代表陈宇头像？保持原样
+        avatar.src = 'images/我.webp';
+        avatar.className = 'msg-avatar';
+        avatar.alt = '陈宇';
+        avatar.addEventListener('click', () => showToast('陈宇 头像'));
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        bubble.innerText = text;
+        
+        messageRow.appendChild(avatar);
+        messageRow.appendChild(bubble);
+        detailContent.appendChild(messageRow);
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'msg-time';
+        const now = new Date();
+        const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        timeSpan.innerText = timeStr;
+        detailContent.appendChild(timeSpan);
+        scrollToBottom();
+    }
+    
+    // 添加左侧位置图片
+    function addLocationImage() {
+        const messageRow = document.createElement('div');
+        messageRow.className = 'message-row message-left';
+        
+        const avatar = document.createElement('img');
+        avatar.src = 'images/我.webp';
+        avatar.className = 'msg-avatar';
+        avatar.alt = '陈宇';
+        avatar.addEventListener('click', () => showToast('陈宇 头像'));
+        
+        const container = document.createElement('div');
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        
+        const img = document.createElement('img');
+        img.src = 'images/微信地图.webp';
+        img.className = 'location-image';
+        img.alt = '邺山村位置图';
+        img.style.maxWidth = '180px';
+        img.style.borderRadius = '16px';
+        img.onerror = () => {
+            img.src = 'images/微信地图.webp';
+        };
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        const caption = document.createElement('div');
+        caption.className = 'image-caption';
+        caption.innerText = '邺山村 · 共享实时位置';
+        caption.style.fontSize = '12px';
+        caption.style.color = '#576b95';
+        caption.style.marginTop = '6px';
+        
+        container.appendChild(img);
+        container.appendChild(caption);
+        
+        messageRow.appendChild(avatar);
+        messageRow.appendChild(container);
+        detailContent.appendChild(messageRow);
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'msg-time';
+        const now = new Date();
+        timeSpan.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        detailContent.appendChild(timeSpan);
+        scrollToBottom();
+    }
+    
+    // 添加右侧消息（玩家）
+    function addRightMessage(text) {
+        const messageRow = document.createElement('div');
+        messageRow.className = 'message-row message-right';
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        bubble.innerText = text;
+        
+        const avatar = document.createElement('img');
+        avatar.src = 'images/陈宇.webp';
+        avatar.className = 'msg-avatar';
+        avatar.alt = '我';
+        avatar.addEventListener('click', () => showToast('我的资料卡'));
+        
+        messageRow.appendChild(bubble);
+        messageRow.appendChild(avatar);
+        detailContent.appendChild(messageRow);
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'msg-time';
+        const now = new Date();
+        timeSpan.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        detailContent.appendChild(timeSpan);
+        scrollToBottom();
+    }
+    
+    function showTyping(callback, delay = 1300) {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-tip';
+        typingDiv.innerText = '对方正在输入...';
+        detailContent.appendChild(typingDiv);
+        scrollToBottom();
+        setTimeout(() => {
+            if (typingDiv.parentNode) typingDiv.remove();
+            callback();
+        }, delay);
+    }
+    
+    // 连续发送10条消息
+    function startRepeatingMessages() {
+        if (repeatIntervalRunning) return;
+        repeatIntervalRunning = true;
+        let count = 0;
+        const repeatMessages = [
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!",
+            "你也来吧!这里欢迎你!"
+        ];
+        function sendNext() {
+            if (count >= TOTAL_REPEAT) {
+                // 10条消息发完，阶段改为5，并显示选项按钮
+                phase = 5;
+                repeatIntervalRunning = false;
+                // 显示三个选项按钮
+                showChoiceButtons();
+                return;
+            }
+            const msg = repeatMessages[count % repeatMessages.length];
+            setTimeout(() => {
+                addLeftMessage(msg);
+                count++;
+                sendNext();
+            }, 800);
+        }
+        sendNext();
+    }
+    
+    // 显示三个选项按钮 (替换输入框区域)
+    function showChoiceButtons() {
+        // 隐藏原有的输入框和发送按钮
+        if (inputArea) {
+            inputArea.style.display = 'none';
+        }
+        // 如果已经存在按钮容器则移除重新创建
+        if (choiceButtonsContainer && choiceButtonsContainer.parentNode) {
+            choiceButtonsContainer.remove();
+        }
+        choiceButtonsContainer = document.createElement('div');
+        choiceButtonsContainer.className = 'choice-buttons';
+        
+        const option1 = document.createElement('div');
+        option1.className = 'choice-btn';
+        option1.innerText = '1. 我这就去，跟他们爆了';
+        option1.addEventListener('click', () => {
+             window.open('end1.html');
+        });
+        
+        const option2 = document.createElement('div');
+        option2.className = 'choice-btn';
+        option2.innerText = '2. 对不起.......';
+        option2.addEventListener('click', () => {
+            window.open('end2.html');
+        });
+        
+        const option3 = document.createElement('div');
+        option3.className = 'choice-btn';
+        option3.innerText = '3. 我这就联系警方，把我之前在网上搜集的证据发出来，坚持住';
+        option3.addEventListener('click', () => {
+            window.open('end3.html');
+        });
+        
+        choiceButtonsContainer.appendChild(option1);
+        choiceButtonsContainer.appendChild(option2);
+        choiceButtonsContainer.appendChild(option3);
+        
+        // 插入到聊天区域底部，输入框原位置后
+        const chatDetail = document.querySelector('.chat-detail');
+        chatDetail.appendChild(choiceButtonsContainer);
+        scrollToBottom();
+    }
+    
+    // 阶段0: 左侧主动发第一条
+    function startPhase0() {
+        if (phase !== 0) return;
+        phase = 1;
+        showTyping(() => {
+            addLeftMessage("我没事，这两天有点事没看信息");
+            msgInput.disabled = false;
+            sendBtn.disabled = false;
+            msgInput.placeholder = "输入消息...";
+            scrollToBottom();
+        }, 800);
+    }
+    
+    function afterPlayerSentFirst() {
+        showTyping(() => {
+            addLeftMessage("真的没事，我很安全，邺山村很美，你也来吧。");
+            phase = 3;
+            msgInput.disabled = false;
+            sendBtn.disabled = false;
+            msgInput.value = "";
+        }, 1200);
+    }
+    
+    function afterPlayerSentAlert() {
+        phase = 4;
+        showTyping(() => {
+            addLocationImage();
+            setTimeout(() => {
+                addLeftMessage("你也来吧!这里欢迎你!");
+                startRepeatingMessages();
+            }, 700);
+        }, 1000);
+    }
+    
+    function handlePlayerSend() {
+        let rawText = msgInput.value.trim();
+        if (!rawText) {
+            showToast("不能发送空白消息");
+            return;
+        }
+        
+        if (phase === 1) {
+            const forcedMsg = "陈宇，怎么回事，你真的没事？";
+            addRightMessage(forcedMsg);
+            msgInput.value = "";
+            msgInput.disabled = true;
+            sendBtn.disabled = true;
+            afterPlayerSentFirst();
+        } 
+        else if (phase === 3) {
+            const forcedMsg = "不对，你不是陈宇，你是谁，我要报警了";
+            addRightMessage(forcedMsg);
+            msgInput.value = "";
+            msgInput.disabled = true;
+            sendBtn.disabled = true;
+            afterPlayerSentAlert();
+        }
+        else if (phase === 4 || phase === 5) {
+            if (phase === 4) showToast("消息发送失败: 对方正在狂发信息，请稍后...");
+            else showToast("对话已冻结，请从下方选择回应");
+            msgInput.value = "";
+        }
+        else {
+            showToast("等待对方消息中...");
+            msgInput.value = "";
+        }
+    }
+    
+    // 绑定事件
+    sendBtn.addEventListener('click', () => {
+        handlePlayerSend();
+    });
+    msgInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handlePlayerSend();
+        }
+    });
+    
+    setTimeout(() => {
+        if (phase === 0) {
+            startPhase0();
+        }
+    }, 500);
+    
+    document.getElementById('fakeBackBtn').addEventListener('click', () => showToast('当前独立聊天场景'));
+    document.getElementById('backHomeTip').addEventListener('click', () => showToast('诡异对话模拟 · 左侧先发消息'));
+    
+    const existingAvatars = document.querySelectorAll('.msg-avatar');
+    existingAvatars.forEach(av => {
+        av.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showToast('查看资料暂不可用');
+        });
+    });
+    
+    detailContent.addEventListener('click', (e) => {
+        if (e.target.classList && e.target.classList.contains('msg-avatar')) {
+            showToast('头像不可点');
+        }
+    });
+    
+    msgInput.disabled = true;
+    sendBtn.disabled = true;
+    msgInput.placeholder = "陈宇正在输入...";
+    
+    scrollToBottom();
+</script>
+</body>
+</html>

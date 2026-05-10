@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山面馆 - 日志系统</title>
+    <audio id="bgMusic" loop src="红音乐.mp3"></audio>
+    <style type="text/css">
+        /* 全局样式 - 20年前怀旧风格 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            /* 纯高饱和红色背景，类似老式惊悚网页底色 */
+            background-color: #5f0606;
+            font-family: "宋体", "SimSun", "MS Sans Serif", serif;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* 主容器 - 相对布局，用于内容居中 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 20px 30px 20px;
+        }
+        
+       /* 顶部图片区域 - 铺满左右屏幕，高度自动适应图片比例 */
+        .top-image-area {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            margin-top: 0;
+            margin-bottom: 30px;
+            background: #5f0606;  /* 改为与body背景一致的红色，避免突兀色块 */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            line-height: 0;
+        }
+        .top-image {
+            width: 100%;
+            max-height: 1000px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        /* 抖动动画 (怀旧小特效) */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        
+        /* 闪烁动画 (延续原有) */
+        @keyframes flicker {
+            0% { opacity: 1; filter: brightness(1); }
+            92% { opacity: 1; filter: brightness(1); }
+            93% { opacity: 0.6; filter: brightness(0.85); }
+            94% { opacity: 0.9; filter: brightness(0.95); }
+            95% { opacity: 0.5; filter: brightness(0.8); }
+            96% { opacity: 0.95; filter: brightness(0.98); }
+            97% { opacity: 0.7; filter: brightness(0.9); }
+            98% { opacity: 1; filter: brightness(1); }
+            100% { opacity: 1; filter: brightness(1); }
+        }
+        
+        .shake-effect {
+            animation: shake 0.15s ease-in-out 0s 2;
+        }
+        
+        .flicker-effect {
+            animation: flicker 3s infinite;
+        }
+        
+        /* 日志框 - 符纸背景保留原样 */
+        .log-box {
+            background: #FFFEF0;
+            border: 3px solid #e70505;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,200,0.8);
+            margin: 0;
+            position: relative;
+        }
+        
+        /* 符纸纹理效果继续保留 */
+        .paper-bg {
+            background: #290101;
+            background-image: 
+                repeating-linear-gradient(
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(160, 120, 60, 0.08) 2px,
+                    rgba(160, 120, 60, 0.08) 4px
+                ),
+                radial-gradient(circle at 10% 20%, rgba(200, 160, 80, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(200, 160, 80, 0.1) 0%, transparent 30%);
+            border: 2px solid #C9A96E;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.3), inset 0 0 30px rgba(210, 170, 80, 0.2);
+            position: relative;
+        }
+        
+        .paper-bg::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(ellipse, rgba(200,160,80,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .paper-bg::after {
+            content: "";
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(ellipse, rgba(200,160,80,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .log-header {
+            background: #290101;
+            background: linear-gradient(to bottom, #c60303, #2f0201);
+            padding: 12px 20px;
+            border-bottom: 2px solid #ea4f2f;
+            color: #000000;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: "黑体", "SimHei", "MS Sans Serif", sans-serif;
+            text-shadow: 1px 1px 0 #330202;
+            letter-spacing: 2px;
+        }
+        
+        /* ====== 修改部分：日志列表样式 ====== */
+        .log-list {
+            padding: 5px 0;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+        
+        /* 日志条目 - 血红色字体、加粗、字号调大 */
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            border-bottom: 1px solid #D4B87A;
+            transition: background 0.15s;
+            cursor: pointer;
+            background-color: #FFFEF5;
+        }
+        
+        .log-item:hover {
+            background-color: #FFE0E0;
+        }
+        
+        /* 日志标题：血红色、加粗、字号加大 */
+        .log-title {
+            font-size: 16px;           /* 原14px，调大 */
+            font-weight: bold;          /* 加粗 */
+            color: #cc1111;             /* 血红色 */
+            font-family: "宋体", "SimSun", "MS Sans Serif", serif;
+            letter-spacing: 1px;
+            flex: 1;
+        }
+        
+        /* 日志时间：血红色、加粗、字号加大 */
+        .log-time {
+            font-size: 13px;            /* 原11px，调大 */
+            font-weight: bold;          /* 加粗 */
+            color: #cc1111;             /* 血红色 */
+            font-family: "Courier New", "宋体", monospace;
+            background: #F0E5D2;
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid #C3A35C;
+            white-space: nowrap;
+        }
+        
+        /* 左右侧边栏: 各5个图片从上到下排列 */
+        .side-deco-column {
+            width: 95px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+        }
+        
+        .side-img-item {
+            width: 100%;
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        
+        .side-img-item img {
+            width: 100%;
+            height: 100px;
+            border: none;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .side-img-item img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        /* 点亮效果：增加发光和边框 */
+        .side-img-item.lit img {
+            filter: brightness(1.2) drop-shadow(0 0 8px #FFD700);
+            border-radius: 50%;
+            box-shadow: 0 0 12px 3px #FFAA00, 0 0 5px 1px #FFD700;
+            transform: scale(1.02);
+        }
+        
+        /* 中间日志区域自适应 */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        /* 返回按钮 - 保持原有古朴样式 */
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 8px 24px;
+            background: #8B4513;
+            color: #FFD700;
+            text-decoration: none;
+            border: 2px outset #CD853F;
+            font-family: "宋体", "SimSun", serif;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .back-btn:active {
+            border: 2px inset #CD853F;
+        }
+        
+        /* 滚动条样式保持怀旧 */
+        .log-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log-list::-webkit-scrollbar-track {
+            background: #F5E8C8;
+            border-radius: 4px;
+        }
+        
+        .log-list::-webkit-scrollbar-thumb {
+            background: #B8860B;
+            border-radius: 4px;
+        }
+        
+        .empty-log {
+            text-align: center;
+            padding: 50px;
+            color: #17f603;
+            font-size: 14px;
+        }
+        
+        /* 调整容器内部边距 */
+        @media (max-width: 780px) {
+            .side-deco-column {
+                width: 70px;
+                gap: 12px;
+            }
+            .log-title {
+                font-size: 14px;
+            }
+            .log-time {
+                font-size: 11px;
+                padding: 2px 6px;
+            }
+            .flex-row {
+                gap: 12px;
+            }
+        }
+        
+        /* 顶部图片完全铺满左右而不留白，修正body边距 */
+        body {
+            overflow-x: hidden;
+        }
+        /* 浮层文本样式 - 血红色字体 */
+.modal-log-text {
+    color: #cc1111;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 1.8;
+}
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(96, 14, 14, 0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">ex04/04</div>
+
+<div class="container">
+    
+    <!-- 顶部大图片区域 - 铺满左右屏幕 -->
+    <div class="top-image-area">
+       <img src="images/红佛.webp" alt="日志顶部" class="top-image flicker-effect" id="topImage">
+    </div>
+    
+    <!-- 左右两侧图片 (各5个) + 中间日志框 -->
+    <div class="flex-row">
+        <!-- 左侧图片：五个从上到下排列 -->
+        <div class="side-deco-column" id="leftColumn">
+            <div class="side-img-item" data-side="left" data-index="1"><img src="images/眼1.webp" alt="左侧装饰1"></div>
+            <div class="side-img-item" data-side="left" data-index="2"><img src="images/眼1.webp" alt="左侧装饰2"></div>
+            <div class="side-img-item" data-side="left" data-index="3"><img src="images/眼1.webp" alt="左侧装饰3"></div>
+            <div class="side-img-item" data-side="left" data-index="4"><img src="images/眼1.webp" alt="左侧装饰4"></div>
+            <div class="side-img-item" data-side="left" data-index="5"><img src="images/眼1.webp" alt="左侧装饰5"></div>
+        </div>
+        
+        <!-- 中间日志框 (符纸背景) -->
+        <div class="main-content">
+            <div class="log-box paper-bg">
+                <div class="log-header">
+                     𪚥䨻龘靐齉爨麤鱻齾龖龗爩鬱豔饡鸓虪蠿翽纛驧䥰䂿䵿 
+                </div>
+                <div class="log-list" id="logList">
+                    <!-- 日志条目由JS动态生成，方便维护 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧图片：五个眼2.webp从上到下排列 -->
+        <div class="side-deco-column" id="rightColumn">
+            <div class="side-img-item" data-side="right" data-index="1"><img src="images/眼2.webp" alt="右侧装饰1"></div>
+            <div class="side-img-item" data-side="right" data-index="2"><img src="images/眼2.webp" alt="右侧装饰2"></div>
+            <div class="side-img-item" data-side="right" data-index="3"><img src="images/眼2.webp" alt="右侧装饰3"></div>
+            <div class="side-img-item" data-side="right" data-index="4"><img src="images/眼2.webp" alt="右侧装饰4"></div>
+            <div class="side-img-item" data-side="right" data-index="5"><img src="images/眼2.webp" alt="右侧装饰5"></div>
+        </div>
+    </div>
+    <div id="logModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; justify-content:center; align-items:center;">
+    <div style="width:500px; max-width:90%; padding:30px;">
+        <div id="logModalContent" style="font-size:16px; line-height:1.8; color:#ffffff; font-family:'宋体';"></div>
+        <div style="text-align:center; margin-top:30px;">
+            <button onclick="closeLogModal()" style="background:transparent; border:1px solid #ffffff; color:#ffffff; padding:6px 20px; font-family:'宋体'; font-size:14px; cursor:pointer;">关 闭</button>
+        </div>
+    </div>
+</div>
+    
+    <!-- 返回按钮 -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a class="back-btn" href="用户.html">← 返回管理后台</a>
+    </div>
+</div>
+
+<script>
+  // ====== 日志数据 ======
+const logs = [
+    { title: "龘 靐 齉 齾 爩 鱻 麤 灪 灩 爨", time: "4444-44-44" },
+    { title: "癵 籲 饢 驪 鸝 鸞 纛 讞 钃 鑿", time: "4444-44-44" },
+    { title: "鼇 鼈 鼉 鼊 鼋 鼌 鼍 鼏 鼐 鼑", time: "4444-44-44" },
+    { title: "鼒 鼔 鼕 鼖 鼗 鼘 鼙 鼚 鼛 鼜", time: "4444-44-44" },
+    { title: "鼝 鼞 鼟 鼠 鼡 鼢 鼣 鼤 鼥 鼦", time: "4444-44-44" },
+    { title: "齚 齛 齜 齝 齞 齟 齠 齡 齣 齤", time: "4444-44-44" },
+    { title: "癵 鼏 籲 鼐 饢 鼑 鸝 鼒 讞 鼔", time: "4444-44-44" },
+    { title: "鑫 鼸 森 鼹 淼 鼺 焱 龘 垚 靐", time: "4444-44-44" },
+    { title: "钃 鼕 鑿 鼖 齀 鼗 齁 鼘 齂 鼙", time: "4444-44-44" },
+    { title: "齤 鼳 虋 鼴 灨 鼵 爧 鼶 爩 鼷", time: "4444-44-44" },
+    { title: "舙 譶 茻 蟲 蟊 螽 蠡 蠱 衋 襾", time: "4444-44-44" },
+    { title: "覈 角 觜 觿 訛 訞 詟 誩 譱 讀", time: "4444-44-44" }
+];
+
+// 渲染日志列表
+function renderLogs() {
+    const logList = document.getElementById('logList');
+    if (!logList) return;
+    
+    if (logs.length === 0) {
+        logList.innerHTML = '<div class="empty-log">暂无日志记录，请稍后再来</div>';
+        return;
+    }
+    
+    let html = '';
+    for (let i = 0; i < logs.length; i++) {
+        const safeTitle = logs[i].title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        html += `
+            <div class="log-item" onclick="showLogModal('${safeTitle}', '${logs[i].time}')">
+                <div class="log-title">· ${logs[i].title}</div>
+                <div class="log-time">${logs[i].time}</div>
+            </div>
+        `;
+    }
+    logList.innerHTML = html;
+}
+
+// 显示日志弹窗
+function showLogModal(title, time) {
+    const modal = document.getElementById('logModal');
+    const contentDiv = document.getElementById('logModalContent');
+    
+    if (!modal || !contentDiv) return;
+    
+    contentDiv.innerHTML = `
+        <div><strong></strong><br><br>佛又曰:栗穆摩那尼楞夜啰钵皤沙楞舍啰伽菩烁埵咩耶室呼唎啰羯地咩啰墀吉那阇遮墀呼婆沙数怛阿伽喝数无尼呼驮提怛吉曳曳无萨数喝唎迦唵佛南耶栗啰利婆啰沙嚧吉遮他参豆墀沙他伽娑阇迦嚧婆地曳蒙无南羯遮夜诃卢提南室罚皤悉婆利豆婆墀摩地墀楞尼室舍楞萨度娑咩豆罚地那喝卢阿怛无阇孕谨舍驮皤诃哆蒙醯羯蒙耶伊皤俱哆陀佛阇蒙苏豆输蒙俱利地墀皤哆啰喝迦呼夜俱羯伊室迦曳羯参婆豆羯耶萨呼啰醯数参曳提唵度沙参俱穆豆摩罚唎诃钵写驮他伊墀婆他谨沙提帝诃耶无羯蒙娑悉婆伊呼呼卢帝那俱菩皤迦吉唎度夜怛无娑伽耶婆诃数吉悉南迦咩皤陀利悉陀咩栗谨迦佛佛伽萨输嚧啰驮输俱度卢哆室怛婆醯佛悉沙穆卢豆夜娑皤沙怛喝唎那苏唎阿娑呼萨唵舍度喝卢醯孕数伊吉苏室穆唎唵迦伊婆烁菩墀夜吉穆埵埵度墀无诃输陀耶埵墀沙谨卢写耶写地娑遮输蒙利吉遮烁南豆耶遮帝舍提婆哆室摩尼夜烁陀诃舍度那羯无数舍嚧呼蒙悉呼唵嚧耶菩阿醯参驮唎那孕喝娑提曳耶驮婆嚧帝那苏舍醯沙俱悉提利那悉阇皤写数谨夜地帝迦沙苏沙蒙帝诃地烁写室婆驮室墀羯羯吉夜呼孕阿舍耶那南埵阿利沙悉伽参地地蒙蒙苏参提烁摩楞驮阇舍夜苏数羯驮谨穆怛喝数写烁阇沙呼迦提萨卢俱耶喝俱烁蒙苏阿沙孕迦卢唵曳夜醯苏啰室苏穆谨唵吉阿婆怛羯俱栗度穆钵婆伽婆哆佛陀钵帝娑孕地苏遮摩悉尼咩羯喝数摩南数苏曳室穆摩利利遮醯提咩输佛室尼无俱唵嚧啰摩尼孕喝佛尼陀俱地羯哆呼曳卢唵舍曳数烁娑室菩醯</div>
+    `;
+    modal.style.display = 'flex';
+}
+
+// 关闭日志弹窗
+function closeLogModal() {
+    const modal = document.getElementById('logModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// 顶部图片无限抖动效果
+let shakeInterval = null;
+
+function startContinuousShake() {
+    const img = document.getElementById('topImage');
+    if (!img) return;
+    
+    img.style.transition = 'none';
+    img.style.willChange = 'transform, filter, opacity';
+    
+    function doShake() {
+        if (!img) return;
+        
+        const intensity = 2.5;
+        const rotIntensity = 1.5;
+        
+        const x = (Math.random() - 0.5) * intensity * 3;
+        const y = (Math.random() - 0.5) * intensity * 2.5;
+        const rot = (Math.random() - 0.5) * rotIntensity;
+        const skewX = (Math.random() - 0.5) * 2;
+        const skewY = (Math.random() - 0.5) * 2;
+        
+        img.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) skew(${skewX}deg, ${skewY}deg)`;
+        
+        const flicker = Math.random();
+        if (flicker < 0.25) {
+            img.style.filter = 'brightness(1.6) contrast(1.4)';
+        } else if (flicker < 0.5) {
+            img.style.filter = 'brightness(0.65) contrast(0.75)';
+        } else if (flicker < 0.75) {
+            img.style.filter = 'brightness(1.2) saturation(1.3) hue-rotate(5deg)';
+        } else {
+            img.style.filter = 'brightness(1) contrast(1)';
+        }
+        
+        if (Math.random() < 0.12) {
+            img.style.opacity = '0.8';
+        } else {
+            img.style.opacity = '1';
+        }
+    }
+    
+    shakeInterval = setInterval(doShake, 30);
+}
+
+// 停止抖动（可选，用于页面离开时清理）
+function stopContinuousShake() {
+    if (shakeInterval) {
+        clearInterval(shakeInterval);
+        shakeInterval = null;
+    }
+    const img = document.getElementById('topImage');
+    if (img) {
+        img.style.transform = '';
+        img.style.filter = '';
+        img.style.opacity = '';
+    }
+}
+
+// 页面卸载时停止抖动
+window.addEventListener('beforeunload', function() {
+    stopContinuousShake();
+});
+
+// 页面初始化
+window.onload = function() {
+    renderLogs();
+    startContinuousShake();
+    
+    // 音频自动播放
+    const audio = document.getElementById('bgMusic');
+    if (audio) {
+        audio.play().catch(function(error) {
+            console.log('自动播放被浏览器阻止，点击页面任意位置后播放');
+            document.body.addEventListener('click', function playOnce() {
+                audio.play();
+                document.body.removeEventListener('click', playOnce);
+            });
+        });
+    }
+    
+    // 顶部图片加载失败处理
+    const topImg = document.getElementById('topImage');
+    if (topImg) {
+        topImg.onerror = function() {
+            this.style.backgroundColor = "#8B4513";
+            this.style.minHeight = "120px";
+            this.alt = "邺山面馆匾额";
+        };
+    }
+    
+    // 左右图片批量防错
+    const allSideImgs = document.querySelectorAll('.side-img-item img');
+    for (let i = 0; i < allSideImgs.length; i++) {
+        allSideImgs[i].onerror = function() {
+            if (!this.complete) return;
+            this.style.width = "60px";
+            this.style.height = "60px";
+            this.style.backgroundColor = "#E0B873";
+            this.style.border = "1px solid #a56b2f";
+        };
+    }
+    
+    console.log("==== 邺山面馆日志系统载入 ====");
+    console.log("当前日志条目: " + logs.length + " 条");
+    console.log("无限抖动已启动！");
+};
+
+// 右键禁止
+document.oncontextmenu = function(e) {
+    alert("奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉奉");
+    return false;
+};
+</script>
+
+</body>
+</html>

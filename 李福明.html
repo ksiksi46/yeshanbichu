@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邺山一碗面，温暖万人心</title>
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            color: #333;
+        }
+
+        /* 模拟微信PC端窗口容器 */
+        .wechat-mock-window {
+            width: 900px;
+            margin: 30px auto;
+            background-color: #fff;
+            border: 1px solid #d6d6d6;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* 顶部公众号信息栏 */
+        .account-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e7e7e7;
+        }
+
+        .account-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            background-color: #007AFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .account-meta {
+            flex: 1;
+        }
+
+        .account-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .follow-btn {
+            background-color: #07C160;
+            color: #fff;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* 文章内容区域 */
+        .article-container {
+            padding: 20px 60px;
+        }
+
+        .article-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-align: left;
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+
+        .article-info {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        .author-avatar-small {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 6px;
+        }
+
+        /* 文章图片区域 - 修改点1：限制高度 */
+        .article-img-wrapper {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 30px;
+            max-height: 350px;        /* 限制最大高度 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0; /* 图片加载前的背景色 */
+        }
+
+        .article-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;         /* 等比例填充，多余部分裁剪 */
+        } 
+    .article-img1 {
+    width: 74%;
+    height: 500px;
+    display: block;
+    background-size: cover;      /* 背景填充 */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+        /* 正文内容 */
+        .article-body {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5em;
+            text-align: justify;
+        }
+
+        /* 闲渔广告区 */
+        .xianyu-ad-wrapper {
+            background: linear-gradient(135deg, #fff8f0 0%, #fff2e3 100%);
+            border: 1px solid #fee6d0;
+            border-radius: 12px;
+            padding: 30px 25px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .xianyu-ad-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 102, 0, 0.05);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .xianyu-ad-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .xianyu-ad-left {
+            text-align: left;
+            flex: 1;
+        }
+
+        .xianyu-logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #FF6600;
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .xianyu-tagline {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .xianyu-subtag {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .xianyu-ad-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 广告图片区域 - 同样限制高度 */
+        .xianyu-ad-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #fee6d0;
+            flex-shrink: 0;
+        }
+
+        .xianyu-ad-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .xianyu-download-btn {
+            background: linear-gradient(90deg, #FF9900, #FF6600);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(255, 102, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .xianyu-download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+        }
+
+        /* 留言区 */
+        .comments-section {
+            border-top: 1px solid #e6e6e6;
+            padding-top: 20px;
+        }
+
+        .comment-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .comment-content-box {
+            flex: 1;
+        }
+
+        .comment-nickname {
+            font-size: 14px;
+            color: #576b95;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .comment-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .write-comment-btn {
+            width: 100%;
+            background-color: #f7f7f7;
+            color: #555;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s ease;
+        }
+
+        .write-comment-btn:hover {
+            background-color: #f0f0f0;
+        }
+        /* 图标题样式 */
+
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">22/39</div>
+
+<div class="wechat-mock-window">
+    <!-- 顶部公众号栏 -->
+    <div class="account-header">
+        <div class="account-avatar">邺</div>
+        <div class="account-meta">
+            <div class="account-name">邺山日报</div>
+        </div>
+        <button class="follow-btn">关注</button>
+    </div>
+
+    <!-- 文章主体 -->
+    <div class="article-container">
+        <h1 class="article-title">邺山一碗面，温暖万人心</h1>
+        
+        <div class="article-info">
+            <span>邺山日报</span>
+            <span style="margin-left: 15px;">2025年1月6日</span>
+        </div>
+
+        <!-- 文章图片区域 - 修改点2：使用标准img标签，src可自定义 -->
+        <div class="article-img-wrapper">
+            <!-- 请将 src 替换为你自己的图片链接 -->
+            <img class="article-img" src="../images/福明.webp" alt="李福明面馆实景">
+            </div>
+             <div>
+               <p style="font-size: 12px; color: #999; text-indent: 2em;">图：邺山面馆实景</p>
+        </div>
+
+        <!-- 正文内容 -->
+        <div class="article-body">
+            <p>在邺山村，有一家开了三十多年的“面馆”。店主李福明是个地地道道的邺山人，他常挂在嘴边的一句话是：“面要劲道，人要厚道。”这简简单单的十个字，便是他一辈子的经营哲学。</p>
+            
+            <p>每天凌晨四点，当城市还在沉睡，李福明的后厨已经亮起了灯。手工揉面是他三十年如一日的坚持，“三遍水，三遍灰，九九八十一遍揉”，只有这样出来的面，才能在沸水中翻滚后依然保持弹牙的口感。汤底则用筒骨、老母鸡和黄豆，文火慢炖整整一夜，汤色清亮却醇厚无比，喝上一口，鲜得能让人把舌头吞下去。</p>
+            
+            <p>去年冬天的一个雪夜，面馆准备打烊时，进来了一个衣衫单薄的少年。少年冻得瑟瑟发抖，小声问能不能赊一碗面。李福明二话没说，不仅下了满满一大碗牛肉面，还卧了两个荷包蛋。少年狼吞虎咽地吃完，红着脸说将来一定还钱。李福明只是拍了拍他的肩膀：“谁还没个难处，暖乎了就好。”</p>
+             <div class="article-img-wrapper">
+            <!-- 请将 src 替换为你自己的图片链接 -->
+            <img class="article-img1" src="../images/菜单.webp" alt="菜单">
+           
+        </div>
+             <p style="font-size: 12px; color: #999; text-indent: 2em;">图：邺山面馆菜单</p>
+            <p>这件小事只是李福明三十年热心肠的一个缩影。他的面馆里，永远有免费的面汤供路人取暖，遇到经济困难的学生或流浪汉，他总是默默端上一碗热面。“邺山一碗面，温暖万人心”，这是街坊邻居给他的赞誉，也是这家小店最真实的写照。</p>
+        </div>
+
+        <!-- 闲渔广告区 - 修改点3：广告图片同样改为可自定义src -->
+        <div class="xianyu-ad-wrapper">
+            <div class="xianyu-ad-inner">
+                <div class="xianyu-ad-left">
+                    <div class="xianyu-logo">闲渔</div>
+                    <div class="xianyu-tagline">让你的闲置游起来 · 高价回收 极速变现</div>
+                    <div class="xianyu-subtag">下载闲渔APP，解锁更多闲置好物</div>
+                </div>
+                <div class="xianyu-ad-right">
+                    <div class="xianyu-ad-img">
+                        <!-- 请将 src 替换为你自己的图片链接 -->
+                        <img src="../images/闲鱼.webp" alt="闲渔APP图标">
+                    </div>
+                    <button class="xianyu-download-btn">立即下载</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 留言区 -->
+        <div class="comments-section">
+            <!-- 留言1 -->
+            <div class="comment-item">
+                <div class="comment-avatar"></div>
+                <div class="comment-content-box">
+                    <div class="comment-nickname">老街坊王阿姨</div>
+                    <div class="comment-text">老李的面真的是吃了二十年了，不仅面好吃，人更是这个！</div>
+                    <div class="comment-time">2025-01-06 09:30</div>
+                </div>
+            </div>
+
+            <!-- 留言2 -->
+            <div class="comment-item">
+                <div class="comment-avatar"></div>
+                <div class="comment-content-box">
+                    <div class="comment-nickname">在外打拼的邺山人</div>
+                    <div class="comment-text">看哭了，这就是我想家的味道。今年过年一定回去吃！</div>
+                    <div class="comment-time">2025-01-06 10:15</div>
+                </div>
+            </div>
+
+            <!-- 留言3 -->
+            <div class="comment-item">
+                <div class="comment-avatar"></div>
+                <div class="comment-content-box">
+                    <div class="comment-nickname">美食小编</div>
+                    <div class="comment-text">这才是真正的城市烟火气！下周就去邺山采访李叔！</div>
+                    <div class="comment-time">2025-01-06 11:00</div>
+                </div>
+            </div>
+
+            <button class="write-comment-btn">写留言</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

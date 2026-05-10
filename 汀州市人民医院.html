@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汀州市人民医院 - 国家三级甲等综合性医院</title>
+    
+    <!-- 引入毛笔字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #005bac;
+            --secondary-color: #f8f9fa;
+            --accent-color: #e63946;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+            margin: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .top-bar {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 10%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        header {
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: normal;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            font-family: 'Ma Shan Zheng', 'ZCOOL KuaiLe', 'KaiTi', '楷体', cursive;
+        }
+        .logo-img {
+            height: 100px;
+            width: auto;
+            margin-right: 12px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            height: 450px;
+            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.496)), 
+                        url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            color: #173350;
+            margin-bottom: 20px;
+            font-family: 'Ma Shan Zheng', 'ZCOOL KuaiLe', 'KaiTi', '楷体', cursive;
+            font-weight: normal;
+            text-shadow: 2px 2px 6px rgba(255,255,255,0.8);
+            letter-spacing: 4px;
+        }
+
+        .hero-text p {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-size: 18px;
+            color: #1a3a5c;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
+            font-weight: 600;
+        }
+
+        .quick-services {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 40px 10%;
+            margin-top: -50px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .service-card h3 {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        /* 弹窗遮罩层 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 主弹窗 */
+        .modal {
+            background: white;
+            width: 450px;
+            max-width: 90%;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .modal-header .close {
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .modal-header .close:hover {
+            opacity: 0.8;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        /* 服务选项网格 */
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-option {
+            background: #f0f5f9;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #e0e8f0;
+        }
+
+        .service-option:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .service-option h4 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .service-option p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .service-option:hover p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #004080;
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+  
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .news-section {
+            padding: 60px 10%;
+            background: var(--secondary-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-weight: 600;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .news-item {
+            background: white;
+
+            overflow: hidden;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-content small {
+            font-family: "Arial", "Microsoft YaHei", sans-serif;
+            color: #888;
+        }
+
+        .news-content h4 {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .news-content p {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        footer {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 50px 10% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-grid h4 {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer-grid p {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #b2bec3;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #636e72;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">17/39</div>
+    <div style="background:#000; color:#ffcc00; text-align:center; padding:8px; font-weight:bold; font-size:14px;">
+    【解谜游戏】本页面为架空虚构内容，所有名称、事件、文件均与现实无关 
+</div>
+
+    <div class="top-bar">
+        <span>咨询电话：0597-XXXXXXX (总机)</span>
+        <span>急诊时刻：24小时全天候命</span>
+    </div>
+
+    <header>
+        <div class="logo">
+            <img src="../images/人民医院.webp" alt="医院logo" class="logo-img" >
+            汀州市人民医院
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">首页</a></li>
+                <li><a href="#">医院概况</a></li>
+                <li><a href="#">科室导航</a></li>
+                <li><a href="#">专家介绍</a></li>
+                <li><a href="#">就医指南</a></li>
+                <li><a href="#">科研教学</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>厚德 精医 <br>博爱 创新</h1>
+            <p>为您和家人的健康保驾护航，提供最优质的医疗服务。</p>
+        </div>
+    </section>
+
+    <section class="quick-services">
+        <div class="service-card" onclick="alert('预约挂号功能开发中，敬请期待！')">
+            <h3>预约挂号</h3>
+            <p>在线预约 缩短等候</p>
+        </div>
+        <div class="service-card" onclick="alert('出诊动态功能开发中，敬请期待！')">
+            <h3>出诊动态</h3>
+            <p>查看专家实时排班</p>
+        </div>
+        <div class="service-card" id="reportQueryBtn">
+            <h3>报告查询</h3>
+            <p>线上获取检验结果</p>
+        </div>
+        <div class="service-card" onclick="alert('智能导诊功能开发中，敬请期待！')">
+            <h3>智能导诊</h3>
+            <p>精准匹配科室医生</p>
+        </div>
+    </section>
+
+    <section class="news-section">
+        <div class="section-title">
+            <h2>新闻动态 / <span style="color: #888; font-size: 18px;">News</span></h2>
+        </div>
+        <div class="news-grid">
+            <div class="news-item">
+                <div class="news-content">
+                    <small>2026-01-15</small>
+                    <h4>我院成功完成全省首例复杂微创心脏手术</h4>
+                    <p>此次手术的成功标志着我院在心血管外科领域迈入了国内领先水平...</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-content">
+                    <small>2025-08-10</small>
+                    <h4>【义诊通知】本周六将在市中心广场举行大型义诊</h4>
+                    <p>届时将有内科、外科、妇科、儿科多名首席专家现场坐诊...</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-content">
+                    <small>2025-08-05</small>
+                    <h4>数字化病房升级完毕，就医体验全面提升</h4>
+                    <p>通过引入AI智能护理系统，患者的需求响应速度提升了40%...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h4>联系我们</h4>
+                <p>地址：汀州市中心大道108号</p>
+                <p>电话：0597-1234567</p>
+            </div>
+            <div>
+                <h4>友情链接</h4>
+                <p>国家卫健委</p>
+                <p>福建省人民医院</p>
+            </div>
+            <div>
+                <h4>常用下载</h4>
+                <p>健康医疗APP</p>
+                <p>门诊手册PDF</p>
+            </div>
+            <div>
+                <h4>关注我们</h4>
+                <p>官方微信公众号</p>
+                <p>官方微博</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 汀州市人民医院 版权所有 | ICP备XXXXXXXX号 | 技术支持：医疗信息中心
+        </div>
+    </footer>
+
+    <!-- 弹窗遮罩层 -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <span id="modalTitle">报告查询</span>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 动态内容会在这里显示 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        
+        let currentStep = 'options';
+        
+        // 打开弹窗
+        function openModal() {
+            modalOverlay.style.display = 'flex';
+            showOptions();
+        }
+        
+        // 关闭弹窗
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+            currentStep = 'options';
+        }
+        
+        // 显示服务选项
+        function showOptions() {
+            currentStep = 'options';
+            modalTitle.innerText = '报告查询';
+            modalBody.innerHTML = `
+                <div class="service-options">
+                    <div class="service-option" onclick="showMedicalRecordForm()">
+                        <h4>病历查询</h4>
+                        <p>查询个人就诊记录</p>
+                    </div>
+                    <div class="service-option" onclick="showAlert('费用信息')">
+                        <h4>费用信息</h4>
+                        <p>查询费用明细</p>
+                    </div>
+                    <div class="service-option" onclick="showAlert('住院相关查询')">
+                        <h4>住院相关查询</h4>
+                        <p>住院信息及费用</p>
+                    </div>
+                    <div class="service-option" onclick="showAlert('医患互动')">
+                        <h4>医患互动</h4>
+                        <p>在线咨询反馈</p>
+                    </div>
+                    <div class="service-option" onclick="showAlert('预约服务')">
+                        <h4>预约服务</h4>
+                        <p>预约挂号体检</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 显示病历查询表单
+        function showMedicalRecordForm() {
+            currentStep = 'form';
+            modalTitle.innerText = '病历查询';
+            modalBody.innerHTML = `
+                <form id="medicalForm">
+                    <div class="form-group">
+                        <label>姓名：</label>
+                        <input type="text" id="patientName" placeholder="请输入姓名" >
+                    </div>
+                    <div class="form-group">
+                        <label>出生日期：</label>
+                        <input type="date" id="birthday" >
+                    </div>
+                    <div class="form-group">
+                        <label>性别：</label>
+                <select id="gender">
+                    <option value="" disabled selected>请选择性别</option>
+                            <option value="男" >男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <button type="button" class="submit-btn" onclick="submitMedicalQuery()">查询</button>
+                    <button type="button" class="back-btn" onclick="showOptions()">返回</button>
+                </form>
+            `;
+        }
+        
+        // 显示加载中
+        function showLoading() {
+            modalBody.innerHTML = `
+                <div class="loading-message">
+                    <div class="loading-spinner"></div>
+                    <p>查询中，请稍候...</p>
+                </div>
+            `;
+        }
+        
+        // 提交病历查询
+        function submitMedicalQuery() {
+            const name = document.getElementById('patientName')?.value.trim();
+            const birthday = document.getElementById('birthday')?.value;
+            const gender = document.getElementById('gender')?.value;
+            
+            if (!name || !birthday || !gender) {
+                alert('请填写完整信息！');
+                return;
+            }
+            
+            // 验证信息是否正确
+            if (name === '赵弘远' && 
+                birthday === '2000-01-25' && 
+                gender === '男') {
+                
+                // 显示加载中
+                showLoading();
+                
+                // 延迟1.5秒后跳转到新页面
+                setTimeout(function() {
+                    // 关闭弹窗
+                    closeModal();
+                    // 跳转到病历详情页
+                    window.location.href = '病历.html';
+                }, 1500);
+                
+            } else {
+                // 查询失败
+                modalBody.innerHTML = `
+                    <div class="error-message" style="text-align:center; padding:20px; background:#f8d7da; color:#721c24; border-radius:6px;">
+                        <p>❌ 查询失败！</p>
+                        <p>未找到与您输入信息匹配的就诊记录。</p>
+                        <p>请核对姓名、出生日期、性别后重新查询。</p>
+                    </div>
+                    <button type="button" class="back-btn" onclick="showMedicalRecordForm()">重新填写</button>
+                    <button type="button" class="back-btn" onclick="showOptions()" style="margin-top: 5px;">返回首页</button>
+                `;
+            }
+        }
+        
+        // 其他功能提示
+        function showAlert(serviceName) {
+            alert(`${serviceName}功能开发中，敬请期待！`);
+        }
+        
+        // 点击报告查询按钮
+        document.getElementById('reportQueryBtn').addEventListener('click', openModal);
+        
+        // 点击遮罩层关闭弹窗
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+        
+        // 按ESC关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>

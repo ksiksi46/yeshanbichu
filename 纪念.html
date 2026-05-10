@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汀州日报 - 赵弘远同志讣告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #4a4a4a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            font-family: 'SimSun', '宋体', 'Times New Roman', serif;
+        }
+
+        .newspaper {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px 35px 50px;
+            border: 1px solid #cccccc;
+        }
+
+        .newspaper-header {
+            text-align: center;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .newspaper-name {
+            font-size: 48px;
+            font-family: 'SimHei', '黑体', sans-serif;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #000000;
+        }
+
+        .newspaper-sub {
+            font-size: 12px;
+            color: #555555;
+            border-top: 1px solid #cccccc;
+            margin-top: 8px;
+            padding-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .obituary-title {
+            font-size: 28px;
+            font-family: 'SimHei', '黑体', sans-serif;
+            font-weight: bold;
+            text-align: center;
+            color: #000000;
+            margin: 20px 0 10px;
+            letter-spacing: 4px;
+        }
+
+        .obituary-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #666666;
+            border-bottom: 1px dashed #aaaaaa;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* 遗像区域 */
+        .portrait-section {
+            float: right;
+            width: 240px;
+            margin-left: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            background: #f8f8f8;
+            padding: 12px 12px 8px;
+        }
+
+        .portrait-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            background: #eeeeee;
+            overflow: hidden;
+        }
+
+       
+
+       /* 无眼底图 - 顶层 */
+        .portrait-base {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            top: 0;
+            left: 0;
+            z-index: 20;  /* 顶层 */
+        }
+
+        /* 左眼球 - 底层（被无眼图覆盖，但通过镂空显示） */
+        .eye-left {
+            position: absolute;
+            width: 23px;
+            height: 23px;
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 5;   /* 底层 */
+            filter: grayscale(100%);
+        }
+
+        /* 右眼球 - 底层（被无眼图覆盖，但通过镂空显示） */
+        .eye-right {
+            position: absolute;
+            width: 23px;
+            height: 23px;
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 5;   /* 底层 */
+            filter: grayscale(100%);
+        }
+
+        .portrait-caption {
+            text-align: center;
+            font-size: 12px;
+            color: #555555;
+            margin-top: 10px;
+            font-family: 'SimSun', serif;
+        }
+
+        .obituary-text {
+            font-family: 'SimSun', '宋体', serif;
+            font-size: 15px;
+            line-height: 1.9;
+            color: #1a1a1a;
+            text-align: justify;
+        }
+
+        .obituary-text p {
+            margin-bottom: 18px;
+            text-indent: 2em;
+        }
+
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #cccccc;
+            text-align: right;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .info-box {
+            background: #f5f5f5;
+            border-left: 3px solid #333333;
+            padding: 12px 18px;
+            margin: 20px 0;
+            font-size: 13px;
+            color: #333333;
+        }
+
+        .info-box p {
+            margin: 6px 0;
+            text-indent: 0;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+     <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">19/39</div>
+
+<div class="newspaper">
+    <div class="newspaper-header">
+        <div class="newspaper-name">汀 州 日 报</div>
+        <div class="newspaper-sub">
+            <span>国内统一刊号 CN-35XXXX</span>
+            <span>2025年5月9日 星期二</span>
+            <span>第2847期</span>
+        </div>
+    </div>
+
+    <div class="obituary-title">讣 告</div>
+    <div class="obituary-subtitle">沉痛悼念赵弘远同志</div>
+
+    <!-- 遗像区域 -->
+    <div class="portrait-section">
+        <div class="portrait-frame" id="portraitFrame">
+            <!-- 无眼人物底图（请替换为您的图片路径） -->
+            <img src="../images/赵弘远.webp" alt="赵弘远同志遗像" class="portrait-base" id="portraitBase" onerror="this.src='https://placehold.co/400x500/cccccc/999999?text=人物底图'">
+            <!-- 左眼球图片（请替换为您的图片路径） -->
+            <img src="../images/左眼.webp" alt="" class="eye-left" id="eyeLeft" onerror="this.src='https://placehold.co/30x30/ffffff/000000?text=左眼'">
+            <!-- 右眼球图片（请替换为您的图片路径） -->
+            <img src="../images/右眼.webp" alt="" class="eye-right" id="eyeRight" onerror="this.src='https://placehold.co/30x30/ffffff/000000?text=右眼'">
+        </div>
+        <div class="portrait-caption">赵弘远同志遗像<br>（2000-2026）</div>
+    </div>
+
+    <div class="obituary-text clearfix">
+        <p>汀州市邺山村优秀青年、乡村医生赵弘远同志，因意外不幸于2025年5月9日逝世，年仅26岁。惊悉噩耗，万分悲痛。</p>
+        
+        <p>赵弘远同志，2000年出生于汀州市邺山村。自幼勤奋好学，立志从医。后以优异成绩考入省医学院，毕业后主动放弃城市优越条件，毅然回到家乡，扎根基层医疗一线，成为邺山村卫生所的一名乡村医生。</p>
+        
+        <p>从业数年来，赵弘远同志始终恪守医者仁心的职业操守，不分昼夜、不避寒暑，背着药箱走遍邺山村的每一个角落。他对待患者如亲人，用精湛的医术和温暖的态度为无数乡亲解除病痛，被村民亲切地称为"邺山村的健康守门人"。</p>
+        
+        <p>2026年4月18日下午，赵弘远同志在出诊途中遭遇意外，经全力抢救无效，于当日不幸离世。他的离去，是邺山村的巨大损失，也是基层医疗卫生事业的重大遗憾。</p>
+        
+        <div class="info-box">
+            <p><strong>赵弘远同志生平</strong></p>
+            <p>2017年9月 考入省医学院临床医学专业</p>
+            <p>2021年6月 毕业，获医学学士学位</p>
+            <p>2021年8月 回到邺山村，任乡村医生</p>
+            <p>2025年5月9日 因公殉职，享年25岁</p>
+        </div>
+        
+        <p>赵弘远同志的一生，是短暂而光辉的一生。他用自己的青春和热血，践行了医学生的誓言，诠释了新时代青年的责任与担当。他爱岗敬业、无私奉献的精神，将永远铭刻在邺山村村民的心中。</p>
+        
+        <p>邺山村村民委员会决定，于2025年5月10日上午9时，在邺山村文化广场举行追悼会，届时请赵弘远同志生前亲友、同事及社会各界人士前往吊唁，送他最后一程。</p>
+        
+        <div class="signature">
+            <p>邺山村村民委员会</p>
+            <p>汀州市邺山村卫生所</p>
+            <p>2025年5月9日</p>
+        </div>
+        
+        <p style="font-size: 12px; color: #777777; margin-top: 20px; text-align: center; text-indent: 0;">—— 讣告代发，谨此讣闻 ——</p>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const frame = document.getElementById('portraitFrame');
+        const eyeLeft = document.getElementById('eyeLeft');
+        const eyeRight = document.getElementById('eyeRight');
+        
+        if (!frame || !eyeLeft || !eyeRight) return;
+        
+        // ========== 请根据您的照片调整眼睛位置（像素或百分比）==========
+        // 左眼在图片中的位置（相对于图片框的百分比，0-100）
+        const LEFT_EYE_X_PERCENT = 41;   // 左眼中心X坐标百分比
+        const LEFT_EYE_Y_PERCENT = 35;   // 左眼中心Y坐标百分比
+        const RIGHT_EYE_X_PERCENT = 59;  // 右眼中心X坐标百分比
+        const RIGHT_EYE_Y_PERCENT = 35;  // 右眼中心Y坐标百分比
+        
+        // 眼球最大偏移量（像素）
+        const MAX_OFFSET_PX = 3.4;
+        
+        // 当前眼球位置（像素）
+        let leftEyeCenterX = 0;
+        let leftEyeCenterY = 0;
+        let rightEyeCenterX = 0;
+        let rightEyeCenterY = 0;
+        
+        // 更新眼球在图片框内的实际位置
+        function updateEyePositions() {
+            const rect = frame.getBoundingClientRect();
+            if (rect.width === 0) return;
+            
+            leftEyeCenterX = rect.left + (LEFT_EYE_X_PERCENT / 100) * rect.width;
+            leftEyeCenterY = rect.top + (LEFT_EYE_Y_PERCENT / 100) * rect.height;
+            rightEyeCenterX = rect.left + (RIGHT_EYE_X_PERCENT / 100) * rect.width;
+            rightEyeCenterY = rect.top + (RIGHT_EYE_Y_PERCENT / 100) * rect.height;
+            
+            // 设置眼球图片的位置（使其中心对齐到眼睛位置）
+            const eyeWidth = eyeLeft.offsetWidth;
+            const eyeHeight = eyeLeft.offsetHeight;
+            eyeLeft.style.left = ((LEFT_EYE_X_PERCENT / 100) * rect.width - eyeWidth/2) + 'px';
+            eyeLeft.style.top = ((LEFT_EYE_Y_PERCENT / 100) * rect.height - eyeHeight/2) + 'px';
+            eyeRight.style.left = ((RIGHT_EYE_X_PERCENT / 100) * rect.width - eyeWidth/2) + 'px';
+            eyeRight.style.top = ((RIGHT_EYE_Y_PERCENT / 100) * rect.height - eyeHeight/2) + 'px';
+        }
+        
+        // 全局鼠标移动时，两只眼球跟随（眼球图片整体偏移）
+        function handleGlobalMouseMove(e) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            // 计算左眼偏移（眼球图片整体向鼠标方向移动）
+            let leftOffsetX = (mouseX - leftEyeCenterX) / window.innerWidth * MAX_OFFSET_PX * 4;
+            let leftOffsetY = (mouseY - leftEyeCenterY) / window.innerHeight * MAX_OFFSET_PX * 4;
+            
+            // 计算右眼偏移
+            let rightOffsetX = (mouseX - rightEyeCenterX) / window.innerWidth * MAX_OFFSET_PX * 4;
+            let rightOffsetY = (mouseY - rightEyeCenterY) / window.innerHeight * MAX_OFFSET_PX * 4;
+            
+            // 限制偏移范围（-MAX_OFFSET_PX 到 MAX_OFFSET_PX）
+            leftOffsetX = Math.min(Math.max(leftOffsetX, -MAX_OFFSET_PX), MAX_OFFSET_PX);
+            leftOffsetY = Math.min(Math.max(leftOffsetY, -MAX_OFFSET_PX), MAX_OFFSET_PX);
+            rightOffsetX = Math.min(Math.max(rightOffsetX, -MAX_OFFSET_PX), MAX_OFFSET_PX);
+            rightOffsetY = Math.min(Math.max(rightOffsetY, -MAX_OFFSET_PX), MAX_OFFSET_PX);
+            
+            // 应用偏移（平滑移动）
+            eyeLeft.style.transform = `translate(${leftOffsetX}px, ${leftOffsetY}px)`;
+            eyeRight.style.transform = `translate(${rightOffsetX}px, ${rightOffsetY}px)`;
+        }
+        
+        // 鼠标离开窗口时，眼球回到原位
+        function handleMouseLeaveWindow() {
+            eyeLeft.style.transform = `translate(0px, 0px)`;
+            eyeRight.style.transform = `translate(0px, 0px)`;
+        }
+        
+        // 监听页面滚动和窗口大小变化，重新计算眼睛位置
+        function refreshPositions() {
+            updateEyePositions();
+        }
+        
+        // 初始化：计算位置、绑定全局鼠标事件
+        updateEyePositions();
+        window.addEventListener('resize', refreshPositions);
+        window.addEventListener('scroll', refreshPositions);
+        
+        // 图片加载完成后重新计算（因为图片尺寸可能影响布局）
+        const portraitBase = document.getElementById('portraitBase');
+        if (portraitBase) {
+            portraitBase.addEventListener('load', refreshPositions);
+        }
+        eyeLeft.addEventListener('load', refreshPositions);
+        eyeRight.addEventListener('load', refreshPositions);
+        
+        // 绑定全局鼠标移动（整个页面）
+        document.addEventListener('mousemove', handleGlobalMouseMove);
+        document.addEventListener('mouseleave', handleMouseLeaveWindow);
+    })();
+</script>
+
+</body>
+</html>
