@@ -27,14 +27,15 @@
         }
         
         /* 左侧导航栏 */
-        .sidebar {
-            width: 220px;
-            background-color: #fff;
-            border-right: 1px solid #eee;
-            padding: 20px 0;
-            height: 100%;
-            overflow-y: auto;
-        }
+       .sidebar {
+    width: 220px;
+    flex-shrink: 0; /* 保持固定宽度，不被压缩 */
+    background-color: #fff;
+    border-right: 1px solid #eee;
+    padding: 20px 0;
+    height: 100%;
+    overflow-y: auto;
+}
         
         .logo {
             padding: 0 20px 20px;
@@ -88,14 +89,14 @@
         
         /* 主内容区 */
         .main-content {
-            flex: 1;
-            margin-left: 220px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
+    flex: 1;
+    min-width: 0; /* 关键：允许内容收缩，防止溢出 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
         
         /* 顶部搜索栏 */
         .header {
@@ -154,36 +155,40 @@
         }
         
         /* 内容卡片 - 1:1 布局 */
-        .content-card {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-            margin-top: 20px;
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-        }
+      .content-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+    margin-top: 20px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* 确保宽度100% */
+}
         
-        .card-inner {
-            display: flex;
-            flex: 1;
-            min-height: 0;
-            height: 100%;
-        }
+      .card-inner {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    flex-wrap: wrap; /* 允许在小屏幕下换行 */
+}
         
         /* 左侧图片区 - 宽度50% */
-        .image-gallery {
-            width: 50%;
-            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
+       .image-gallery {
+    width: 50%;
+    flex-shrink: 0; /* 防止被压缩 */
+    background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px; /* 保证最小高度 */
+}
         
         .gallery-container {
             position: relative;
@@ -269,16 +274,16 @@
         }
         
         /* 右侧文本区 - 宽度50% */
-        .post-details {
-            width: 50%;
-            border-left: 1px solid #eee;
-            padding: 28px 28px 28px 28px;
-            margin-right: 150px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            height: 100%;
-        }
+       .post-details {
+    width: 50%;
+    flex-shrink: 0; /* 防止被压缩 */
+    border-left: 1px solid #eee;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
+}
         
         /* 滚动条样式 */
         .post-details::-webkit-scrollbar {
@@ -492,14 +497,18 @@
         }
         
         /* 底部链接 */
-        .footer-link {
-            position: fixed;
-            bottom: 10px;
-            left: 240px;
-            font-size: 12px;
-            color: #999;
-            z-index: 100;
-        }
+       .footer-link {
+    position: fixed;
+    bottom: 10px;
+    left: 240px; /* 默认与侧边栏宽度匹配 */
+    font-size: 12px;
+    color: #999;
+    z-index: 100;
+    white-space: nowrap;
+    overflow-x: auto;
+    max-width: calc(100% - 250px);
+    pointer-events: none; /* 避免干扰点击 */
+}
         
         /* 响应式调整 */
         @media (max-width: 768px) {
