@@ -674,7 +674,7 @@
             }
             const titleElem = element.querySelector('.title');
             let title = titleElem ? titleElem.innerText.split('[')[0].trim() : '帖子';
-            showToast(`正在打开「${title}」...\n登录后可参与评论、点赞、收藏等操作`);
+            showToast(`无法查看「${title}」...\n`);
             return true;
         }
         
@@ -746,7 +746,7 @@
                 currentUser = username;
                 updateUI();
                 closeLoginModal();
-                showToast('登录成功！欢迎回来，陈宇。');
+                showToast('登录成功！欢迎回来');
             } else {
                 document.getElementById('loginError').style.display = 'block';
             }
