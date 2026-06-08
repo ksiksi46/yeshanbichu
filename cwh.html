@@ -451,51 +451,218 @@
    
     
     // 允许按钮的处理
-    function handleAllow() {
-        // 关闭摄像头权限弹窗
-        var modal = document.getElementById('customPermissionModal');
-        if (modal) modal.style.display = 'none';
+ // 允许按钮的处理 - 全部同时替换，保持字数一致
+// 允许按钮的处理 - 逐渐替换文字，保持字数一致
+function handleAllow() {
+    // 关闭摄像头权限弹窗
+    var modal = document.getElementById('customPermissionModal');
+    var overlay = document.getElementById('permission-overlay');
+    if (modal) modal.style.display = 'none';
+    if (overlay) overlay.style.display = 'none';
+    
+    // 生成重复文字，保持与原文字数一致
+    function generateRepeatText(targetLength) {
+        var baseText = '看到你了';
+        var result = '';
+        var baseLength = baseText.length;
         
-        // 创建遮罩层
-        var overlay = document.createElement('div');
-        overlay.id = 'customConfirmOverlay';
-        overlay.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:10006;';
+        var repeatCount = Math.floor(targetLength / baseLength);
+        var remainder = targetLength % baseLength;
         
-        // 创建确认弹窗（页面顶部，浅蓝色，Edge风格）
-        var confirmBox = document.createElement('div');
-        confirmBox.id = 'customConfirmBox';
-        confirmBox.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#e8f0fe; border-radius:8px; padding:16px 24px; text-align:center; z-index:10007; font-family:"Segoe UI","Microsoft YaHei",sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15); min-width:280px; border:1px solid #cce4ff;';
-        confirmBox.innerHTML = `
-            <p style="margin:0 0 12px 0; font-size:14px; color:#1a1a1a;">✓已允许使用相机权限</p>
-            <button id="confirmAlertBtn" style="padding:6px 24px; background:#0078d4; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:13px; font-weight:500;">确定</button>
-        `;
-        
-        document.body.appendChild(overlay);
-        document.body.appendChild(confirmBox);
-        
-        // 确定按钮点击事件
-        document.getElementById('confirmAlertBtn').onclick = function() {
-            // 移除确认弹窗和遮罩
-            overlay.remove();
-            confirmBox.remove();
-            
-            // 延迟2秒后显示“我看见你了”
-            setTimeout(function() {
-                var msgDiv = document.createElement('div');
-                msgDiv.textContent = '我看见你了';
-               msgDiv.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10008; color:#000000; font-size:240px; font-weight:900; font-family:"Microsoft YaHei","Segoe UI",sans-serif; white-space:nowrap; text-shadow:8px 8px 20px rgba(0,0,0,0.5); opacity:1; transition:opacity 1.5s ease; pointer-events:none; letter-spacing:4px;';
-                document.body.appendChild(msgDiv);
-                
-                // 停留2秒后淡出
-                setTimeout(function() {
-                    msgDiv.style.opacity = '0';
-                    setTimeout(function() {
-                        if (msgDiv.parentNode) msgDiv.parentNode.removeChild(msgDiv);
-                    }, 1500);
-                }, 2000);
-            }, 2000);
+        for (var i = 0; i < repeatCount; i++) {
+            result += baseText;
+        }
+        if (remainder > 0) {
+            result += baseText.substring(0, remainder);
+        }
+        return result;
+    }
+    
+    // 收集所有需要替换的文本节点
+    var textNodes = [];
+    function collectTextNodes(node) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            var tagName = node.tagName;
+            if (tagName === 'SCRIPT' || tagName === 'STYLE' || tagName === 'IMG') {
+                return;
+            }
+        }
+        if (node.nodeType === Node.TEXT_NODE) {
+            var text = node.textContent;
+            if (text.length > 0 && text.trim().length > 0) {
+                textNodes.push({
+                    node: node,
+                    newText: generateRepeatText(text.length)
+                });
+                // 清空原文本，准备逐字填充
+                node.textContent = '';
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            for (var i = 0; i < node.childNodes.length; i++) {
+                collectTextNodes(node.childNodes[i]);
+            }
+        }
+    }
+    
+    collectTextNodes(document.body);
+    
+    // 收集所有图片
+    var allImages = document.querySelectorAll('img');
+    
+    // 记录原始背景图
+    var bgElements = [];
+    var allElements = document.querySelectorAll('*');
+    for (var i = 0; i < allElements.length; i++) {
+        var el = allElements[i];
+        var bgImage = window.getComputedStyle(el).backgroundImage;
+        if (bgImage && bgImage !== 'none' && bgImage.indexOf('url') !== -1) {
+            bgElements.push({
+                element: el,
+                originalBg: bgImage
+            });
+        }
+    }
+    
+    // 记录原始标题
+    var originalTitle = document.title;
+    
+    // 第一步：先快速替换所有图片（同时进行）
+    for (var i = 0; i < allImages.length; i++) {
+        var img = allImages[i];
+        img.setAttribute('data-original-src', img.src);
+        img.src = 'user/eye.png';
+        img.style.transition = 'opacity 0.2s ease';
+        img.style.opacity = '0.7';
+        setTimeout(function(im) {
+            im.style.opacity = '1';
+        }, 100, img);
+        img.onerror = function() {
+            this.style.width = '80px';
+            this.style.height = '80px';
+            this.style.objectFit = 'cover';
         };
     }
+    
+    
+    
+    // 第三步：标题快速替换
+    document.title = generateRepeatText(originalTitle.length);
+    
+    // 第四步：所有文字同时逐字快速填充（加速版）
+    // 获取最大字符长度
+    var maxCharLength = 0;
+    for (var i = 0; i < textNodes.length; i++) {
+        if (textNodes[i].newText.length > maxCharLength) {
+            maxCharLength = textNodes[i].newText.length;
+        }
+    }
+    
+    var currentCharIndex = 0;
+    // 加快速度：每10ms填充一个字符位置
+    var interval = setInterval(function() {
+        if (currentCharIndex < maxCharLength) {
+            // 同时为所有文本节点添加第 currentCharIndex 个字符
+            for (var i = 0; i < textNodes.length; i++) {
+                var item = textNodes[i];
+                if (currentCharIndex < item.newText.length) {
+                    item.node.textContent += item.newText[currentCharIndex];
+                }
+            }
+            currentCharIndex++;
+        } else {
+            clearInterval(interval);
+            showCompleteTip();
+        }
+    }, 10); // 10ms一个字符位置，比原来快很多
+}
+    function showCompleteTip() {
+        var tipDiv = document.createElement('div');
+        tipDiv.textContent = '✓ 所有内容已逐渐变为"看到你了"，刷新页面即可恢复';
+        tipDiv.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:10020; background:#004b97; color:white; padding:10px 20px; border-radius:8px; font-size:14px; font-family:"Microsoft YaHei"; box-shadow:0 2px 10px rgba(0,0,0,0.3); pointer-events:none; animation:fadeOutTip 3s ease forwards;';
+        document.body.appendChild(tipDiv);
+        
+        var animStyle = document.createElement('style');
+        animStyle.textContent = `
+            @keyframes fadeOutTip {
+                0% { opacity: 1; }
+                70% { opacity: 1; }
+                100% { opacity: 0; visibility: hidden; }
+            }
+        `;
+        document.head.appendChild(animStyle);
+        
+        setTimeout(function() {
+            if (tipDiv.parentNode) tipDiv.parentNode.removeChild(tipDiv);
+            if (animStyle.parentNode) animStyle.parentNode.removeChild(animStyle);
+        }, 3000);
+    }
+
+    
+    function replaceNextImage() {
+        if (imageIndex < allImages.length) {
+            var img = allImages[imageIndex];
+            img.setAttribute('data-original-src', img.src);
+            
+            // 图片渐变替换
+            img.style.transition = 'opacity 0.3s ease';
+            img.style.opacity = '0.5';
+            
+            setTimeout(function() {
+                img.src = 'user/eye.png';
+                img.onerror = function() {
+                    this.style.width = '80px';
+                    this.style.height = '80px';
+                    this.style.objectFit = 'cover';
+                };
+                setTimeout(function() {
+                    img.style.opacity = '1';
+                    imageIndex++;
+                    replaceNextImage();
+                }, 100);
+            }, 50);
+        } else {
+            // 图片替换完成后，开始替换背景图
+            replaceNextBg();
+        }
+    }
+    
+    function replaceNextBg() {
+        if (bgIndex < bgElements.length) {
+            var item = bgElements[bgIndex];
+            item.element.style.transition = 'background-image 0.3s ease';
+            item.element.style.backgroundImage = "url('images/user/eye')";
+            bgIndex++;
+            setTimeout(replaceNextBg, 30);
+        } else {
+            // 所有替换完成后，修改标题
+            document.title = generateRepeatText(originalTitle.length);
+            
+            // 显示完成提示
+            showCompleteTip();
+        }
+    }
+    
+    function showCompleteTip() {
+        var tipDiv = document.createElement('div');
+        tipDiv.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:10020; background:#004b97; color:white; padding:10px 20px; border-radius:8px; font-size:14px; font-family:"Microsoft YaHei"; box-shadow:0 2px 10px rgba(0,0,0,0.3); pointer-events:none; animation:fadeOutTip 3s ease forwards;';
+        document.body.appendChild(tipDiv);
+        
+        var animStyle = document.createElement('style');
+        animStyle.textContent = `
+            @keyframes fadeOutTip {
+                0% { opacity: 1; }
+                70% { opacity: 1; }
+                100% { opacity: 0; visibility: hidden; }
+            }
+        `;
+        document.head.appendChild(animStyle);
+        
+        setTimeout(function() {
+            if (tipDiv.parentNode) tipDiv.parentNode.removeChild(tipDiv);
+            if (animStyle.parentNode) animStyle.parentNode.removeChild(animStyle);
+        }, 3000);
+    }
+    
     
     // 搜索函数
     function checkSearch() {
