@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>iPhone · 公众号</title>
@@ -23,7 +24,6 @@
             padding: 20px;
         }
 
-        /* 手机容器 */
         .phone-container {
             width: 420px;
             height: 800px;
@@ -36,7 +36,6 @@
             flex-direction: column;
         }
 
-        /* 听筒区域 */
         .dynamic-island {
             background: #f5f5f5;
             height: 40px;
@@ -73,7 +72,6 @@
             margin-left: 5px;
         }
 
-        /* 顶部状态栏 */
         .status-bar {
             background: #f5f5f5;
             color: #333;
@@ -85,7 +83,6 @@
             border-bottom: 1px solid #eee;
         }
 
-        /* 主屏幕壁纸 - 浅色清新 */
         .home-screen {
             flex: 1;
             background: linear-gradient(145deg, #f5f7fa, #eef2f5);
@@ -95,7 +92,6 @@
             position: relative;
         }
 
-        /* 返回按钮区域 */
         .nav-back {
             padding: 12px 16px;
             background: #fff;
@@ -130,14 +126,12 @@
             margin-right: 60px;
         }
 
-        /* 公众号内容容器 - 完全适配手机宽度 */
         .oa-content {
             flex: 1;
             overflow-y: auto;
             background-color: #f7f7f7;
         }
 
-        /* 以下为公众号页面样式，完全保留原设计并适配手机 */
         .container {
             max-width: 100%;
             background-color: #fff;
@@ -193,6 +187,7 @@
             flex-direction: column;
             align-items: center;
             flex-shrink: 0;
+            cursor: pointer;
         }
         
         .account-avatar {
@@ -313,11 +308,6 @@
             background-color: #eee;
             border-radius: 6px;
             overflow: hidden;
-        }
-        
-        .article-image img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
         }
         
@@ -333,7 +323,6 @@
             height: 100%;
         }
 
-        /* 文章详情浮层 */
         .article-detail-overlay {
             position: absolute;
             top: 0;
@@ -381,126 +370,124 @@
     </style>
 </head>
 <body>
-     <div style="position: fixed; top: 16px; right: 20px; background: rgba(96, 14, 14, 0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">ex01/04</div>
-<div class="phone-container">
-    <!-- 听筒区域 -->
-    <div class="dynamic-island">
-        <div class="speaker">
-            <div class="speaker-dot"></div>
-            <div class="speaker-dot"></div>
-            <div class="speaker-dot"></div>
+    <div style="position: fixed; top: 16px; right: 20px; background: rgba(96, 14, 14, 0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">ex01/04</div>
+    
+    <div class="phone-container">
+        <div class="dynamic-island">
+            <div class="speaker">
+                <div class="speaker-dot"></div>
+                <div class="speaker-dot"></div>
+                <div class="speaker-dot"></div>
+            </div>
+            <div class="camera"></div>
         </div>
-        <div class="camera"></div>
-    </div>
-    
-    <!-- 状态栏 -->
-    <div class="status-bar">
-        <span>9:41</span>
-        <span>📶 5G 🔋 100%</span>
-    </div>
-    
-    <!-- 主屏幕 - 内嵌公众号页面 -->
-    <div class="home-screen">
-    
-        <!-- 公众号内容区域 -->
-        <div class="oa-content">
-            <div class="container">
-                <!-- 顶部导航栏 -->
-                <div class="header">
-                    <div class="header-left">公众号</div>
-                    <div class="header-right">
-                        <div class="icon-btn">🔍</div>
-                        <div class="icon-btn">
-                            🔔
-                            <span class="notification-dot"></span>
-                        </div>
-                        <div class="icon-btn">□</div>
-                    </div>
-                </div>
-                
-                <!-- 公众号导航 -->
-                <div class="account-nav">
-                    <div class="account-item">
-                        <div class="account-avatar">
-                            <img src="user/健身1.webp" alt="健身盒子">
-                        </div>
-                        <div class="account-name">
-                            <span class="online-status"></span>
-                            <span>健身盒子</span>
-                        </div>
-                    </div>
-                    <div class="account-item">
-                        <div class="account-avatar">
-                            <img src="user/佛1.webp" alt="澄怀居士">
-                        </div>
-                        <div class="account-name">
-                            <span class="online-status"></span>
-                            <span>澄怀居士</span>
-                        </div>
-                    </div>
-                    <div class="account-item">
-                        <div class="account-avatar">
-                            <img src="user/职场1.webp" alt="职场潜行">
-                        </div>
-                        <div class="account-name">
-                            <span class="online-status"></span>
-                            <span>职场潜行</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 文章列表 -->
-                <div class="article-list" id="articleListContainer">
-                    <!-- 文章1 -->
-                    <div class="article-item" data-title="与佛论禅，新奇的密码编译，佛之曰密码转换器" data-content="你有没有过这样的时刻——想发一条emo的朋友圈又怕矫情，想含蓄表达喜欢却不知怎么说，想记录心情却不想让所有人看懂？「佛语密码转换器」就是为此而生：你输入普通汉语，它会自动转换成以 “<strong>佛又曰</strong>” 开头的禅意密文。比如你输入“我想你了”，它会输出：“<strong>佛又曰</strong>：+啰耶怛舍菩阇吉帝那蒙罚萨娑唵菩羯蒙室参佛输楞烁羯他呼迦那苏皤吉伊漫。”你输入“考研上岸了”，它会输出：“<strong>佛又曰</strong>：楞利佛墀萨耶南卢阿醯陀南唎帝穆尼夜啰谨唵阇尼室沙提谨尼驮数羯佛度地漫。”所有转换都基于《六祖坛经》《金刚经》等经典句式，把喜怒哀乐披上禅意的外衣。">
-                        <div class="article-left">
-                            <div class="article-header">
-                                <div class="article-avatar">
-                                    <img src="user/佛1.webp" alt="澄怀居士">
-                                </div>
-                                <div class="article-info">
-                                    <span class="article-source">澄怀居士</span>
-                                    <span class="article-time">16天前</span>
-                                </div>
+        
+        <div class="status-bar">
+            <span>10:12</span>
+            <span><i class="fas fa-signal"></i> 5G  <i class="fas fa-battery-full"></i>  100%</span>
+        </div>
+        
+        <div class="home-screen">
+            <!-- 顶部返回区域 - 已绑定正确的事件 -->
+            
+            
+            <div class="oa-content">
+                <div class="container">
+                    <div class="header">
+                         <span class="back-text" id="topBackText"><</span>
+                        <div class="header-left">公众号</div>
+                        <div class="header-right">
+                            <div class="icon-btn"><i class="fas fa-search"></i></div>
+                            <div class="icon-btn">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-dot"></span>
                             </div>
-                         <div class="article-title">与佛论禅，新奇的密码编译，佛之曰密码转换器</div>
-    
-                        </div>
-                        <div class="article-right">
-                             <img src="user/佛2.webp" alt="山东教育电视台" class="article-image ">
-                
                         </div>
                     </div>
                     
-                    <!-- 文章2 -->
-                    <div class="article-item" data-title="实测6款AI编程助手，程序员离失业还有多远？" data-content="最近两年AI写代码的能力突飞猛进，从GitHub Copilot到Cursor，再到国内的通义灵码、豆包MarsCode，到底哪个更好用？我们实测了6款主流AI编程助手，从代码补全准确率、上下文理解能力、生成速度三个维度做了对比。
+                    <div class="account-nav">
+                        <div class="account-item">
+                            <div class="account-avatar">
+                                <img src="user/健身1.webp" alt="健身盒子">
+                            </div>
+                            <div class="account-name">
+                                <span class="online-status"></span>
+                                <span>健身盒子</span>
+                            </div>
+                        </div>
+                        <div class="account-item">
+                            <div class="account-avatar">
+                                <img src="user/佛1.webp" alt="澄怀居士">
+                            </div>
+                            <div class="account-name">
+                                <span class="online-status"></span>
+                                <span>澄怀居士</span>
+                            </div>
+                        </div>
+                        <div class="account-item">
+                            <div class="account-avatar">
+                                <img src="user/职场1.webp" alt="职场潜行">
+                            </div>
+                            <div class="account-name">
+                                <span class="online-status"></span>
+                                <span>职场潜行</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="article-list" id="articleListContainer">
+                        <!-- 文章1 -->
+                        <div class="article-item" 
+                            data-title="与佛论禅，新奇的密码编译，佛之曰密码转换器" 
+                            data-content='你有没有过这样的时刻——想发一条emo的朋友圈又怕矫情，想含蓄表达喜欢却不知怎么说，想记录心情却不想让所有人看懂？「佛语密码转换器」就是为此而生：你输入普通汉语，它会自动转换成以 "<strong>佛又曰</strong>" 开头的禅意密文。比如你输入"我想你了"，它会输出："<strong>佛又曰</strong>：+啰耶怛舍菩阇吉帝那蒙罚萨娑唵菩羯蒙室参佛输楞烁羯他呼迦那苏皤吉伊漫。"你输入"考研上岸了"，它会输出："<strong>佛又曰</strong>：楞利佛墀萨耶南卢阿醯陀南唎帝穆尼夜啰谨唵阇尼室沙提谨尼驮数羯佛度地漫。"所有转换都基于《六祖坛经》《金刚经》等经典句式，把喜怒哀乐披上禅意的外衣。<br><br>网站链接：<a href="https://tool.nxux.cn/api/jm/" target="_blank" rel="noopener noreferrer" style="color:#07C160; text-decoration:none;">https://tool.nxux.cn/api/jm/</a>'>
+                            <div class="article-left">
+                                <div class="article-header">
+                                    <div class="article-avatar">
+                                        <img src="user/佛1.webp" alt="澄怀居士">
+                                    </div>
+                                    <div class="article-info">
+                                        <span class="article-source">澄怀居士</span>
+                                        <span class="article-time">16天前</span>
+                                    </div>
+                                </div>
+                                <div class="article-title">与佛论禅，新奇的密码编译，佛之曰密码转换器</div>
+                            </div>
+                            <div class="article-right">
+                                <img src="user/佛2.webp" alt="文章图片" class="article-image">
+                            </div>
+                        </div>
+                        
+                        <!-- 文章2 -->
+                        <div class="article-item" 
+                            data-title="实测6款AI编程助手，程序员离失业还有多远？" 
+                            data-content="最近两年AI写代码的能力突飞猛进，从GitHub Copilot到Cursor，再到国内的通义灵码、豆包MarsCode，到底哪个更好用？我们实测了6款主流AI编程助手，从代码补全准确率、上下文理解能力、生成速度三个维度做了对比。
 
-先说结论：Co-pilot依然是王者，但Cursor的“Agent模式”让人惊艳——你只需要描述需求，它能自动创建文件、写代码、跑终端。对于重复性CRUD工作，AI的效率已经超过初级程序员。
+先说结论：Co-pilot依然是王者，但Cursor的'Agent模式'让人惊艳——你只需要描述需求，它能自动创建文件、写代码、跑终端。对于重复性CRUD工作，AI的效率已经超过初级程序员。
 
 不过别慌，真正复杂的系统设计、业务理解、跨团队协作，AI短期内还替代不了。建议25岁左右的开发者：少刷焦虑贴，多学架构思维，把AI当成超级辅助，而不是对手。
 
 评论区聊聊：你现在用哪款AI写代码？">
-                        <div class="article-left">
-                            <div class="article-header">
-                                <div class="article-avatar">
-                                    <img src="user/ai1.webp" alt="创青春">
+                            <div class="article-left">
+                                <div class="article-header">
+                                    <div class="article-avatar">
+                                        <img src="user/ai1.webp" alt="创青春">
+                                    </div>
+                                    <div class="article-info">
+                                        <span class="article-source">硬核科技论</span>
+                                        <span class="article-time">2月前</span>
+                                    </div>
                                 </div>
-                                <div class="article-info">
-                                    <span class="article-source">硬核科技论</span>
-                                    <span class="article-time">2月前</span>
-                                </div>
+                                <div class="article-title">实测6款AI编程助手，程序员离失业还有多远？</div>
                             </div>
-                            <div class="article-title">实测6款AI编程助手，程序员离失业还有多远？</div>
-                        </div>
-                        <div class="article-right">
-                            <div class="article-image">
-                                <img src="user/ai2.webp" alt="人物照片">
+                            <div class="article-right">
+                                <img src="user/ai2.webp" alt="文章图片" class="article-image">
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- 文章3 -->
-                    <div class="article-item" data-title="25岁后代谢真的会变慢？3个动作拯救“过劳肥”" data-content="很多兄弟工作两三年后发现：明明吃得和大学一样多，肚子却越来越大。这不是错觉——25岁后基础代谢平均每年下降1%-2%，加上久坐、外卖、熬夜，脂肪自然找上门。
+                        
+                        <!-- 文章3 -->
+                        <div class="article-item" 
+                            data-title="25岁后代谢真的会变慢？3个动作拯救'过劳肥'" 
+                            data-content="很多兄弟工作两三年后发现：明明吃得和大学一样多，肚子却越来越大。这不是错觉——25岁后基础代谢平均每年下降1%-2%，加上久坐、外卖、熬夜，脂肪自然找上门。
 
 分享3个不需要去健身房的有效动作，每天15分钟就能改善：
 
@@ -514,148 +501,173 @@
 用一桶水或书包代替哑铃，矫正久坐带来的髋关节僵硬，还能刺激睾酮分泌。
 
 坚持一个月，你会发现精力变好、腰围减小。别等30岁再后悔，现在就开始。">
-                        <div class="article-left">
-                            <div class="article-header">
-                                <div class="article-avatar">
-                                    <img src="user/健身1.webp" alt="数模加油站">
+                            <div class="article-left">
+                                <div class="article-header">
+                                    <div class="article-avatar">
+                                        <img src="user/健身1.webp" alt="数模加油站">
+                                    </div>
+                                    <div class="article-info">
+                                        <span class="article-source">健身盒子</span>
+                                        <span class="article-time">2月前</span>
+                                    </div>
                                 </div>
-                                <div class="article-info">
-                                    <span class="article-source">健身盒子</span>
-                                    <span class="article-time">2月前</span>
-                                </div>
+                                <div class="article-title">25岁后代谢真的会变慢？3个动作拯救"过劳肥"</div>
                             </div>
-                            <div class="article-title">25岁后代谢真的会变慢？3个动作拯救“过劳肥”</div>
-                        </div>
-                        <div class="article-right">
-                            <div class="article-image">
-                                <img src="user/健身2.webp" alt="小狗">
+                            <div class="article-right">
+                                <img src="user/健身2.webp" alt="文章图片" class="article-image">
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- 文章4 -->
-                    <div class="article-item" data-title="入职3年还在原地踏步？高薪同龄人都在用的“职场杠杆思维" data-content="小张和小李同一年进公司，3年后小张成了主管，小李还在做执行。区别在哪？不是能力，是思维方式。
+                        
+                        <!-- 文章4 -->
+                        <div class="article-item" 
+                            data-title="入职3年还在原地踏步？高薪同龄人都在用的'职场杠杆思维'" 
+                            data-content="小张和小李同一年进公司，3年后小张成了主管，小李还在做执行。区别在哪？不是能力，是思维方式。
 
-我发现那些晋升快的年轻人，都在有意识使用四种“杠杆”：
+我发现那些晋升快的年轻人，都在有意识使用四种'杠杆'：
 
 1. 信息杠杆
-主动参加跨部门会议、多看行业报告，掌握别人不知道的信息。老板问你“最近有什么新动向”时，你能说出三条，就已经赢了。
+主动参加跨部门会议、多看行业报告，掌握别人不知道的信息。老板问你'最近有什么新动向'时，你能说出三条，就已经赢了。
 
 2. 工具杠杆
 花一周时间学Excel高级函数/ Python自动化，以后每周能省下5小时重复劳动。时间花在刀刃上。
 
 3. 向上杠杆
-定期向领导同步工作进展，主动问“还有什么我能帮忙的”。不是拍马屁，是让别人看见你的价值。
+定期向领导同步工作进展，主动问'还有什么我能帮忙的'。不是拍马屁，是让别人看见你的价值。
 
 4. 人脉杠杆
 每月约一位不同部门的同事吃午饭，了解他们在做什么。关键时刻，人脉就是信息通道。
 
-25岁到30岁这五年，差距就是这样一点点拉开的。今天就能做的事：列一张“我能用杠杆优化什么”的清单。">
-                        <div class="article-left">
-                            <div class="article-header">
-                                <div class="article-avatar">
-                                    <img src="user/职场1.webp" alt="事务所招聘网">
+25岁到30岁这五年，差距就是这样一点点拉开的。今天就能做的事：列一张'我能用杠杆优化什么'的清单。">
+                            <div class="article-left">
+                                <div class="article-header">
+                                    <div class="article-avatar">
+                                        <img src="user/职场1.webp" alt="事务所招聘网">
+                                    </div>
+                                    <div class="article-info">
+                                        <span class="article-source">职场潜行</span>
+                                        <span class="article-time">3月前</span>
+                                    </div>
                                 </div>
-                                <div class="article-info">
-                                    <span class="article-source">职场潜行</span>
-                                    <span class="article-time">3月前</span>
-                                </div>
+                                <div class="article-title">入职3年还在原地踏步？高薪同龄人都在用的"职场杠杆思维"</div>
                             </div>
-                            <div class="article-title">入职3年还在原地踏步？高薪同龄人都在用的“职场杠杆思维”</div>
-                        </div>
-                        <div class="article-right">
-                            <div class="article-image">
-                                <img src="user/职场2.webp" alt="腾讯">
+                            <div class="article-right">
+                                <img src="user/职场2.webp" alt="文章图片" class="article-image">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- 文章详情弹层（在手机框架内） -->
-    <div class="article-detail-overlay" id="articleDetailOverlay">
-        <div class="detail-header">
-            <div class="detail-back" id="closeDetailBtn">←</div>
-            <div class="detail-title" id="detailTitle">文章详情</div>
+        
+        <!-- 文章详情浮层 -->
+        <div class="article-detail-overlay" id="articleDetailOverlay">
+            <div class="detail-header">
+                <div class="detail-back" id="closeDetailBtn">←</div>
+                <div class="detail-title" id="detailTitle">文章详情</div>
+            </div>
+            <div class="detail-content" id="detailContent">
+                加载中...
+            </div>
         </div>
-        <div class="detail-content" id="detailContent">
-            加载中...
-        </div>
     </div>
-</div>
 
-<script>
-    // 手机框架提示：返回按钮仅用于关闭详情或回到框架初始状态（无实际跳转）
-    const fakeBackBtn = document.getElementById('fakeBackBtn');
-    const fakeBackText = document.getElementById('fakeBackText');
-    
-    // 如果点击返回，显示轻提示——因为是纯展示框架，不做页面跳转
-    function showFrameworkTip() {
-        let tip = document.createElement('div');
-        tip.innerText = '公众号内容已嵌入手机框架';
-        tip.style.cssText = `
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            z-index: 10000;
-            white-space: nowrap;
-        `;
-        document.body.appendChild(tip);
-        setTimeout(() => tip.remove(), 1500);
-    }
-    
-    if (fakeBackBtn) {
-        fakeBackBtn.addEventListener('click', showFrameworkTip);
-    }
-    if (fakeBackText) {
-        fakeBackText.addEventListener('click', showFrameworkTip);
-    }
-    
-    // 文章点击显示详情
-    const articleItems = document.querySelectorAll('.article-item');
+    <script>
+          // 获取元素
+    const topBackBtn = document.querySelector('.back-btn');
+    const topBackText = document.querySelector('.back-text');
     const detailOverlay = document.getElementById('articleDetailOverlay');
+    const closeDetailBtn = document.getElementById('closeDetailBtn');
     const detailTitle = document.getElementById('detailTitle');
     const detailContentDiv = document.getElementById('detailContent');
-    const closeDetailBtn = document.getElementById('closeDetailBtn');
     
+    // 返回到微信聊天列表的函数
+    function goBackToWechat() {
+        // 方法1：关闭当前页面（如果在微信内）
+        if (typeof WeixinJSBridge !== 'undefined') {
+            WeixinJSBridge.call('closeWindow');
+        } 
+        // 方法2：返回上一页（如果是从微信跳转过来的）
+        else if (window.history.length > 1) {
+            window.history.back();
+        }
+        // 方法3：跳转到微信.html
+        else {
+            window.location.href = '微信.html';
+        }
+    }
+    
+    // 关闭详情浮层的函数
+    function closeDetailOverlay() {
+        if (detailOverlay && detailOverlay.style.display === 'flex') {
+            detailOverlay.style.display = 'none';
+            return true;  // 表示关闭了详情浮层
+        }
+        return false;  // 表示没有详情浮层打开
+    }
+    
+    // 顶部返回按钮点击事件
+    function handleBackClick(e) {
+        if (e) e.stopPropagation();
+        
+        // 优先关闭详情浮层
+        const closed = closeDetailOverlay();
+        
+        // 如果没有详情浮层打开，则返回微信
+        if (!closed) {
+            goBackToWechat();
+        }
+    }
+    
+    // 绑定顶部返回按钮
+    if (topBackBtn) {
+        topBackBtn.addEventListener('click', handleBackClick);
+    }
+    if (topBackText) {
+        topBackText.addEventListener('click', handleBackClick);
+    }
+    
+    // 详情页内部的返回按钮
+    if (closeDetailBtn) {
+        closeDetailBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeDetailOverlay();
+        });
+    }
+    
+    // 点击遮罩关闭详情
+    if (detailOverlay) {
+        detailOverlay.addEventListener('click', function(e) {
+            if (e.target === detailOverlay) {
+                closeDetailOverlay();
+            }
+        });
+    }
+    
+    // 文章列表点击事件
+    const articleItems = document.querySelectorAll('.article-item');
     articleItems.forEach(item => {
+        // 如果文章有 data-url 属性，则跳过详情弹层
+        if (item.hasAttribute('data-url')) {
+            return;
+        }
+        
         item.addEventListener('click', function(e) {
             e.stopPropagation();
             const title = this.getAttribute('data-title') || this.querySelector('.article-title')?.innerText || '文章';
             const content = this.getAttribute('data-content') || '暂无详细内容，请稍后查看。';
-            detailTitle.innerText = title.length > 22 ? title.slice(0,22) + '...' : title;
-            detailContentDiv.innerHTML = `
-                <div style="font-size:18px; font-weight:600; margin-bottom:16px; color:#07C160;">${title}</div>
-                <div style="line-height:1.7; font-size:16px;">${content}</div>
-                <div style="margin-top:24px; padding-top:16px; border-top:1px solid #eee; color:#999; font-size:13px;">阅读原文 </div>
-            `;
-            detailOverlay.style.display = 'flex';
+            if (detailTitle && detailContentDiv && detailOverlay) {
+                detailTitle.innerText = title.length > 22 ? title.slice(0,22) + '...' : title;
+                detailContentDiv.innerHTML = `
+                    <div style="font-size:18px; font-weight:600; margin-bottom:16px; color:#07C160;">${title}</div>
+                    <div style="line-height:1.7; font-size:16px;">${content}</div>
+                    <div style="margin-top:24px; padding-top:16px; border-top:1px solid #eee; color:#999; font-size:13px;">阅读原文</div>
+                `;
+                detailOverlay.style.display = 'flex';
+            }
         });
     });
     
-    // 关闭详情
-    if (closeDetailBtn) {
-        closeDetailBtn.addEventListener('click', function() {
-            detailOverlay.style.display = 'none';
-        });
-    }
-    
-    // 点击遮罩关闭（可选）
-    detailOverlay.addEventListener('click', function(e) {
-        if (e.target === detailOverlay) {
-            detailOverlay.style.display = 'none';
-        }
-    });
-    
-    // 公众号内图标提示（保留原质感，轻提示）
+    // 公众号内其他按钮提示
     const iconBtns = document.querySelectorAll('.icon-btn, .account-item');
     iconBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -679,14 +691,6 @@
             setTimeout(() => tip.remove(), 1000);
         });
     });
-    
-    // 阻止文章列表内事件冒泡引起的多余提示
-    const articleListContainer = document.getElementById('articleListContainer');
-    if (articleListContainer) {
-        articleListContainer.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-    }
 </script>
 </body>
 </html>
