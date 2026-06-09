@@ -1024,7 +1024,7 @@
         <div class="chat-list">
             <!-- 陈宇聊天 -->
             <div class="chat-item" id="chenyuChat">
-                <img src="images/我.webp" class="chat-avatar" id="chenyuListAvatar" alt="avatar">
+                <img src="images/我.webp" class="chat-avatar"  alt="avatar">
                 <div class="chat-info">
                     <div class="chat-name">陈宇</div>
                     <div class="chat-preview">陈宇？回个话啊</div>
@@ -1171,7 +1171,7 @@
     </div>
     <div class="msg-time">15:50</div>
  <div class="message-row message-left" >
-        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar15">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar16">
         <div class="msg-bubble">我前几天发现的，七闻论坛</div>
     </div>
     <div class="msg-time">15:50</div>
@@ -1183,7 +1183,7 @@
     <div class="msg-time">15:50</div>
 
 <div class="message-row message-left" >
-        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar15">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar17">
         <div class="msg-bubble">你用我的号吧，注册挺麻烦的，账号是我微信号，密码是咱宿舍口号拼音首字母</div>
     </div>
     <div class="msg-time">15:51</div>
@@ -1198,7 +1198,7 @@
     <div class="detail-time">2026年1月25日 凌晨</div>
     
     <div class="message-row message-left">
-        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar16">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar18">
         <div class="msg-bubble">失眠了，想前任了😔</div>
     </div>
     <div class="msg-time">02:34</div>
@@ -1210,7 +1210,7 @@
     <div class="msg-time">02:36</div>
     
     <div class="message-row message-left">
-        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar17">
+        <img src="images/我.webp" class="msg-avatar" id="chenyuMsgAvatar19">
         <div class="msg-bubble">刷到她朋友圈了，好像有对象了</div>
     </div>
     <div class="msg-time">02:38</div>
@@ -1465,7 +1465,10 @@
         document.getElementById('chenyuMsgAvatar14'),
         document.getElementById('chenyuMsgAvatar15'),
         document.getElementById('chenyuMsgAvatar16'),
-        document.getElementById('chenyuMsgAvatar17')
+        document.getElementById('chenyuMsgAvatar17'),
+        document.getElementById('chenyuMsgAvatar18'),
+        document.getElementById('chenyuMsgAvatar19'),
+        document.getElementById('chenyuMsgAvatar20'),
        ];
     
     // 威信打开动画
@@ -1647,7 +1650,7 @@ function startBgAudio() {
         bgAudio.pause();
         bgAudio.currentTime = 0;
     }
-    bgAudio = new Audio('微信.MP3');
+    bgAudio = new Audio('微信.mp3');
     bgAudio.loop = true;
     bgAudio.volume = 0.6;
     bgAudio.play().catch(e => console.log('音频播放失败:', e));
