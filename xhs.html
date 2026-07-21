@@ -178,13 +178,15 @@ body {
 
 /* 左侧图片区 - 修复：填满父容器高度 */
 .image-gallery {
-    width: 50%;
+    width: 36.8%;
     flex-shrink: 0;
     background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
     position: relative;
     overflow: hidden;
     height: 100%;
-    min-height: 400px;
+    min-height: 100px;
+    aspect-ratio: 3 / 4;  /* 新增：3:4 比例 */
+    align-self: center;   /* 垂直居中 */
 }
 
 /* 图片容器 - 占满整个图片区 */
