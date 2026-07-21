@@ -546,7 +546,19 @@ body {
     font-weight: normal;
     line-height: 1.2;
 }
+.comment-repl {
+    margin-left: 40px;
+    width: calc(100% - 40px);
+    font-size: 0.9em;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
 
+.comment-repl img {
+    width: 28px !important;
+    height: 28px !important;
+}
 /* 响应式调整 */
 @media (max-width: 768px) {
     .card-inner {
@@ -826,7 +838,7 @@ body {
         <span>⋯</span>
     </div>
     <!-- 用户再次回复 -->
-    <div class="comment-item ">
+    <div class="comment-item comment-repl ">
         <img src="user/5.webp" width='24' height='24' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='15' fill='%23ddd'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23999'/%3E%3Ccircle cx='20' cy='10' r='3' fill='%23999'/%3E%3Cpath d='M8,20 Q15,25 22,20' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="评论者头像">
         <div class="comment-content">
             <div class="comment-username">元宝不叫元宝</div>
