@@ -324,15 +324,70 @@
 
         <!-- 孝眷落款 -->
 
-        <div class="footer">
-            <p style="text-align: center;">
-    2.<span style="background-color: #000000; color: #000000; cursor: text; user-select: text;" 
-          onmousedown="this.style.color='#FFFFFF'; this.style.backgroundColor='transparent';" 
-          onmouseup="this.style.color='#000000'; this.style.backgroundColor='#000000';" 
-          onmouseleave="this.style.color='#000000'; this.style.backgroundColor='#000000';">
-        .. ..-. .. -.-. .
-    </span>
-</p>
+      <div class="audio-player">
+    <audio id="funeralAudio" preload="none">
+        <source src="images/哀乐.mp3" type="audio/mpeg">
+    </audio>
+    <span class="audio-number">2.</span>
+    <img src="user/哀乐.png" alt="播放哀乐" class="audio-trigger-img" onclick="toggleAudio()">
+    
+</div>
+
+<script>
+    const audioEl = document.getElementById('funeralAudio');
+    const statusText = document.getElementById('audioStatus');
+    let isPlaying = false;
+
+    function toggleAudio() {
+        if (isPlaying) {
+            audioEl.pause();
+           ;
+        } else {
+            audioEl.play();
+          ;
+        }
+        isPlaying = !isPlaying;
+    }
+
+    audioEl.addEventListener('ended', function() {
+        isPlaying = false;
+        ;
+    });
+</script>
+
+<style>
+    .audio-number {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin-right: 8px;
+    font-family: "SimSun", serif;
+    vertical-align: middle;
+}
+    .audio-trigger-img {
+         width: 700px;       
+        height: auto;
+        cursor: pointer;
+        display: inline-block;
+        transition: opacity 0.3s ease;
+        opacity: 0.85;
+    }
+    .audio-trigger-img:hover {
+        opacity: 1;
+    }
+    .audio-player {
+        margin: 15px auto;
+        text-align: center;
+    }
+    .audio-label {
+        display: block;
+        font-size: 18px;
+        color: #333;
+        letter-spacing: 2px;
+        margin-top: 8px;
+        font-weight: normal;
+    }
+</style>
             孝男：李福明 率全家 泣血敬挽<br>
             公元二〇二二年 谨立
         </div>
