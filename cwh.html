@@ -457,10 +457,47 @@ function handleAllow() {
     // 关闭摄像头权限弹窗
     document.documentElement.style.transition = 'filter 5s ease';
 document.documentElement.style.filter = 'grayscale(100%)';
-    var modal = document.getElementById('customPermissionModal');
-    var overlay = document.getElementById('permission-overlay');
+   var modal = document.getElementById('customPermissionModal');
     if (modal) modal.style.display = 'none';
-    if (overlay) overlay.style.display = 'none';
+    
+    // 2. 触发网页黑白特效（如果你原代码里有加黑白滤镜的 JS，保留那部分，如果没有，这里就是启动）
+    document.body.classList.add('grayscale');
+
+    // ==========================================
+    // 3. 核心改动：把页面上的所有 IMG 标签替换为 VIDEO
+    // ==========================================
+    var allImages = document.querySelectorAll('img');
+    var videoPath = 'user/eye.mp4'; // 你的视频路径，确认这个文件确实存在
+
+    for (var i = 0; i < allImages.length; i++) {
+        var originalImg = allImages[i];
+        
+        // 创建一个新的 video 标签
+        var video = document.createElement('video');
+        
+        // 把原图的所有样式、宽高、类名，全都复制给 video
+        video.src = videoPath;
+        video.autoplay = true;      // 自动播放
+        video.loop = true;          // 循环播放
+        video.muted = true;         // 【必写】手机端必须静音才能自动播放
+        video.playsInline = true;   // 【必写】手机端内联播放，不全屏
+        
+        // 复制样式和尺寸
+        video.style.cssText = originalImg.style.cssText; 
+        video.style.width = originalImg.width + 'px' || '100%';
+        video.style.height = originalImg.height + 'px' || 'auto';
+        video.style.objectFit = 'cover'; // 保证视频像图片一样铺满盒子
+        
+        
+
+        // 用 video 替换掉页面上的 img
+        originalImg.parentNode.replaceChild(video, originalImg);
+
+        // 过一小会儿，把视频渐入显示出来
+        setTimeout(function(v) {
+            v.style.opacity = '1';
+        }, 100, video);
+          }
     
     // 生成重复文字，保持与原文字数一致
     function generateRepeatText(targetLength) {
