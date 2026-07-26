@@ -455,6 +455,8 @@
 // 允许按钮的处理 - 逐渐替换文字，保持字数一致
 function handleAllow() {
     // 关闭摄像头权限弹窗
+    document.documentElement.style.transition = 'filter 5s ease';
+document.documentElement.style.filter = 'grayscale(100%)';
     var modal = document.getElementById('customPermissionModal');
     var overlay = document.getElementById('permission-overlay');
     if (modal) modal.style.display = 'none';
@@ -608,7 +610,7 @@ function handleAllow() {
             img.style.opacity = '0.5';
             
             setTimeout(function() {
-                img.src = 'user/eye.png';
+                img.src = 'user/eye.gif';
                 img.onerror = function() {
                     this.style.width = '80px';
                     this.style.height = '80px';
