@@ -1,639 +1,686 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>祈福</title>
-<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Creepster&family=Uncial+Antiqua&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --blood: #8B0000;
-    --deep-blood: #2a0000;
-    --black: #0a0000;
-    --text: #0d0000;
-    --drip: #cc0000;
-  }
- 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
- 
-  body {
-  background: url('user/祭祀背景.gif') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
-  font-family: 'Creepster', cursive;
-  color: #ecd5b0;
-  overflow-x: hidden;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='5' fill='%238B0000'/%3E%3C/svg%3E"), crosshair;
-}
-  
-  /* 全局噪点叠层 */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.6;
-  }
-   /* 页面最上方的仪式开场文本 —— 无框，只有文字，字号加大 */
-  .ritual-opening {
-    text-align: center;
-    font-family: 'Uncial Antiqua', 'Creepster', monospace;
-    font-size: 2rem;
-    line-height: 1.9;
-    color: #f0cfae;
-    text-shadow: 0 0 3px #00182a;
-    letter-spacing: 0.8px;
-    max-width: 880px;
-    margin: 0 auto 45px auto;
-    background: none;
-    border: none;
-    padding: 0 16px;
-  }
-  .ritual-opening p {
-    margin-bottom: 20px;
-  }
-  .chant-line {
-    font-family: 'Nosifer', cursive;
-    font-size: 1.4rem;
-    color: #cc7a4c;
-    letter-spacing: 4px;
-    margin-top: 12px;
-    display: inline-block;
-    background: none;
-    border-top: 1px dashed #8b3a2a;
-    border-bottom: 1px dashed #8b3a2a;
-    padding: 8px 22px;
-  }
-
-  /* 首屏遮罩层：只显示祈福之式，逼迫用户下滑 */
-  .fullscreen-cover {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: radial-gradient(ellipse at center, #440101 0%, #3a0000 40%, #0d0000 100%);
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: default;
-    transition: opacity 1s ease, visibility 1s ease;
-    backdrop-filter: blur(0px);
-  }
-
-  .fullscreen-cover.hide {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .prayer-title-cover {
-    text-align: center;
-    font-family: 'Nosifer', 'Uncial Antiqua', cursive;
-    font-size: 8.5rem;
-    font-weight: 800;
-    color: #000000;
-    text-shadow: 0 0 20px #f7f7f7, 0 0 40px #8b0000, 2px 2px 0 #2a0000;
-    letter-spacing: 12px;
-    margin-bottom: 30px;
-    animation: titleFlicker 3s infinite;
-  }
-
-  .scroll-hint {
-    font-family: 'Creepster', cursive;
-    font-size: 1.2rem;
-    color: #c98f6e;
-    text-shadow: 0 0 8px #2a0000;
-    letter-spacing: 2px;
-    margin-top: 40px;
-    opacity: 0.8;
-    animation: bounceHint 1.8s infinite ease;
-  }
-
-  .scroll-hint i {
-    display: block;
-    font-size: 1.8rem;
-    margin-top: 8px;
-    font-style: normal;
-  }
-
-  @keyframes bounceHint {
-    0%, 100% { transform: translateY(0); opacity: 0.6; }
-    50% { transform: translateY(10px); opacity: 1; }
-  }
-
-  @keyframes titleFlicker {
-    0%, 18%, 22%, 25%, 53%, 57%, 100% {
-      text-shadow: 0 0 20px #ff0000, 0 0 40px #8b0000, 2px 2px 0 #2a0000;
-      opacity: 1;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>祈福 · 窅</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Creepster&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --blood: #8B0000; --deep-blood: #2a0000; --black: #0a0000; --text: #0d0000; --drip: #cc0000; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      font-family: 'Creepster', cursive;
+      color: #ecd5b0;
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='5' fill='%238B0000'/%3E%3C/svg%3E"), crosshair;
+      position: relative;
+      background: #0a0000;
     }
-    20%, 24%, 55% {
-      text-shadow: 0 0 5px #ff0000, 0 0 10px #8b0000;
-      opacity: 0.85;
+    #bg-video {
+      position: fixed; top: 50%; left: 50%; min-width: 100vw; min-height: 100vh;
+      width: auto; height: auto; transform: translate(-50%, -50%);
+      object-fit: cover; z-index: -2;
     }
-  }
-
-  /* 下方实际内容（初始被遮挡，滚动后可见） */
-  .main-content {
-    position: relative;
-    z-index: 1;
-    padding-top: 20px;
-  }
-
-  /* 主容器 */
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px 30px 60px;
-  }
- 
-  /* 行布局：左右各5个正方形GIF + 中间放置纯文本（无框） */
-  .ritual-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 30px;
-  }
- 
-  /* 左右两列：只放正方形GIF */
-  .gif-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
-  .left-col { align-items: flex-end; }
-  .right-col { align-items: flex-start; }
- 
-  /* GIF卡片 - 正方形，无底部文本，只有图像 */
-  .gif-card {
-    width: 260px;
-    height: 260px;
-    background: rgba(10, 0, 0, 0.65);
-    border: 1px solid #5a1a1a;
-    box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(139,0,0,0.2);
-    border-radius: 6px;
-    backdrop-filter: blur(2px);
-    transition: transform 0.2s;
-    overflow: hidden;
-  }
-  .gif-card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 0 28px #8b000055;
-    border-color: #9b2a2a;
-  }
- 
-  .gif-wrap {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    background: #0a0000;
-  }
-  .real-gif {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0.92;
-  }
-  .gif-wrap::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px);
-    pointer-events: none;
-    z-index: 2;
-  }
- 
-  /* 中央区域 —— 纯文本，无任何边框/背景框，字号较大，邪典古拙 */
-  .middle-texts {
-    flex-shrink: 0;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 28px;
-    margin: 0 10px;
-  }
-  .ritual-step {
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: 'Uncial Antiqua', 'Creepster', monospace;
-    font-size: 1.3rem;
-    line-height: 1.65;
-    color: #ffffff;
-    text-shadow: 0 0 10px #000000;
-    transition: all 0.1s;
-  }
-  /* 仅保留标题作为微弱区分，无框无背景 */
- .step-title {
-    font-family: 'Nosifer', cursive;
-    font-size: 2em;
-    letter-spacing: 2px;
-    color: #ff0202;
-    margin-bottom: 8px;
-    display: block;
-    text-align: center;
-    border-bottom: 1px dotted #8b3a2a;
-    padding-bottom: 6px;
-    width: 100%;
+    #bg-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999; opacity: 0.6;
+    }
+    .ritual-opening {
+      text-align: center; font-family: 'Uncial Antiqua', 'Creepster', monospace;
+      font-size: 2rem; line-height: 1.9; color: #f0cfae;
+      text-shadow: 0 0 3px #00182a; letter-spacing: 0.8px;
+      max-width: 880px; margin: 0 auto 45px auto; padding: 0 16px;
+    }
+    .ritual-opening p { margin-bottom: 20px; }
+    .chant-line {
+      font-family: 'Nosifer', cursive; font-size: 1.4rem; color: #cc7a4c;
+      letter-spacing: 4px; margin-top: 12px; display: inline-block;
+      border-top: 1px dashed #8b3a2a; border-bottom: 1px dashed #8b3a2a;
+      padding: 8px 22px;
+    }
+    .fullscreen-cover {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: radial-gradient(ellipse at center, #440101 0%, #3a0000 40%, #0d0000 100%);
+      z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      cursor: default; transition: opacity 1s ease, visibility 1s ease;
+    }
+    .fullscreen-cover.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    .prayer-title-cover {
+      font-family: 'Nosifer', 'Uncial Antiqua', cursive;
+      font-size: 8.5rem; font-weight: 800; color: #000000;
+      text-shadow: 0 0 20px #f7f7f7, 0 0 40px #8b0000, 2px 2px 0 #2a0000;
+      letter-spacing: 12px; margin-bottom: 30px;
+      animation: titleFlicker 3s infinite;
+    }
+    @keyframes titleFlicker {
+      0%,18%,22%,25%,53%,57%,100% { text-shadow: 0 0 20px #ff0000, 0 0 40px #8b0000, 2px 2px 0 #2a0000; opacity: 1; }
+      20%,24%,55% { text-shadow: 0 0 5px #ff0000, 0 0 10px #8b0000; opacity: 0.85; }
+    }
+    .main-content { position: relative; z-index: 1; padding-top: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px 30px 60px; }
+    .ritual-row { display: flex; justify-content: space-between; align-items: stretch; gap: 30px; }
+    .gif-column { flex: 1; display: flex; flex-direction: column; gap: 32px; }
+    .left-col { align-items: flex-end; }
+    .right-col { align-items: flex-start; }
+    .gif-card { width: 260px; height: 260px; background: rgba(10, 0, 0, 0.65); border: 1px solid #5a1a1a; box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(139,0,0,0.2); border-radius: 6px; backdrop-filter: blur(2px); transition: transform 0.2s; overflow: hidden; }
+    .gif-card:hover { transform: scale(1.01); box-shadow: 0 0 28px #8b000055; border-color: #9b2a2a; }
+    .gif-wrap { width: 100%; height: 100%; position: relative; overflow: hidden; background: #0a0000; }
+    .real-gif { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.92; }
+    .gif-wrap::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px); pointer-events: none; z-index: 2; }
+    .middle-texts { flex-shrink: 0; width: 400px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; margin: 0 10px; }
+    .ritual-step { background: none; border: none; padding: 0; font-family: 'Uncial Antiqua', 'Creepster', monospace; font-size: 1.3rem; line-height: 1.65; color: #ffffff; text-shadow: 0 0 10px #000000; }
+    .step-title { font-family: 'Nosifer', cursive; font-size: 2em; letter-spacing: 2px; color: #ff0202; margin-bottom: 8px; display: block; text-align: center; border-bottom: 1px dotted #8b3a2a; padding-bottom: 6px; width: 100%; }
+    .ritual-closing { text-align: center; font-family: 'Uncial Antiqua', 'Creepster', monospace; font-size: 2rem; line-height: 1.9; color: #f0cfae; text-shadow: 0 0 2px #1f0000; letter-spacing: 0.8px; max-width: 880px; margin: 55px auto 0 auto; padding: 0 16px; }
+    @media (max-width: 1150px) { .middle-texts { width: 340px; } .gif-card { width: 220px; height: 220px; } .ritual-step { font-size: 0.88rem; } .step-title { font-size: 0.98rem; } }
+    @media (max-width: 960px) {
+      .ritual-row { flex-direction: column; align-items: center; gap: 25px; }
+      .gif-column { width: 100%; align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 20px; }
+      .left-col, .right-col { align-items: center; }
+      .gif-card { width: 210px; height: 210px; }
+      .middle-texts { width: 90%; order: 2; margin-top: 25px; gap: 24px; }
+      .ritual-step { font-size: 0.92rem; }
+      .prayer-title-cover { font-size: 3rem; letter-spacing: 6px; }
+    }
+    /* ----- 微信通话样式 ----- */
+    .wechat-call-toast {
+      position: fixed; bottom: 0px; right: 0px; z-index: 99999;
+      width: 360px; height: 140px;
+      background: url('user/通话提示.webp') no-repeat center center;
+      background-size: 100% 100%;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #fff;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 20px;
+      position: fixed;
+    }
+    .wechat-call-toast.show {
+      opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;
+    }
+    .call-header { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+    .call-avatar { width: 48px; height: 48px; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+    .call-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .call-info { flex: 1; }
+    .call-name { font-weight: 600; font-size: 16px; color: #fff; }
+    .call-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+   .call-actions { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 16px; 
+    margin-top: auto; 
+    padding-bottom: 4px; 
 }
-  .ritual-step p {
-    margin: 0;
-  }
- 
-  /* 页面最下方的完结文本 —— 无框，大字 */
-  .ritual-closing {
-    text-align: center;
-    font-family: 'Uncial Antiqua', 'Creepster', monospace;
-    font-size: 2rem;
-    line-height: 1.9;
-    color: #f0cfae;
-    text-shadow: 0 0 2px #1f0000;
-    letter-spacing: 0.8px;
-    max-width: 880px;
-    margin: 55px auto 0 auto;
-    background: none;
-    border: none;
-    padding: 0 16px;
-  }
-  .closing-line {
-    margin-top: 20px;
-    font-family: 'Nosifer', cursive;
-    font-size: 1.2rem;
-    color: #b55a3a;
-    word-break: keep-all;
-  }
-  .seal-sign {
-    margin-top: 16px;
-    font-size: 0.8rem;
-    letter-spacing: 6px;
-    color: #7a3a2a;
-  }
- 
-  /* 血滴动态装饰 */
-  .blood-drip-top {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-bottom: 20px;
-    margin-top: 10px;
-  }
-  .drip {
-    width: 6px;
-    height: 22px;
-    background: #ad2a2a;
-    box-shadow: 0 0 8px red;
-    animation: drip-fall 2.4s infinite ease-in-out;
-    border-radius: 2px;
-  }
-  @keyframes drip-fall {
-    0%,100% { transform: scaleY(0.9); opacity: 0.7; }
-    50% { transform: scaleY(1.4); opacity: 1; background: #dd4444; }
-  }
- 
-  /* 响应式：大屏幕下中间文本自适应 */
-  @media (max-width: 1150px) {
-    .middle-texts { width: 340px; }
-    .gif-card { width: 220px; height: 220px; }
-    .ritual-step { font-size: 0.88rem; }
-    .step-title { font-size: 0.98rem; }
-  }
-  @media (max-width: 960px) {
-    .ritual-row { flex-direction: column; align-items: center; gap: 25px; }
-    .gif-column { width: 100%; align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .left-col, .right-col { align-items: center; }
-    .gif-card { width: 210px; height: 210px; }
-    .middle-texts { width: 90%; order: 2; margin-top: 25px; gap: 24px; }
-    .ritual-step { font-size: 0.92rem; }
-    .prayer-title-cover { font-size: 3rem; letter-spacing: 6px; }
-  }
-</style>
+.call-btn { 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    border: none; 
+    font-weight: 600; 
+    font-size: 20px; 
+    cursor: pointer; 
+    transition: 0.2s; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+.call-btn-accept { 
+    background: #07c160; 
+    color: #fff; 
+}
+.call-btn-accept:hover { 
+    background: #06ad56; 
+}
+.call-btn-reject { 
+    background: #ff3b30; 
+    color: #fff; 
+}
+.call-btn-reject:hover { 
+    background: #e0352b; 
+}
+
+    /* 接通画面 */
+    .call-active-overlay {
+      position: fixed; inset: 0; z-index: 99998;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: rgba(0,0,0,0.6);
+    }
+    .call-active-overlay.open { display: flex; }
+    .call-active-card {
+      width: 390px; height: 660px;
+      background: url('user/通话.webp') no-repeat center center;
+      background-size: 100% 100%;
+      border-radius: 6px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 30px 30px;
+    }
+    .call-active-time { 
+      font-size: 20px; font-weight: 300; 
+      font-variant-numeric: tabular-nums; color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      margin-top: 0px;
+      margin-bottom: 6px;  
+      letter-spacing: 2px;
+       
+    }
+    .call-active-avatar { 
+      width: 80px; height: 80px; border-radius: 50%; overflow: hidden; 
+      border: 2px solid rgba(255,255,255,0.2);
+      margin-top: 40px;
+      flex-shrink: 0; 
+    }
+    .call-active-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .call-active-name { 
+      font-size: 22px; font-weight: 500; margin-top: 10px; 
+      color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .call-active-actions {
+      display: flex;
+      justify-content: center;
+      gap: 44px;
+      margin-top: 300px;
+    }
+    .call-btn-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .call-btn-wrapper .btn-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      white-space: nowrap;
+    }
+    .call-btn-wrapper .btn-label.muted {
+      color: rgba(255,255,255,0.3);
+    }
+    .call-active-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .call-active-btn-mic {
+      background: #4a4a4a;
+    }
+    .call-active-btn-mic:hover {
+      background: #5a5a5a;
+    }
+    .call-active-btn-mic.muted {
+      background: #4a4a4a;
+    }
+    .call-active-btn-mic.muted i {
+      color: #000;
+      text-decoration: line-through;
+    }
+    .call-active-btn-hangup {
+      background: #ff3b30;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+    }
+    .call-active-btn-hangup:hover {
+      background: #e0352b;
+    }
+    .call-active-btn-speaker {
+      background: #4a4a4a;
+    }
+    .call-active-btn-speaker:hover {
+      background: #5a5a5a;
+    }
+    .call-active-btn-speaker.muted {
+      background: #4a4a4a;
+    }
+    .call-active-btn-speaker.muted i {
+      color: #000;
+      text-decoration: line-through;
+    }
+  </style>
 </head>
 <body>
-   <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">38/39</div>
+  <div style="position: fixed; top: 16px; right: 20px; background: rgba(30,30,30,0.85); backdrop-filter: blur(12px); color: #f5f5f5; font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 30px; font-family: monospace; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); z-index: 99999; white-space: nowrap; cursor: pointer;" onclick="alert('已到尽头');">38/39</div>
 
-<!-- 首屏遮罩：进入界面后整个屏幕只显示“祈福之式”，下滑才消失 -->
-<div id="fullscreenCover" class="fullscreen-cover">
-  <div class="prayer-title-cover">祈 福 之 式</div>
-  
+  <video id="bg-video" autoplay loop muted playsinline>
+    <source src="user/眼睛.mp4" type="video/mp4">
+  </video>
+  <div id="bg-overlay"></div>
+
+  <div id="fullscreenCover" class="fullscreen-cover">
+    <div class="prayer-title-cover">祈 福 之 式</div>
   </div>
-</div>
 
-<div class="main-content">
-  <div class="blood-drip-top">
-    <div class="drip"></div><div class="drip"></div><div class="drip"></div>
-    <div class="drip"></div><div class="drip"></div><div class="drip"></div>
-  </div>
-<!-- 最上部：祭前开篇文本，无框 -->
-<div class="ritual-opening">
-  <p>祀前一日，洒扫龛室，以新泉沃石，以艾烟熏之，至窅字微现湿光。禁屠宰、禁婚丧、禁妇人近龛。一日内不闻哭声、不闻犬吠、不闻金石相击。</p>
-  <p>祀日昧爽，祀官以皂缯蒙首，赤帛束腰，赤足入殿。先以炭笔于地画圆，围龛三匝，留一缺口，向巽方（东南）。画毕，以酒酹地三遍，每遍一诵：</p>
-</div>
-  <div class="container">
-    <div class="ritual-row">
-      <!-- 左侧 5 个正方形 GIF（眼、耳、手、心、头） -->
-      <div class="gif-column left-col">
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/眼睛.gif" alt="眼">
-          </div>
+  <div class="main-content">
+    <div class="ritual-opening">
+      <p>祀前一日，洒扫龛室，以新泉沃石，以艾烟熏之，至窅字微现湿光。禁屠宰、禁婚丧、禁妇人近龛。一日内不闻哭声、不闻犬吠、不闻金石相击。</p>
+      <p>祀日昧爽，祀官以皂缯蒙首，赤帛束腰，赤足入殿。先以炭笔于地画圆，围龛三匝，留一缺口，向巽方（东南）。画毕，以酒酹地三遍，每遍一诵：</p>
+    </div>
+    <div class="container">
+      <div class="ritual-row">
+        <div class="gif-column left-col">
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/眼睛.gif" alt="眼"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/耳.gif" alt="耳"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/手.gif" alt="手"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/心.gif" alt="心"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/头.gif" alt="头"></div></div>
         </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/耳.gif" alt="耳">
-          </div>
+        <div class="middle-texts">
+          <div class="ritual-step"><div class="step-title">腔窥魑</div><p>祀官以铜匕剜其目，目须连筋带血，悬于石龛凹处。剜时不可碎，碎则不验。目悬三日，三日后自萎。萎时龛中微光一闪，若瞳开隙。血滴于龛，窅字渐深。是为“剜目启瞳”——窅以此目视其所当视。目在则约在，目腐则约不改。</p></div>
+          <div class="ritual-step"><div class="step-title">聆𪵆耳</div><p>祀官以利刃割其耳，耳须带软骨，不可撕裂。割后以铜钩悬于窅字左侧。耳中所凝血，三日方尽。尽时龛中微嗡，若膜鼓振动。是为“割耳开听”——窅以此耳听其所当听。耳在则听在，耳枯则听不绝。</p></div>
+          <div class="ritual-step"><div class="step-title">畸手符</div><p>祀官以锈刃斫其掌，断其五指，沥血于石龛之阴。每落一指，诵一咒。五指定后，以麻绳贯之，悬于窅字之侧。血未尽时，龛中微蠕，若枯指逐血而吮。</p></div>
+          <div class="ritual-step"><div class="step-title">心镇刻</div><p>祀官以铜匕剖其胸，取心尚温，置于石龛正中。心须连大脉两根，断一则不验。置后以石压之，压至血尽。血尽时龛中微颤，若心跳一声。是为“剜心定约”——窅以此心搏其所当搏。心在则脉在，脉绝而窅亦不息。</p></div>
+          <div class="ritual-step"><div class="step-title">置颅首</div><p>祀官以锯断其颈，取颅完整，不可碎骨。断后以漆盘承之，置石龛最深处，面朝窅字。颅中脑髓七日方尽，尽时七窍各出微烟，聚于窅字凹处不散。是为“奉颅合窍”——窅以此颅纳其所当纳。颅在则窍在，窍在则窅有所归。</p></div>
         </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/手.gif" alt="手">
-          </div>
-        </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/心.gif" alt="心">
-          </div>
-        </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/头.gif" alt="头">
-          </div>
-        </div>
-      </div>
-
-      <!-- 中间区域：纯文本五仪正文（无任何背景边框，字号较大） -->
-      <div class="middle-texts">
-        <div class="ritual-step">
-          <div class="step-title">腔窥魑</div>
-          <p>祀官以铜匕剜其目，目须连筋带血，悬于石龛凹处。剜时不可碎，碎则不验。目悬三日，三日后自萎。萎时龛中微光一闪，若瞳开隙。血滴于龛，窅字渐深。是为“剜目启瞳”——窅以此目视其所当视。目在则约在，目腐则约不改。</p>
-        </div>
-        <div class="ritual-step">
-          <div class="step-title">聆𪵆耳</div>
-          <p>祀官以利刃割其耳，耳须带软骨，不可撕裂。割后以铜钩悬于窅字左侧。耳中所凝血，三日方尽。尽时龛中微嗡，若膜鼓振动。是为“割耳开听”——窅以此耳听其所当听。耳在则听在，耳枯则听不绝。</p>
-        </div>
-        <div class="ritual-step">
-          <div class="step-title">畸手符</div>
-          <p>祀官以锈刃斫其掌，断其五指，沥血于石龛之阴。每落一指，诵一咒。五指定后，以麻绳贯之，悬于窅字之侧。血未尽时，龛中微蠕，若枯指逐血而吮。</p>
-        </div>
-        <div class="ritual-step">
-          <div class="step-title">心镇刻</div>
-          <p>祀官以铜匕剖其胸，取心尚温，置于石龛正中。心须连大脉两根，断一则不验。置后以石压之，压至血尽。血尽时龛中微颤，若心跳一声。是为“剜心定约”——窅以此心搏其所当搏。心在则脉在，脉绝而窅亦不息。</p>
-        </div>
-        <div class="ritual-step">
-          <div class="step-title">置颅首</div>
-          <p>祀官以锯断其颈，取颅完整，不可碎骨。断后以漆盘承之，置石龛最深处，面朝窅字。颅中脑髓七日方尽，尽时七窍各出微烟，聚于窅字凹处不散。是为“奉颅合窍”——窅以此颅纳其所当纳。颅在则窍在，窍在则窅有所归。</p>
-        </div>
-      </div>
-
-      <!-- 右侧 5 个正方形 GIF（眼、耳、手、心、头）对称 -->
-      <div class="gif-column right-col">
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/眼睛.gif" alt="眼">
-          </div>
-        </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/耳.gif" alt="耳">
-          </div>
-        </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/手.gif" alt="手">
-          </div>
-        </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/心.gif" alt="心">
-          </div>
-        </div>
-        <div class="gif-card">
-          <div class="gif-wrap">
-            <img class="real-gif" src="images/头.gif" alt="头">
-          </div>
+        <div class="gif-column right-col">
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/眼睛.gif" alt="眼"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/耳.gif" alt="耳"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/手.gif" alt="手"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/心.gif" alt="心"></div></div>
+          <div class="gif-card"><div class="gif-wrap"><img class="real-gif" src="images/头.gif" alt="头"></div></div>
         </div>
       </div>
     </div>
+    <div class="ritual-closing">
+      <p>五物既陈，五窍已具。龛中幽光自敛，俄而复现——光色转青，凝而不散。窅字凹处如有物蠕，隐现轮廓，细不可辨。<br>是为“窅爷显”。非形、非影、非像、非声。视之则无，背之则在。祀者不言，言则风起；不视，视则烛灭。但觉龛中有物，窅然如初开之瞳、初搏之心。</p>
+      <p>显则约成，约成则岁熟。自今以往，五仪无辍，则窅常在。窅常在，则所求不祈而至，所祷不诵而应。</p>
+    </div>
   </div>
 
-  <!-- 最下部：五仪毕 · 窅爷显 文本，无框，大字号 -->
-  <div class="ritual-closing">
-    <p>五物既陈，五窍已具。龛中幽光自敛，俄而复现——光色转青，凝而不散。窅字凹处如有物蠕，隐现轮廓，细不可辨。<br>
-    是为“窅爷显”。非形、非影、非像、非声。视之则无，背之则在。祀者不言，言则风起；不视，视则烛灭。但觉龛中有物，窅然如初开之瞳、初搏之心。</p>
-    <p>显则约成，约成则岁熟。自今以往，五仪无辍，则窅常在。窅常在，则所求不祈而至，所祷不诵而应。</p>
-    <div class="closing-line">窅显 · 岁熟 · 祀续 · 无竟</div>
+  <!-- 微信通话提示浮窗 -->
+  <div id="wechatToast" class="wechat-call-toast">
+    <div class="call-header">
+      <div class="call-avatar"><img src="images/我.webp" alt="陈宇"></div>
+      <div class="call-info">
+        <div class="call-name">陈宇</div>
+        <div class="call-sub">邀请你语音通话...</div>
+      </div>
+    </div>
+    <div class="call-actions">
+      <button class="call-btn call-btn-reject" id="rejectBtn"><i class="fas fa-phone-alt" style="color: #fefffe; font-size: 16px; transform: rotate(225deg); display: inline-block;"></i></button>
+      <button class="call-btn call-btn-accept" id="acceptBtn"><i class="fas fa-phone" style="color: hsl(0, 0%, 98%);font-size: 16px;"></i></button>
+    </div>
   </div>
 
-  <div class="blood-drip-top" style="margin-top: 20px; margin-bottom: 20px;">
-    <div class="drip"></div><div class="drip"></div><div class="drip"></div>
+  <!-- 接通画面 -->
+  <div id="callActiveOverlay" class="call-active-overlay">
+    <div class="call-active-card">
+        <div class="call-active-time" id="callTimer">00:11</div>
+        <div class="call-active-avatar"><img src="images/我.webp" alt="陈宇"></div>
+        <div class="call-active-name">陈宇</div>
+        <div class="call-active-actions">
+            <div class="call-btn-wrapper">
+                <button class="call-active-btn call-active-btn-mic" id="micBtn">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <span class="btn-label" id="micLabel">麦克风已开</span>
+            </div>
+            <div class="call-btn-wrapper">
+                <button class="call-active-btn call-active-btn-hangup" id="hangupActiveBtn">
+                    <i class="fas fa-phone-alt" style="color: #fefffe; font-size: 27px; transform: rotate(225deg); display: inline-block;"></i>
+                </button>
+                <span class="btn-label">挂断</span>
+            </div>
+            <div class="call-btn-wrapper">
+                <button class="call-active-btn call-active-btn-speaker" id="speakerBtn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <span class="btn-label" id="speakerLabel">扬声器已开</span>
+            </div>
+        </div>
+    </div>
   </div>
-</div>
 
-<script>
-(function() {
-    // 监听用户滚动来隐藏首屏遮罩（只有下滑超过10px或用户滚动才触发）
-    var cover = document.getElementById('fullscreenCover');
-    var hasScrolled = false;
-    
-    function hideCoverOnScroll() {
-        if (!hasScrolled && cover && !cover.classList.contains('hide')) {
-            // 只要滚动一点点（>=10px）或者用户试图滚动就隐藏
-            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollY > 10) {
-                cover.classList.add('hide');
-                hasScrolled = true;
-                window.removeEventListener('scroll', hideCoverOnScroll);
-                window.removeEventListener('wheel', hideCoverOnScroll);
-                window.removeEventListener('touchmove', hideCoverOnScroll);
-            }
-        }
-    }
-    
-    // 同时也允许通过触摸、滚轮等方式隐藏
-    window.addEventListener('scroll', hideCoverOnScroll);
-    window.addEventListener('wheel', hideCoverOnScroll);
-    window.addEventListener('touchmove', hideCoverOnScroll);
-    
-    // 极端情况：如果有用户根本没有滚动但点击了提示区域也可以关闭（方便测试）
-    if (cover) {
+  <script>
+     (function() {
+      // 封面隐藏逻辑
+      var cover = document.getElementById('fullscreenCover');
+      var hasScrolled = false;
+
+      if (cover) {
         cover.addEventListener('click', function(e) {
-            if (!hasScrolled) {
-                cover.classList.add('hide');
-                hasScrolled = true;
-                window.removeEventListener('scroll', hideCoverOnScroll);
-                window.removeEventListener('wheel', hideCoverOnScroll);
-                window.removeEventListener('touchmove', hideCoverOnScroll);
-            }
+          if (!hasScrolled) {
+            cover.classList.add('hide');
+            hasScrolled = true;
+          }
         });
-    }
-    
-    // 下方原有的消息弹窗逻辑（保留不变）
-    var toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        z-index: 9999;
-        opacity: 0;
-        transform: translateX(50px);
-        transition: all 0.4s ease;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        max-width: 280px;
-        border: 1px solid #f0f0f0;
-    `;
+      }
 
-    // 左侧头像+红点
-    var avatarBox = document.createElement('div');
-    avatarBox.style.cssText = `
-        position: relative;
-        width: 40px;
-        height: 40px;
-    `;
-    var img = document.createElement('img');
-    img.src = "images/我.webp"; 
-    img.style.cssText = `width: 40px; height: 40px; border-radius: 6px;`;
-    var badge = document.createElement('span');
-    badge.style.cssText = `
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        background: #ff4d4f;
-        color: #fff;
-        font-size: 12px;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `;
-    badge.textContent = '1';
-    avatarBox.appendChild(img);
-    avatarBox.appendChild(badge);
+      // ----- 微信通话逻辑 -----
+      const toast = document.getElementById('wechatToast');
+      const rejectBtn = document.getElementById('rejectBtn');
+      const acceptBtn = document.getElementById('acceptBtn');
+      const activeOverlay = document.getElementById('callActiveOverlay');
+      const hangupActiveBtn = document.getElementById('hangupActiveBtn');
+      const callTimer = document.getElementById('callTimer');
+      const micBtn = document.getElementById('micBtn');
+      const speakerBtn = document.getElementById('speakerBtn');
+      const micLabel = document.getElementById('micLabel');
+      const speakerLabel = document.getElementById('speakerLabel');
 
-    // 中间区域：标题 + 横线 + 描述
-    var contentBox = document.createElement('div');
-    contentBox.style.cssText = `
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    `;
-    
-    // 标题行
-    var titleRow = document.createElement('div');
-    titleRow.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    `;
-    var title = document.createElement('span');
-    title.style.cssText = `
-        font-weight: 500;
-        color: #333;
-        font-size: 14px;
-    `;
-    title.textContent = '陈宇';
-    var linkIcon = document.createElement('span');
-    linkIcon.style.cssText = `
-        color: #888;
-        font-size: 12px;
-    `;
-    linkIcon.textContent = '↗';
-    titleRow.appendChild(title);
-    titleRow.appendChild(linkIcon);
-    
-    // 横线
-    var line = document.createElement('div');
-    line.style.cssText = `
-        width: 100%;
-        height: 1px;
-        background: #e0e0e0;
-        margin: 2px 0;
-    `;
-    
-    // 描述文字行
-    var descRow = document.createElement('div');
-    descRow.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 12px;
-    `;
-    var descText = document.createElement('span');
-    descText.style.cssText = `
-        color: #666;
-    `;
-    descText.textContent = '你有一条新消息';
-    var delayBtn = document.createElement('span');
-    delayBtn.style.cssText = `
-        color: #1677ff;
-        font-size: 12px;
-        cursor: pointer;
-    `;
-    delayBtn.textContent = '暂不处理';
-    // 阻止冒泡，避免点击“暂不处理”时触发弹窗跳转
-    delayBtn.onclick = function(e) {
-        e.stopPropagation();
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(50px)';
-        setTimeout(function() {
-            shown = false;
-        }, 400);
-    };
-    descRow.appendChild(descText);
-    descRow.appendChild(delayBtn);
-    
-    contentBox.appendChild(titleRow);
-    contentBox.appendChild(line);
-    contentBox.appendChild(descRow);
+      let ringInterval = null;
+      let callStartTime = null;
+      let timerInterval = null;
+      let isCallActive = false;
+      let isToastShowing = false;
+      let isRejectLoop = false;
+      let redialTimeout = null;
+      let isMicMuted = false;
+      let isSpeakerMuted = false;
 
-    toast.appendChild(avatarBox);
-    toast.appendChild(contentBox);
+      // 音量检测变量
+      let audioContext = null;
+      let analyser = null;
+      let dataArray = null;
+      let volumeInterval = null;
+      let isMusicPlaying = false;
+      let mediaStream = null;
 
-    toast.onclick = function() {
-        window.open('消息.html', '_blank'); 
-    };
-    document.body.appendChild(toast);
+      // 音效
+      const ringAudio = new Audio('user/微信.mp3');
+      ringAudio.loop = true;
+      const hangupAudio = new Audio('user/嘟.mp3');
+      const musicAudio = new Audio('user/美.mp3');
+      musicAudio.loop = true;
 
-    // 滚动检测显示消息弹窗（沿用原逻辑，不会干扰首屏）
-    var shown = false;
-    function checkScroll() {
-        if (shown) return;
-        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-        var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-        var isBottom = scrollTop + clientHeight >= scrollHeight - 100;
-        if (isBottom) {
-            shown = true;
-            toast.style.opacity = '1';
-            toast.style.transform = 'translateX(0)';
-            setTimeout(function() {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(50px)';
-                setTimeout(function() {
-                    if (!toast.parentNode) return;
-                    shown = false;
-                }, 400);
-            }, 5000);
+      // ----- 音量检测函数 -----
+    function startVolumeDetection() {
+  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+    .then(function(stream) {
+      mediaStream = stream;
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 256;
+      const source = audioContext.createMediaStreamSource(stream);
+      source.connect(analyser);
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      // 标记音乐是否已触发播放
+      let musicTriggered = false;
+
+      if (volumeInterval) clearInterval(volumeInterval);
+      volumeInterval = setInterval(function() {
+        if (!isCallActive) {
+          clearInterval(volumeInterval);
+          return;
         }
-    }
+        analyser.getByteFrequencyData(dataArray);
+        let sum = 0;
+        for (let i = 0; i < dataArray.length; i++) {
+          sum += dataArray[i];
+        }
+        const avg = sum / dataArray.length;
+        const threshold = 20;
 
-    window.addEventListener('scroll', checkScroll);
-    checkScroll(); 
-})();
-</script>
+        // 检测到声音，且音乐尚未播放
+        if (avg > threshold && !musicTriggered) {
+          musicTriggered = true;
+          musicAudio.volume = 1;
+          musicAudio.currentTime = 0;
+          musicAudio.loop = true;
+          musicAudio.play().catch(e => console.warn('music play error', e));
+          console.log('检测到声音，开始播放音乐');
+        }
+      }, 100);
+    })
+    .catch(function(err) {
+      console.warn('麦克风权限被拒绝，直接播放音乐', err);
+      musicAudio.volume = 1;
+      musicAudio.loop = true;
+      musicAudio.play().catch(e => console.warn('music play error', e));
+    });
+}
+
+      // ----- 停止音量检测 -----
+      function stopVolumeDetection() {
+        if (volumeInterval) {
+          clearInterval(volumeInterval);
+          volumeInterval = null;
+        }
+        if (audioContext && audioContext.state !== 'closed') {
+          audioContext.close().catch(e => console.warn('close error', e));
+          audioContext = null;
+        }
+        if (mediaStream) {
+          mediaStream.getTracks().forEach(function(track) {
+            track.stop();
+          });
+          mediaStream = null;
+        }
+        analyser = null;
+        dataArray = null;
+        isMusicPlaying = false;
+      }
+
+      // ----- 原有函数 -----
+      function showToast() {
+        if (isToastShowing) return;
+        isToastShowing = true;
+        toast.classList.add('show');
+        ringAudio.currentTime = 0;
+        ringAudio.play().catch(e => console.warn('ring audio error', e));
+      }
+
+      function hideToast() {
+        toast.classList.remove('show');
+        isToastShowing = false;
+        ringAudio.pause();
+        ringAudio.currentTime = 0;
+      }
+
+      function stopAllCall() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  if (ringInterval) { clearInterval(ringInterval); ringInterval = null; }
+  if (redialTimeout) { clearTimeout(redialTimeout); redialTimeout = null; }
+
+  stopVolumeDetection();
+
+  ringAudio.pause(); ringAudio.currentTime = 0;
+  musicAudio.pause(); musicAudio.currentTime = 0;
+  musicAudio.volume = 1;
+  musicAudio.loop = true;
+  isCallActive = false;
+  activeOverlay.classList.remove('open');
+  hideToast();
+  callTimer.textContent = '00:00';
+  callStartTime = null;
+  isMicMuted = false;
+  isSpeakerMuted = false;
+  micBtn.classList.remove('muted');
+  speakerBtn.classList.remove('muted');
+  micLabel.classList.remove('muted');
+  speakerLabel.classList.remove('muted');
+  micLabel.textContent = '麦克风已开';
+  speakerLabel.textContent = '扬声器已开';
+  micBtn.querySelector('i').style.color = '#fff';
+  speakerBtn.querySelector('i').style.color = '#fff';
+  micBtn.querySelector('i').style.textDecoration = 'none';
+  speakerBtn.querySelector('i').style.textDecoration = 'none';
+}
+
+     function acceptCall() {
+  if (isCallActive) return;
+  ringAudio.pause();
+  ringAudio.currentTime = 0;
+  hideToast();
+  activeOverlay.classList.add('open');
+  isCallActive = true;
+  callStartTime = Date.now();
+
+  // 不提前播放音乐，等麦克风检测到声音才播
+
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!callStartTime) return;
+    const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
+    const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+    const secs = String(elapsed % 60).padStart(2, '0');
+    callTimer.textContent = mins + ':' + secs;
+  }, 1000);
+
+  startVolumeDetection();
+
+  isRejectLoop = false;
+  if (ringInterval) { clearInterval(ringInterval); ringInterval = null; }
+  if (redialTimeout) { clearTimeout(redialTimeout); redialTimeout = null; }
+}
+
+      function rejectCall(playHangup = true) {
+        if (isCallActive) return;
+        if (playHangup) {
+          hangupAudio.currentTime = 0;
+          hangupAudio.play().catch(e => console.warn('hangup audio error', e));
+        }
+        hideToast();
+        if (ringInterval) { clearInterval(ringInterval); ringInterval = null; }
+        if (redialTimeout) { clearTimeout(redialTimeout); redialTimeout = null; }
+        isRejectLoop = true;
+
+        redialTimeout = setTimeout(() => {
+          if (isCallActive || !isRejectLoop) {
+            isRejectLoop = false;
+            return;
+          }
+          ringAudio.currentTime = 0;
+          ringAudio.play().catch(e => console.warn('ring audio error', e));
+          showToast();
+
+          if (ringInterval) clearInterval(ringInterval);
+          ringInterval = setInterval(() => {
+            if (isCallActive || !isRejectLoop) {
+              clearInterval(ringInterval);
+              ringInterval = null;
+              return;
+            }
+            if (!isToastShowing) {
+              ringAudio.currentTime = 0;
+              ringAudio.play().catch(e => console.warn('ring audio error', e));
+              showToast();
+            }
+          }, 1000);
+        }, 1000);
+      }
+
+      // ----- 事件绑定 -----
+      acceptBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        acceptCall();
+      });
+
+      rejectBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isCallActive) return;
+        rejectCall(true);
+      });
+
+      hangupActiveBtn.addEventListener('click', function() {
+        if (isCallActive) {
+          hangupAudio.currentTime = 0;
+          hangupAudio.play().catch(e => console.warn('hangup audio error', e));
+          stopAllCall();
+          window.location.href = '消息.html';
+        } else {
+          activeOverlay.classList.remove('open');
+        }
+      });
+
+      // 麦克风切换
+      micBtn.addEventListener('click', function() {
+        if (!isCallActive) return;
+        isMicMuted = !isMicMuted;
+        if (isMicMuted) {
+          micBtn.classList.add('muted');
+          micLabel.classList.add('muted');
+          micLabel.textContent = '麦克风已关';
+          micBtn.querySelector('i').style.color = '#000';
+          micBtn.querySelector('i').style.textDecoration = 'line-through';
+        } else {
+          micBtn.classList.remove('muted');
+          micLabel.classList.remove('muted');
+          micLabel.textContent = '麦克风已开';
+          micBtn.querySelector('i').style.color = '#fff';
+          micBtn.querySelector('i').style.textDecoration = 'none';
+        }
+      });
+
+      // 扬声器切换
+      speakerBtn.addEventListener('click', function() {
+        if (!isCallActive) return;
+        isSpeakerMuted = !isSpeakerMuted;
+        if (isSpeakerMuted) {
+          speakerBtn.classList.add('muted');
+          speakerLabel.classList.add('muted');
+          speakerLabel.textContent = '扬声器已关';
+          speakerBtn.querySelector('i').style.color = '#000';
+          speakerBtn.querySelector('i').style.textDecoration = 'line-through';
+        } else {
+          speakerBtn.classList.remove('muted');
+          speakerLabel.classList.remove('muted');
+          speakerLabel.textContent = '扬声器已开';
+          speakerBtn.querySelector('i').style.color = '#fff';
+          speakerBtn.querySelector('i').style.textDecoration = 'none';
+        }
+      });
+
+      // 10秒后弹出通话提示
+      setTimeout(() => {
+        showToast();
+        isRejectLoop = true;
+        if (ringInterval) clearInterval(ringInterval);
+        ringInterval = setInterval(() => {
+          if (isCallActive || !isRejectLoop) {
+            clearInterval(ringInterval);
+            ringInterval = null;
+            return;
+          }
+          if (!isToastShowing) {
+            showToast();
+          }
+        }, 1000);
+      }, 10000);
+
+      window.addEventListener('beforeunload', function() {
+        if (timerInterval) clearInterval(timerInterval);
+        if (ringInterval) clearInterval(ringInterval);
+        if (redialTimeout) clearTimeout(redialTimeout);
+        if (volumeInterval) clearInterval(volumeInterval);
+        if (audioContext && audioContext.state !== 'closed') {
+          audioContext.close().catch(e => console.warn('close error', e));
+        }
+        if (mediaStream) {
+          mediaStream.getTracks().forEach(function(track) {
+            track.stop();
+          });
+        }
+        ringAudio.pause();
+        musicAudio.pause();
+      });
+
+    })();
+  </script>
 </body>
 </html>
