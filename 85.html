@@ -33,10 +33,12 @@
         .eye-asset {
             position: absolute;
             right: 2%;
-            top: 25%;
+            top: 20%;
             transform: translateY(-50%);
-            width: 350px;
-            height: 400px;
+            width: min(38vw, 350px);
+            height: auto;
+            max-height: 68vh;
+            object-fit: contain;
             pointer-events: none;
             opacity: 1;
         }
@@ -238,6 +240,17 @@
                 flex-wrap: wrap;
             }
 
+            .background-layer {
+                overflow: hidden;
+            }
+
+            .eye-asset {
+                right: -8%;
+               top: 20%;
+                width: min(62vw, 300px);
+                max-height: 52vh;
+            }
+
             .logo {
                 font-size: 64px;
                 letter-spacing: -2px;
@@ -261,7 +274,7 @@
 </head>
 <body>
     <div class="background-layer">
-        <img src="user/鬼.webp" class="eye-asset" alt="眼睛">
+        <img src="image/鬼.webp" class="eye-asset" alt="眼睛">
     </div>
 
     <div id="webpage" class="webpage-layer">
@@ -307,7 +320,7 @@
             </div>
         </footer>
 
-        <img src="user/大手.webp" id="handImage" class="hand-asset" alt="手">
+        <img src="image/大手.webp" id="handImage" class="hand-asset" alt="手">
     </div>
 
     <script>
