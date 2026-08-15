@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页演示</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #000;
+            color: #202124;
+        }
+
+        body {
+            position: relative;
+        }
+
+        .background-layer {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            z-index: 1;
+        }
+
+        .eye-asset {
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 350px;
+            height: 400px;
+            pointer-events: none;
+            opacity: 1;
+        }
+
+        .webpage-layer {
+            position: absolute;
+            inset: 0;
+            background: #f5f5f5;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .webpage-layer.slide-out {
+            transform: translateX(-20%);
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 28px 0;
+            font-size: 14px;
+            z-index: 2;
+        }
+
+        .topbar a {
+            color: #202124;
+            text-decoration: none;
+        }
+
+        .topbar .login {
+            background: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 9px 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-page {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .search-wrap {
+            width: min(720px, 76vw);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            font-weight: 700;
+            letter-spacing: -4px;
+            margin-bottom: 28px;
+            user-select: none;
+        }
+
+        .logo .b { color: #4285f4; }
+        .logo .r { color: #ea4335; }
+        .logo .y { color: #fbbc05; }
+        .logo .g { color: #34a853; }
+        .logo .e { color: #ea4335; }
+
+        .search-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #dfe1e5;
+            border-radius: 999px;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.08);
+            padding: 0 18px;
+            height: 54px;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 1px 8px rgba(32, 33, 36, 0.18);
+            border-color: #dfe1e5;
+        }
+
+        .search-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #9aa0a6;
+            border-radius: 50%;
+            position: relative;
+            margin-right: 12px;
+            opacity: 0.8;
+        }
+
+        .search-icon::after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 2px;
+            background: #9aa0a6;
+            border-radius: 2px;
+            right: -5px;
+            bottom: -2px;
+            transform: rotate(45deg);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 18px;
+            color: #202124;
+        }
+
+        .search-tools {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-left: 10px;
+        }
+
+        .search-tools button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            color: #5f6368;
+        }
+
+        .action-row {
+            margin-top: 28px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-row button {
+            background: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            padding: 10px 18px;
+            color: #3c4043;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .action-row button:hover {
+            border-color: #dadce0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            padding: 16px 28px 20px;
+            background: #f2f2f2;
+            color: #70757a;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+
+        .footer a {
+            color: #70757a;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .hand-asset {
+            position: absolute;
+            right: -50px;
+            bottom: 10%;
+            height: 35%;
+            max-height: 250px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 11;
+        }
+
+        .hand-asset.show-hand {
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            .topbar {
+                justify-content: center;
+                padding-top: 14px;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .logo {
+                font-size: 64px;
+                letter-spacing: -2px;
+            }
+
+            .search-wrap {
+                width: 88vw;
+                margin-top: -40px;
+            }
+
+            .search-box {
+                height: 48px;
+            }
+
+            .footer {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-layer">
+        <img src="image/眼.png" class="eye-asset" alt="眼睛">
+    </div>
+
+    <div id="webpage" class="webpage-layer">
+        <header class="topbar">
+            <a href="#">图片</a>
+            <a href="#">新闻</a>
+            <a href="#">地图</a>
+            <button class="login">登录</button>
+        </header>
+
+        <main class="search-page">
+            <div class="search-wrap">
+                <div class="logo" aria-label="搜索引擎标志">
+                    <span class="b">S</span><span class="r">e</span><span class="y">a</span><span class="g">r</span><span class="b">c</span><span class="r">h</span>
+                </div>
+
+                <div class="search-box" role="search">
+                    <span class="search-icon" aria-hidden="true"></span>
+                    <input class="search-input" type="text" aria-label="搜索内容" placeholder="在这里输入搜索内容" />
+                    <div class="search-tools">
+                        <button type="button" aria-label="语音搜索">🎙</button>
+                        <button type="button" aria-label="图片搜索">📷</button>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button type="button">搜索</button>
+                    <button type="button">手气不错</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div>
+                <a href="#">关于</a>
+                <a href="#">广告</a>
+                <a href="#">商务</a>
+            </div>
+            <div>
+                <a href="#">隐私</a>
+                <a href="#">条款</a>
+                <a href="#">设置</a>
+            </div>
+        </footer>
+
+        <img src="image/手.png" id="handImage" class="hand-asset" alt="手">
+    </div>
+
+    <script>
+        const webpage = document.getElementById('webpage');
+        const handImage = document.getElementById('handImage');
+
+        setTimeout(function() {
+            handImage.classList.add('show-hand');
+            webpage.classList.add('slide-out');
+        }, 4000);
+    </script>
+</body>
+</html>
